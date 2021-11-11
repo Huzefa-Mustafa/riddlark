@@ -38,7 +38,7 @@ public class Server implements Runnable,login,hostRoom,joinRoom,register,result,
 
             request = (Request) ois.readObject();
             switch (request.getType()) {
-                case 1 ->  login.login();
+                case 1 -> login.login();
                 case 2 -> register.register();
                 case 3 -> hostRoom.hostRoom();
                 case 4 -> joinRoom.joinRoom();
