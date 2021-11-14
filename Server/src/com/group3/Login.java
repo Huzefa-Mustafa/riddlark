@@ -6,7 +6,7 @@ import com.group3.models.User;
 import static com.group3.Server.*;
 
 interface Login {
-    static void login() {
+    static void Login() {
 
         int status = 3;
         User currentUser = new User();
