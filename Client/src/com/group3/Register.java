@@ -4,9 +4,9 @@ import com.group3.models.Request;
 import com.group3.models.Response;
 import com.group3.models.User;
 
-import static com.group3.Main.*;
+import static com.group3.App.*;
 
-interface register {
+interface Register {
      static void register() {
 
          boolean flag;

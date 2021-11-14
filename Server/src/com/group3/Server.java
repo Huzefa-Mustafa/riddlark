@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 
-public class Server implements Runnable,login,hostRoom,joinRoom,register,result,playGame,checkIfRecord {
+public class Server implements Runnable,login, HostRoom,joinRoom,register,result,playGame, CheckIfRecord {
 
     static Socket connection;
     static ArrayList<User> usersList = new ArrayList<>();
@@ -40,12 +40,12 @@ public class Server implements Runnable,login,hostRoom,joinRoom,register,result,
             switch (request.getType()) {
                 case 1 -> login.login();
                 case 2 -> register.register();
-                case 3 -> hostRoom.hostRoom();
+                case 3 -> HostRoom.hostRoom();
                 case 4 -> joinRoom.joinRoom();
                 case 5 -> result.result();
                 case 6 -> System.out.println("exiting");
                 case 7 -> playGame.playGame();
-                case 8 -> checkIfRecord.checkIfRecord();
+                case 8 -> CheckIfRecord.checkIfRecord();
                 default -> System.out.println("WRONG CHOICE");
             }
             oos.writeUnshared(response);

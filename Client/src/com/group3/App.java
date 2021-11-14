@@ -5,14 +5,14 @@ import com.group3.models.User;
 import java.util.Scanner;
 
 
-public class Main implements login,register,about,hostRoom,joinRoom,getRecords{
+public class App implements Login, Register, About, HostRoom, JoinRoom, GetRecords {
 
     static Scanner scanner = new Scanner(System.in);
     static Boolean loggedIn = false;
     static User user = new User(), currentUser;
     static int port = 1234, choice;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
 
@@ -36,12 +36,12 @@ public class Main implements login,register,about,hostRoom,joinRoom,getRecords{
             else choice = 10;
 
             switch (choice) {
-                case 0 -> about.about();
-                case 1 -> login.Login();
-                case 2 -> register.register();
-                case 3 -> hostRoom.hostRoom();
-                case 4 -> joinRoom.joinRoom();
-                case 5 -> getRecords.getRecords();
+                case 0 -> About.about();
+                case 1 -> Login.Login();
+                case 2 -> Register.register();
+                case 3 -> HostRoom.hostRoom();
+                case 4 -> JoinRoom.joinRoom();
+                case 5 -> GetRecords.getRecords();
                 case 6 -> System.out.println("\n\t************** GOOD BYE **************");
                 default -> System.out.println("\n\t************** please enter correct choice **************");
             }

@@ -3,13 +3,13 @@ package com.group3;
 import com.group3.models.Request;
 import com.group3.models.Response;
 
-import static com.group3.Main.*;
+import static com.group3.App.*;
 
-interface login {
+interface Login {
     static void Login() {
         if (loggedIn) {
             System.out.println("\n\t********* you are already logged in ********* ");
-            System.out.println("\tenter \"y\" to logout and login as a new user");
+            System.out.println("\tenter \"y\" to logout and Login as a new user");
             System.out.print("\tyour choice: ");
             String choice = scanner.nextLine();
 

@@ -1,6 +1,6 @@
 package com.group3;
 
-interface about {
+interface About {
     static void about() {
         System.out.println("\n\n\t\t************** WELCOME TO RIDDLARK **************");
 

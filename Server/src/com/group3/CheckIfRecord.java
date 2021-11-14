@@ -1,6 +1,6 @@
 package com.group3;
 
-interface checkIfRecord {
+interface CheckIfRecord {
     static void checkIfRecord() {
 
     }
