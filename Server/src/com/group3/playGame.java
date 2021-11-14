@@ -1,6 +1,6 @@
 package com.group3;
 
-interface playGame {
+interface PlayGame {
     static void playGame() {
 
     }

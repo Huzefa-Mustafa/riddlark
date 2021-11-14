@@ -7,10 +7,11 @@ import static com.group3.Server.request;
 import static com.group3.Server.usersList;
 import static com.group3.Server.response;
 
-interface register {
+interface Register {
       static void register() {
 
          User user = request.getUser();
+          System.out.println(user.getName());
          if (verifyEmail(user.getEmail()) && verifyPassword(user.getPassword())) {
              response = new Response(0);
              usersList.add(user);

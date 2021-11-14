@@ -5,7 +5,7 @@ import com.group3.models.User;
 
 import static com.group3.Server.*;
 
-interface login {
+interface Login {
     static void login() {
 
         int status = 3;
