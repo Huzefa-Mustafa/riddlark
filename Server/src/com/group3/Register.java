@@ -3,9 +3,7 @@ package com.group3;
 import com.group3.models.Response;
 import com.group3.models.User;
 
-import static com.group3.Server.request;
-import static com.group3.Server.usersList;
-import static com.group3.Server.response;
+import static com.group3.ServerSocketManager.*;
 
 interface Register {
     static void Register() {
