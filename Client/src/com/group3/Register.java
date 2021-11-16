@@ -4,9 +4,9 @@ import com.group3.models.Request;
 import com.group3.models.Response;
 import com.group3.models.User;
 
-import static com.group3.App.*;
+import static com.group3.WelcomePage.*;
 
- class Register {
+class Register {
      static void register() {
 
          boolean flag;
@@ -22,7 +22,7 @@ import static com.group3.App.*;
 
              User user = new User(email, name, password);
 
-             Client client = new Client(new Request(choice, user), port);
+             ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
              Response response = client.sendRequest();
 
              if (response.getErrorCode() == 0) {
