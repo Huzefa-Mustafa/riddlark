@@ -1,6 +1,6 @@
 package com.group3;
 
-interface JoinRoom {
+class JoinRoom {
     static void joinRoom() {
 
     }

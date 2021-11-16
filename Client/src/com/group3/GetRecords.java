@@ -1,6 +1,6 @@
 package com.group3;
 
-interface GetRecords {
+class GetRecords {
     static void getRecords() {
 
     }

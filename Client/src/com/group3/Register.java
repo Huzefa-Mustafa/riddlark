@@ -6,7 +6,7 @@ import com.group3.models.User;
 
 import static com.group3.App.*;
 
-interface Register {
+ class Register {
      static void register() {
 
          boolean flag;

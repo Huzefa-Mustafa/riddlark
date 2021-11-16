@@ -5,7 +5,7 @@ import com.group3.models.Response;
 
 import static com.group3.App.*;
 
-interface Login {
+ class Login {
     static void Login() {
         if (loggedIn) {
             System.out.println("\n\t********* you are already logged in ********* ");

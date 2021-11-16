@@ -5,7 +5,7 @@ import com.group3.models.User;
 import java.util.Scanner;
 
 
-public class App implements Login, Register, About, HostRoom, JoinRoom, GetRecords {
+public class App  {
 
     static Scanner scanner = new Scanner(System.in);
     static Boolean loggedIn = false;
