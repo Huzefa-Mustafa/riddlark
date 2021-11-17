@@ -10,11 +10,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServerSocketManager implements Runnable, Login, Register, CheckIfRecord {
 
     static Socket connection;
-    static SaveData saveData;
+    static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
     static ObjectOutputStream oos;
     static ObjectInputStream ois;
@@ -22,8 +23,9 @@ public class ServerSocketManager implements Runnable, Login, Register, CheckIfRe
     static Response response = new Response();
     ServerSocketManager(Socket s) {
         this.connection = s;
-        if (saveData.readDataFromJson("Users.json") != null)
-        {this.usersList = saveData.readDataFromJson("Users.json");}
+//        if (saveData.readDataFromJson("Users.json") != null) {
+//            this.usersList = saveData.readDataFromJson("Users.json");
+//        }
     }
     @Override
     public void run() {

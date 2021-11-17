@@ -13,7 +13,8 @@ interface Register {
         if (verifyEmail(user.getEmail()) && verifyPassword(user.getPassword())) {
             response = new Response(0);
             usersList.add(user);
-            saveData.saveDataInJSON("Users.json",usersList);
+            usersList.get(0).display();
+            saveData.saveUserData(usersList);
             System.out.println("\n************** new user ****************");
             user.display();
             System.out.println("****************************************\n");

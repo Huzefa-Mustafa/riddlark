@@ -25,3 +25,8 @@
 /.vscode/settings.json
 /bin/App.class
 /bin/client/Client.class
+/out/production/Server/com/group3/App.class
+/out/production/Server/com/group3/register.class
+/out/production/Server/com/group3/SaveData.class
+/out/production/Server/com/group3/ServerSocketManager.class
+/out/production/Server/com/group3/Users.txt
