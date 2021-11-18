@@ -14,8 +14,11 @@ public class Server {
 
     static ServerSocket server;
     static Socket connection;
+
+    static SaveData saveData = new SaveData();
+    static ArrayList<User> usersList = new ArrayList<>();
     Server(){
-//        this.usersList = saveData.loadUserData();
+        this.usersList = saveData.loadUserData();
     }
 
     public void createServer(){

@@ -43,7 +43,7 @@ public class SaveData {
             while (fis.available() > 0) {
 //              while ((user = (User) ois.readObject()) != null){
                 user = (User) ois.readObject();
-                user.display("Loaded User");
+                user.display();
                 this.userList.add(user);
             }
             ois.close();

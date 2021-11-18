@@ -15,17 +15,12 @@ import java.util.List;
 public class ServerSocketManager implements Runnable, Login, Register, CheckIfRecord {
 
     static Socket connection;
-    static SaveData saveData = new SaveData();
-    static ArrayList<User> usersList = new ArrayList<>();
     static ObjectOutputStream oos;
     static ObjectInputStream ois;
     static Request request;
     static Response response = new Response();
     ServerSocketManager(Socket s) {
         this.connection = s;
-//        if (saveData.readDataFromJson("Users.json") != null) {
-//            this.usersList = saveData.readDataFromJson("Users.json");
-//        }
     }
     @Override
     public void run() {
