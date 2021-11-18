@@ -1,8 +1,10 @@
 package com.group3;
 
+import com.group3.models.User;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,7 +14,9 @@ public class Server {
 
     static ServerSocket server;
     static Socket connection;
-    Server(){}
+    Server(){
+//        this.usersList = saveData.loadUserData();
+    }
 
     public void createServer(){
         try {

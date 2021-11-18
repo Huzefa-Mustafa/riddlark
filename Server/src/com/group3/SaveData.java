@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 import static com.group3.ServerSocketManager.*;
 public class SaveData {
-//    ArrayList<User> users = new ArrayList<>();
+    ArrayList<User> userList = new ArrayList<>();
     String[] fileNames = {"Users.txt"};
     SaveData(){}
     public void saveUserData(ArrayList arrayList){
@@ -25,11 +25,44 @@ public class SaveData {
                 oos.writeObject(user);
             }
             oos.close();
-            System.out.println("The Object  was successfully written to a file");
+            System.out.println("The User was successfully written to a file");
 
         } catch (Exception e) {
             System.out.println("Error writing object. \nMessage: " + e.getMessage() + "\n Stacktrace: " + e.getLocalizedMessage());
             e.printStackTrace();
+        }
+    }
+
+    public ArrayList loadUserData() {
+        this.userList = new ArrayList<>();
+        try {
+
+            FileInputStream fis = new FileInputStream(new File(fileNames[0]));
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            User user;
+            while (fis.available() > 0) {
+//              while ((user = (User) ois.readObject()) != null){
+                user = (User) ois.readObject();
+                user.display("Loaded User");
+                this.userList.add(user);
+            }
+            ois.close();
+            System.out.println("The Users are successfully loaded from a file");
+            return this.userList;
+        }catch (EOFException e) {
+            System.out.println("File ended");
+            e.printStackTrace();
+            return this.userList;
+        } catch (IOException e) {
+            System.out.println("File Not Found. \nMessage: " + e.getMessage() + "\nStacktrace: " + e.toString());
+//            e.printStackTrace();
+            return this.userList;
+        }  catch(ClassNotFoundException e){
+            System.out.println("Error class. \nMessage: " + e.getMessage() + "\nStacktrace: " + e.getLocalizedMessage());
+            return this.userList;
+        } catch(Exception e){
+            System.out.println("Error : \nMessage: " + e.getMessage() + "\nStacktrace: " + e.getLocalizedMessage());
+            return this.userList;
         }
     }
 
@@ -56,12 +89,12 @@ public class SaveData {
 //        br.close();
 //        return list;
 //    }
-    private void writeFile(String filePath, String data) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(filePath,true));
-        while (data.length() > 0) {
-            bw.write(data);
-            bw.newLine();
-        }
-        bw.close();
-    }
+//    private void writeFile(String filePath, String data) throws IOException {
+//        BufferedWriter bw = new BufferedWriter(new FileWriter(filePath,true));
+//        while (data.length() > 0) {
+//            bw.write(data);
+//            bw.newLine();
+//        }
+//        bw.close();
+//    }
 }
