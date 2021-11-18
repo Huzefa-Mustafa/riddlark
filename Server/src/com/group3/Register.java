@@ -7,11 +7,11 @@ import static com.group3.ServerSocketManager.*;
 import static com.group3.Server.usersList;
 import static com.group3.Server.saveData;
 
-interface Register {
-    static void Register() {
+class Register {
+    public synchronized static void register() {
 
         User user = request.getUser();
-        System.out.println(user.getName());
+//        System.out.println(user.getName());
         if (verifyEmail(user.getEmail()) && verifyPassword(user.getPassword())) {
             response = new Response(0);
             usersList.add(user);
@@ -25,10 +25,10 @@ interface Register {
             response = new Response(1);
         }
     }
-    private static boolean verifyEmail(String email) {
+    private static synchronized boolean verifyEmail(String email) {
         return email.contains("@") && email.contains(".") ;
     }
-    private static boolean verifyPassword(String password) {
+    private static synchronized boolean verifyPassword(String password) {
 
         return password.length() >= 4;
     }

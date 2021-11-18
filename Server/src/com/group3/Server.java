@@ -21,7 +21,7 @@ public class Server {
         this.usersList = saveData.loadUserData();
     }
 
-    public void createServer(){
+    public synchronized void createServer(){
         try {
             int port = 1234;
             this.server = new ServerSocket(port);

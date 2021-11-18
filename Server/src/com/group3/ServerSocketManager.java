@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerSocketManager implements Runnable, Login, Register, CheckIfRecord {
+public class ServerSocketManager implements Runnable {
 
     static Socket connection;
     static ObjectOutputStream oos;
@@ -32,14 +32,14 @@ public class ServerSocketManager implements Runnable, Login, Register, CheckIfRe
 
             request = (Request) ois.readObject();
             switch (request.getType()) {
-                case 1 -> Login.Login();
-                case 2 -> Register.Register();
+                case 1 -> Login.login();
+                case 2 -> Register.register();
                 case 3 -> { /* HostRoom.hostRoom();  */}
                 case 4 -> {/*JoinRoom.joinRoom();*/}
                 case 5 -> {/*Result.result();*/}
                 case 6 -> System.out.println("exiting");
                 case 7 -> {/*PlayGame.playGame();*/}
-                case 8 -> CheckIfRecord.checkIfRecord();
+                case 8 -> {/*CheckIfRecord.checkIfRecord();*/}
                 default -> System.out.println("WRONG CHOICE");
             }
             oos.writeUnshared(response);

@@ -6,8 +6,8 @@ import com.group3.models.User;
 import static com.group3.Server.*;
 import static com.group3.ServerSocketManager.*;
 
-interface Login {
-    static void Login() {
+class Login {
+    static synchronized void login() {
 
         int status = 3;
         User currentUser = new User();
