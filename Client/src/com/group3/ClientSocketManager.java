@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Client{
+public class ClientSocketManager{
 
     static  int port;
     static ObjectInputStream ois;
@@ -16,9 +16,9 @@ public class Client{
     static Request request = new Request();
     static Response response = new Response();
 
-    public Client(Request request, int port) {
-        Client.request = request;
-        Client.port = port;
+    public ClientSocketManager(Request request, int port) {
+        ClientSocketManager.request = request;
+        ClientSocketManager.port = port;
     }
 
     public Response sendRequest() {

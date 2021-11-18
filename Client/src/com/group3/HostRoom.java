@@ -1,6 +1,6 @@
 package com.group3;
 
- interface HostRoom {
+ class HostRoom {
     static void hostRoom() {
 
     }
