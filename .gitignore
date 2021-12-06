@@ -25,3 +25,8 @@
 /.vscode/settings.json
 /bin/App.class
 /bin/client/Client.class
+.bin
+bin/
+
+.out
+out/
