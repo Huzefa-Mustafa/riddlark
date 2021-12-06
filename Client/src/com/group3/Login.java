@@ -7,20 +7,6 @@ import static com.group3.WelcomePage.*;
 
 class Login {
     static void Login() {
-        if (loggedIn) {
-            System.out.println("\n\t********* you are already logged in ********* ");
-            System.out.println("\tenter \"y\" to logout and Login as a new user");
-            System.out.print("\tyour choice: ");
-            String choice = scanner.nextLine();
-
-            if (choice.toLowerCase().equals("y")) {
-                currentUser = null;
-                loggedIn = false;
-                Login();
-            } else {
-                System.out.println("\n\n\t\t\t*********** Welcome back " + currentUser.getName() + " ************");
-            }
-        } else {
 
             do {
                 System.out.print("\n\tEnter your email address : ");
@@ -34,7 +20,6 @@ class Login {
                 if (response.getErrorCode() == 0) {
                     System.out.println("\n\n\t**************** logged in successfully ****************");
                     currentUser = response.getUser();
-                    System.out.println("\n\n\t\t\t*********** Welcome " + currentUser.getName() + " ************");
                     loggedIn = true;
                 } else if (response.getErrorCode() == 2) {
                     System.out.println("\n\t********* log in failed ( Password incorrect ) **********");
@@ -45,10 +30,10 @@ class Login {
                     System.out.println("\n\t**************** No registered user ****************");
                     break;
                 }
-
-
             } while (!loggedIn);
+            if (loggedIn) {
+                SuccessfulLoginPage.SuccessfulLoginPage();
+            }
 
         }
     }
-}
