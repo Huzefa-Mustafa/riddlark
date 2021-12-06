@@ -24,13 +24,14 @@ public class WelcomePage  {
             System.out.println("\n\t╷–––––––––––––––––––––––––––––╷");
             System.out.println("\t│            MENU             │");
             System.out.println("\t│–––––––––––––––––––––––––––––│");
-            System.out.println("\t│   0. About                  │");
-            System.out.println("\t│   1. Login                  │");
-            System.out.println("\t│   2. Register               │");
-            System.out.println("\t│   3. Host a room            │");
-            System.out.println("\t│   4. Join a room            │");
-            System.out.println("\t│   5. Hall Of Fame           │");
-            System.out.println("\t│   6. Exit                   │");
+            System.out.println("\t│        PLEASE ENTER         │");
+            System.out.println("\t│    **** 0: Login    ****    │");
+            System.out.println("\t│    **** 1: Register ****    │");
+            System.out.println("\t│    **** 2: About    ****    │");
+//            System.out.println("\t│   3. Host a room            │");
+//            System.out.println("\t│   4. Join a room            │");
+//            System.out.println("\t│   5. Hall Of Fame           │");
+            System.out.println("\t│    **** 3: Quit     ****    │");
             System.out.println("\t│_____________________________│");
             System.out.println("\n  please enter your choice");
             System.out.print("  Your choice : ");
@@ -40,9 +41,9 @@ public class WelcomePage  {
             else choice = 10;
 
             switch (choice) {
-                case 0 -> About.about();
-                case 1 -> Login.Login();
-                case 2 -> Register.register();
+                case 0 -> Login.Login();
+                case 1 -> Register.register();
+                case 2 -> About.about();
                 case 3 -> HostRoom.hostRoom();
                 case 4 -> JoinRoom.joinRoom();
                 case 5 -> GetRecords.getRecords();
