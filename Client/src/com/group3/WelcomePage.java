@@ -31,7 +31,7 @@ public class WelcomePage  {
 //            System.out.println("\t│   3. Host a room            │");
 //            System.out.println("\t│   4. Join a room            │");
 //            System.out.println("\t│   5. Hall Of Fame           │");
-            System.out.println("\t│    **** 3: Quit     ****    │");
+            System.out.println("\t│    **** 4: Quit     ****    │");
             System.out.println("\t│_____________________________│");
             System.out.println("\n  please enter your choice");
             System.out.print("  Your choice : ");
@@ -44,10 +44,8 @@ public class WelcomePage  {
                 case 0 -> Login.Login();
                 case 1 -> Register.register();
                 case 2 -> About.about();
-                case 3 -> HostRoom.hostRoom();
-                case 4 -> JoinRoom.joinRoom();
-                case 5 -> GetRecords.getRecords();
-                case 6 -> System.out.println("\n\t************** GOOD BYE **************");
+                case 3 -> GetRecords.getRecords();
+                case 4 -> System.out.println("\n\t************** GOOD BYE **************");
                 default -> System.out.println("\n\t************** please enter correct choice **************");
             }
         } while (choice != 6);

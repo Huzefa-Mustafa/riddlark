@@ -24,7 +24,7 @@ public class SuccessfulLoginPage {
             else choice = 10;
 
             switch (choice) {
-                case 0 -> About.about();
+                case 0 -> JoinGame.joinGame();
                 case 1 -> logout();
                 default -> System.out.println("\n\t************** please enter correct choice **************");
             }
