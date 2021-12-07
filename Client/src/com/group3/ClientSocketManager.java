@@ -16,6 +16,7 @@ public class ClientSocketManager{
     static Request request = new Request();
     static Response response = new Response();
 
+
     public ClientSocketManager(Request request, int port) {
         ClientSocketManager.request = request;
         ClientSocketManager.port = port;
