@@ -20,8 +20,9 @@ class Login {
                 if (response.getErrorCode() == 0) {
                     System.out.println("\n\n\t**************** logged in successfully ****************");
                     currentUser = response.getUser();
-                    System.out.println("\n\n\t\t\t*********** Welcome " + currentUser.getName() + " ************");
+//                    System.out.println("\n\n\t\t\t*********** Welcome " + currentUser.getName() + " ************");
                     loggedIn = true;
+                    user.setName(currentUser.getName());
                 } else if (response.getErrorCode() == 2) {
                     System.out.println("\n\t********* log in failed ( Password incorrect ) **********");
                 } else if (response.getErrorCode() == 3) {
