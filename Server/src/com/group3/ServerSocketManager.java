@@ -34,11 +34,7 @@ public class ServerSocketManager implements Runnable {
             switch (request.getType()) {
                 case 1 -> Login.login();
                 case 2 -> Register.register();
-                case 3 -> {
-//                    Group.group(request.getUser());
-                    Group group = new Group();
-                    group.addPlayer(request.getUser());
-                }
+                case 3 -> PlayGame.playGame(request.getUser());
                 case 4 -> {/*JoinRoom.joinRoom();*/}
                 case 5 -> {/*Result.result();*/}
                 case 6 -> System.out.println("exiting");
