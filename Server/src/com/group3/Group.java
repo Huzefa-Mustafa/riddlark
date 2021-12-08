@@ -1,5 +1,6 @@
 package com.group3;
 
+import com.group3.models.Response;
 import com.group3.models.User;
 
 import java.util.ArrayList;
@@ -8,15 +9,18 @@ public class Group {
     /**
      * The Group class creates group of participating players.
      * */
-    private String groupID;
+//    private static int idGen = 10000;
+    private static int groupID = 10000;
     private int numberOfGroups;
     private ArrayList<User> players = new ArrayList<>();
-
-    Group(){}
+    Response response = new Response();
+    Group(){
+        groupID++;
+    }
     /**
      * @return the current group id.
      * */
-    public String getGroupID(){ return this.groupID; }
+    public int getGroupID(){ return this.groupID; }
     /**
      * @param user The user object to be added in the list of players.
      * */
@@ -40,4 +44,12 @@ public class Group {
      * remove all players from the list of players.
      * */
     public void removeAllPlayers() { this.players.removeAll(this.players); }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "ID = " + this.getGroupID() +
+                ",No. of players=" + this.getTotalPlayers() +
+                '}';
+    }
 }
