@@ -67,7 +67,7 @@ public class SaveData {
             return this.userList;
         }
     }
-    public ArrayList<Riddle> loadRiddlesData(){
+    public void loadRiddlesData(){
         Gson gson = new Gson();
         BufferedReader bufferedReader = null;
         try {

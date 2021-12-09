@@ -9,13 +9,14 @@ public class Group {
     /**
      * The Group class creates group of participating players.
      * */
-//    private static int idGen = 10000;
     private static int groupID = 10000;
     private int numberOfGroups;
     private ArrayList<User> players = new ArrayList<>();
-    Response response = new Response();
+    private Boolean isPlaying;
+
     Group(){
         groupID++;
+        this.isPlaying = Boolean.FALSE;
     }
     /**
      * @return the current group id.
@@ -36,6 +37,14 @@ public class Group {
      * @return true or false base on result.
      * */
     public boolean isPlayer(User user) { return this.players.contains(user); }
+    /**
+     * @param isPlaying sets the status of group playing or not.
+     * */
+    public void setIsPlayingState(boolean isPlaying) { this.isPlaying = isPlaying; }
+    /**
+     * @return the status of the group if playing or not.
+     * */
+    public boolean getIsPlayingState() { return this.isPlaying; }
     /**
      * @param user the user object to be removed from the list of players.
      * */
