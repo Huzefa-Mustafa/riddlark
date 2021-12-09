@@ -19,6 +19,8 @@ public class ServerSocketManager implements Runnable {
     static ObjectInputStream ois;
     static Request request;
     static Response response = new Response();
+    static User currentUser = new User();
+    static String UserName;
     ServerSocketManager(Socket s) {
         this.connection = s;
     }
@@ -48,7 +50,7 @@ public class ServerSocketManager implements Runnable {
             oos.close();
             connection.close();
 
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
     }

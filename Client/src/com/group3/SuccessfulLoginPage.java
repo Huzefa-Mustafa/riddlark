@@ -1,10 +1,12 @@
 package com.group3;
 
+import java.io.IOException;
+
 import static com.group3.WelcomePage.*;
 
 public class SuccessfulLoginPage {
 
-    static void SuccessfulLoginPage() {
+    static void SuccessfulLoginPage() throws IOException {
 
         System.out.println("\n\n\t\t\t*********** Welcome " + currentUser.getName() + " ************");
 

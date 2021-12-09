@@ -10,7 +10,6 @@ class Login {
     static synchronized void login() {
 
         int status = 3;
-        User currentUser = new User();
         for (User u : usersList) {
             if (u.getEmail().equals(request.getUser().getEmail())) {
                 if (u.getPassword().equals(request.getUser().getPassword())) {
