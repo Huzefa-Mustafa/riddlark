@@ -18,16 +18,19 @@ public class  JoinGame {
         BufferedReader reader = new BufferedReader(new InputStreamReader(serverIn));
 
         String msg;
+/*
         do {
             System.out.println(reader.readLine());
             msg = scanner.nextLine();
             outputStream.write(msg.getBytes());
             outputStream.flush();
         } while (!"quit".equalsIgnoreCase(msg));
+*/
 
-/*        while (true) {
+        while (true) {
             System.out.println(reader.readLine());
-        }*/
+
+        }
     }
 
     }

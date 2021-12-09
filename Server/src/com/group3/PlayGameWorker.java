@@ -28,13 +28,13 @@ public class PlayGameWorker implements Runnable {
         outputStream.write(("Hi There: ").getBytes());
         outputStream.write(("Time is now " + new Date() + "\n").getBytes());
         String line ;
-        do {
+/*        do {
             line = reader.readLine();
             System.out.println("From Client: " + line);
             String msg = "You typed :" + line + "\n";
             outputStream.write(msg.getBytes());
             outputStream.flush();
-        }while(!"quit".equalsIgnoreCase(line));
+        }while(!"quit".equalsIgnoreCase(line));*/
 
        /* while ((line = reader.readLine())) {
             if ("quit".equalsIgnoreCase(line)) {
@@ -46,10 +46,10 @@ public class PlayGameWorker implements Runnable {
 
 
 
-/*        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             outputStream.write(("Time is now " + new Date() + "\n").getBytes());
             Thread.sleep(1000);
-        }*/
+        }
     }
 
     public void handleClientSocket1() throws IOException, InterruptedException {
