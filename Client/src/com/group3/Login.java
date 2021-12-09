@@ -11,8 +11,8 @@ class Login {
     static void Login() throws IOException {
 
             do {
-                System.out.print("\n\tEnter your email address : ");
-                user.setEmail(scanner.nextLine());
+                System.out.print("\n\tEnter your User name : ");
+                user.setName(scanner.nextLine());
                 System.out.print("\tEnter your password : ");
                 user.setPassword(scanner.nextLine());
 
@@ -28,7 +28,7 @@ class Login {
                 } else if (response.getErrorCode() == 2) {
                     System.out.println("\n\t********* log in failed ( Password incorrect ) **********");
                 } else if (response.getErrorCode() == 3) {
-                    System.out.println("\n\t********* log in failed ( email not found ) **********");
+                    System.out.println("\n\t********* log in failed ( user name not found ) **********");
                     break;
                 } else if (response.getErrorCode() == 4) {
                     System.out.println("\n\t**************** No registered user ****************");

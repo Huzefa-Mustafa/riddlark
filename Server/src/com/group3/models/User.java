@@ -3,25 +3,25 @@ package com.group3.models;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    String email;
     String name;
     String password;
+    boolean isReady;
 
     public User() {
     }
 
-    public User(String email, String name, String password) {
-        this.email = email;
+    public User( String name, String password) {
         this.name = name;
         this.password = password;
+        this.isReady = false;
     }
 
-    public String getEmail() {
-        return this.email;
+    public boolean isReady() {
+        return isReady;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setReady(boolean ready) {
+        isReady = ready;
     }
 
     public String getName() {
@@ -41,7 +41,6 @@ public class User implements Serializable {
     }
 
     public void display(){
-        System.out.println("\t\temail :" + email);
         System.out.println("\t\tname :" + name);
         System.out.println("\t\tpass :" + password);
     }

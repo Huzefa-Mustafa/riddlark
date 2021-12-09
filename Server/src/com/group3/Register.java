@@ -10,6 +10,8 @@ import static com.group3.Server.usersList;
 import static com.group3.Server.saveData;
 
 class Register {
+
+
     public synchronized static void register() {
 
         User userDetails = request.getUser();
@@ -33,8 +35,10 @@ class Register {
                     System.out.println("\n************** new user ****************");
                     userDetails .display();
                     System.out.println("****************************************\n");
-                } else {
+                } else if (!iter.hasNext()) {
                     response = new Response(1);
+                    break;
+
                 }
             }
         }
