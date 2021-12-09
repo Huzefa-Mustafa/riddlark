@@ -3,9 +3,7 @@ package com.group3;
 import com.group3.models.Request;
 import com.group3.models.Response;
 
-import java.io.DataInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientSocketManager{
@@ -15,6 +13,8 @@ public class ClientSocketManager{
     static ObjectOutputStream oos;
     static Request request = new Request();
     static Response response = new Response();
+    static Socket connection;
+    private InputStream serverIn;
 
 
     public ClientSocketManager(Request request, int port) {
@@ -26,13 +26,12 @@ public class ClientSocketManager{
 
 
         try {
-            Socket connection = new Socket("localhost", port);
+            connection = new Socket("localhost", port);
             oos = new ObjectOutputStream(connection.getOutputStream());
             ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
 
             oos.writeUnshared(request);
             response = (Response) ois.readUnshared();
-
             oos.close();
             ois.close();
 
@@ -41,5 +40,24 @@ public class ClientSocketManager{
         }
 
         return response;
+    }
+
+    public Response sendRequest2() {
+        try {
+            connection = new Socket("localhost", port);
+            oos = new ObjectOutputStream(connection.getOutputStream());
+            oos.writeUnshared(request);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    static void playerGameWorker() throws IOException {
+
+
+
     }
 }

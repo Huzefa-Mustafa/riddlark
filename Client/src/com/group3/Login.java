@@ -3,10 +3,12 @@ package com.group3;
 import com.group3.models.Request;
 import com.group3.models.Response;
 
+import java.io.IOException;
+
 import static com.group3.WelcomePage.*;
 
 class Login {
-    static void Login() {
+    static void Login() throws IOException {
 
             do {
                 System.out.print("\n\tEnter your email address : ");

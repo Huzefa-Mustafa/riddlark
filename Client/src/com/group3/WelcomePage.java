@@ -2,6 +2,7 @@ package com.group3;
 
 import com.group3.models.User;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -17,7 +18,7 @@ public class WelcomePage  {
 
     }
 
-    public void mainMenu() {
+    public void mainMenu() throws IOException {
 
         System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
 

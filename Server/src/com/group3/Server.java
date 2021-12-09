@@ -31,6 +31,7 @@ public class Server {
                 System.out.println("wait for connections");
                 this.connection = server.accept(); // Wait and create new connection if a client request arrives
                 ServerSocketManager serverTask = new ServerSocketManager(this.connection); // create a new socket task
+
                 serverTask.run(); // Run Task
                 /***
                  /* Close socket */
