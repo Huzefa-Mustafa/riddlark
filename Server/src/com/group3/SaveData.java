@@ -67,7 +67,23 @@ public class SaveData {
             return this.userList;
         }
     }
+    public ArrayList<Riddle> loadRiddlesData(){
+        Gson gson = new Gson();
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader("riddles.json"));
+            Riddle[] riddleData = gson.fromJson(bufferedReader, Riddle[].class);
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 //    public ArrayList readDataFromJson(String filePath) {
 //        try {
 //            return readFile(filePath);
