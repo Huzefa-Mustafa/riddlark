@@ -12,14 +12,15 @@ import static com.group3.Server.saveData;
 class Register {
 
 
-    public synchronized static void register(User userDetails) {
+    public synchronized static void register() {
 
-//        User userDetails = request.getUser();
-        System.out.println("Has user: " + usersList.contains(userDetails));
+        User userDetails = request.getUser();
+        System.out.println("Username : " + userDetails.getName());
 
         if (usersList.isEmpty()) {
 
             usersList.add(userDetails);
+            response = new Response(0);
             saveData.saveUserData(usersList);
             System.out.println("\n************** new user ****************");
             userDetails.display();
@@ -37,7 +38,7 @@ class Register {
             User user = iter.next();
             if (!user.getName().equals(clientUserDetails.getName())) {
                 response = new Response(0);
-                usersList.add(user);
+                usersList.add(clientUserDetails);
                 saveData.saveUserData(usersList);
                 System.out.println("\n************** new user ****************");
                 clientUserDetails.display();

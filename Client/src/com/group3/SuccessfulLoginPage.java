@@ -15,7 +15,7 @@ public class SuccessfulLoginPage {
             System.out.println("\t│            MENU             │");
             System.out.println("\t│–––––––––––––––––––––––––––––│");
             System.out.println("\t│   3. Play Game              │");
-            System.out.println("\t│   4. Logout                   │");
+            System.out.println("\t│   4. Logout                 │");
             System.out.println("\t│_____________________________│");
             System.out.println("\n  please enter your choice");
             System.out.print("  Your choice : ");

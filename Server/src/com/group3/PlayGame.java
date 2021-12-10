@@ -27,24 +27,20 @@ public class PlayGame {
     }*/
     static void playGame(User user) throws IOException, InterruptedException {
 //        setUserName();
-        System.out.println(request.getUserReply());
-
-        if(request.getUserReply().equals("y")) {
-            System.out.println(user.getName() + "Reply >>" + request.getUserReply());
-//            runMsgThread();
-        } else {
+//        System.out.println(request.getUserReply());
+//        Request request = new Request();
+//        if(request.getUserReply().equals("y")) {
+//            System.out.println(user.getName() + "Reply >>" + request.getUserReply());
+////            runMsgThread();
+//        } else {
             if (groupList.isEmpty()){
                 Group group = new Group();
                 group.addPlayer(user);
                 groupList.add(group);
-//            PlayGameWorker worker = new PlayGameWorker(groupList);
                 System.out.println("Empty GroupList, New Group Created : " + group.toString());
                 response = new Response();
-
                 response.setMessage( user.getName() + " added to Group with ID: " + group.getGroupID() );
 
-//            GroupSocketTask groupTask = new GroupSocketTask(connection, group.toString()); // create a new group socket task
-//            groupTask.run(); // Run Task
             } else {
                 Iterator<Group> iter = groupList.iterator();
                 try {
@@ -71,7 +67,7 @@ public class PlayGame {
                     e.printStackTrace();
                 }
             }
-        }
+//        }
 
 
     }

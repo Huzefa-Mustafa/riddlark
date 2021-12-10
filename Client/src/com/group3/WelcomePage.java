@@ -27,7 +27,7 @@ public class WelcomePage  {
             System.out.println("\t│            MENU             │");
             System.out.println("\t│–––––––––––––––––––––––––––––│");
             System.out.println("\t│        PLEASE ENTER         │");
-            System.out.println("\t│    **** 0: About    ****   │");
+            System.out.println("\t│    **** 0: About    ****    │");
             System.out.println("\t│    **** 1: Login    ****    │");
             System.out.println("\t│    **** 2: Register ****    │");
 //            System.out.println("\t│   3. Host a room            │");
