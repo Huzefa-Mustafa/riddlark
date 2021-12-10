@@ -18,7 +18,6 @@ public class PlayGame {
     static ArrayList<Group> groupList = new ArrayList<>();
     static Socket connection;
     static User userName;
-    static Request request;
     /**
      * @param user to be willing to participate in the game
      * */
@@ -28,8 +27,8 @@ public class PlayGame {
     static void playGame(User user) throws IOException, InterruptedException {
 //        setUserName();
    //     System.out.println(request.getUserReply());
-        //Request request = new Request();
-        if(request.getUserReply().equalsIgnoreCase("y")) {
+       // Request request = new Request();
+        if((request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("y"))) {
             System.out.println(user.getName() + "Reply >>" + request.getUserReply());
 //            runMsgThread();
         } else {
