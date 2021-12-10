@@ -27,9 +27,9 @@ public class PlayGame {
     }*/
     static void playGame(User user) throws IOException, InterruptedException {
 //        setUserName();
-        System.out.println(request.getUserReply());
-        Request request = new Request();
-        if(request.getUserReply().equals("y")) {
+   //     System.out.println(request.getUserReply());
+        //Request request = new Request();
+        if(request.getUserReply().equalsIgnoreCase("y")) {
             System.out.println(user.getName() + "Reply >>" + request.getUserReply());
 //            runMsgThread();
         } else {
