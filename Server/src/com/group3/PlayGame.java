@@ -27,12 +27,12 @@ public class PlayGame {
     }*/
     static void playGame(User user) throws IOException, InterruptedException {
 //        setUserName();
-//        System.out.println(request.getUserReply());
-//        Request request = new Request();
-//        if(request.getUserReply().equals("y")) {
-//            System.out.println(user.getName() + "Reply >>" + request.getUserReply());
-////            runMsgThread();
-//        } else {
+        System.out.println(request.getUserReply());
+        Request request = new Request();
+        if(request.getUserReply().equals("y")) {
+            System.out.println(user.getName() + "Reply >>" + request.getUserReply());
+//            runMsgThread();
+        } else {
             if (groupList.isEmpty()){
                 Group group = new Group();
                 group.addPlayer(user);
@@ -67,7 +67,7 @@ public class PlayGame {
                     e.printStackTrace();
                 }
             }
-//        }
+       }
 
 
     }
@@ -79,8 +79,5 @@ public class PlayGame {
 //            Thread.sleep(1000);
 //        }
 //    }
-    private static void setUserName() {
-        userName = response.getUser();
-        currentUser.setName(userName.getName());
-    }
+
 }

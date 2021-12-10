@@ -18,34 +18,27 @@ class Register {
         System.out.println("Username : " + userDetails.getName());
 
         if (usersList.isEmpty()) {
-
-            usersList.add(userDetails);
-            response = new Response(0);
-            saveData.saveUserData(usersList);
-            System.out.println("\n************** new user ****************");
-            userDetails.display();
-            System.out.println("****************************************\n");
+            addUser(userDetails);
+        } else if (userExist1(userDetails)) {
+            response = new Response(1);
         } else {
-            if (!userExist(userDetails)) {
-                response = new Response(1);
-            };
+            addUser(userDetails);
         }
     }
-
-    private static synchronized Boolean userExist(User clientUserDetails) {
+    private static void addUser(User userDetails) {
+        usersList.add(userDetails);
+        response = new Response(0);
+        saveData.saveUserData(usersList);
+        System.out.println("\n************** new user ****************");
+        userDetails.display();
+        System.out.println("****************************************\n");
+    }
+    private static boolean userExist1(User clientUserDetails) {
         Iterator<User> iter = usersList.iterator();
         while(iter.hasNext()) {
             User user = iter.next();
-            if (!user.getName().equals(clientUserDetails.getName())) {
-                response = new Response(0);
-                usersList.add(clientUserDetails);
-                saveData.saveUserData(usersList);
-                System.out.println("\n************** new user ****************");
-                clientUserDetails.display();
-                System.out.println("****************************************\n");
+            if (user.getName().equals(clientUserDetails.getName())) {
                 return true;
-            } else if(!iter.hasNext()) {
-                return false;
             }
         }
         return false;
