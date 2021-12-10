@@ -31,6 +31,7 @@ public class ClientSocketManager{
             ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
 
             oos.writeUnshared(request);
+
             response = (Response) ois.readUnshared();
             oos.close();
             ois.close();

@@ -31,3 +31,10 @@ bin/
 .out
 out/
 /.idea/inspectionProfiles/Project_Default.xml
+/out/production/Client/com/group3/ClientSocketManager.class
+/out/production/Client/com/group3/login.class
+/out/production/Client/com/group3/models/User.class
+/out/production/Client/com/group3/register.class
+/out/production/Server/com/group3/login.class
+/out/production/Server/com/group3/models/User.class
+/out/production/Server/com/group3/register.class

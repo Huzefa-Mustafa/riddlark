@@ -11,7 +11,7 @@ class Login {
 
         int status = 3;
         for (User u : usersList) {
-            if (u.getEmail().equals(request.getUser().getEmail())) {
+            if (u.getName().equals(request.getUser().getName())) {
                 if (u.getPassword().equals(request.getUser().getPassword())) {
                     status = 1;
                     currentUser = u;
