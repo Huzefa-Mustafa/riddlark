@@ -34,9 +34,7 @@ class Register {
         System.out.println("****************************************\n");
     }
     private static boolean userExist1(User clientUserDetails) {
-        Iterator<User> iter = usersList.iterator();
-        while(iter.hasNext()) {
-            User user = iter.next();
+        for (User user : usersList) {
             if (user.getName().equals(clientUserDetails.getName())) {
                 return true;
             }
