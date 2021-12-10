@@ -4,23 +4,26 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
     private static final long serialVersionUID = 6529685098267757690L;
-    int type;   // MENU CODE TYPE
+    private int selectedOption;   // MENU CODE TYPE
+    private String userReply;
     User user;
 
     public Request(){}
 
-    public Request(int type, User user) {
-        this.type = type;
+    public Request(int selectedOption, User user) {
+        this.selectedOption = selectedOption;
+        this.user = user;
+    }
+    public Request(int selectedOption,String userReply, User user) {
+        this.selectedOption = selectedOption;
+        this.userReply = userReply;
         this.user = user;
     }
 
+    public int getSelectedOption() { return this.selectedOption; }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
+    public void setSelectedOption(int selectedOption) {
+        this.selectedOption = selectedOption;
     }
 
     public User getUser() {
@@ -30,5 +33,9 @@ public class Request implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getUserReply() { return this.userReply; }
+
+    public void setUserReply(String userReply) { this.userReply = userReply; }
 
 }

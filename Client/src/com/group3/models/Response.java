@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Response implements Serializable {
     int errorCode;
     User user;
-
+    String message;
     public Response() { }
 
     public Response(int errorCode) {
@@ -29,5 +29,9 @@ public class Response implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    public String getMessage() { return this.message; }
 
 }
