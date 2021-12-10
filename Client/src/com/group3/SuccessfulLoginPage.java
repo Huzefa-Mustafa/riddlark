@@ -6,7 +6,7 @@ import static com.group3.WelcomePage.*;
 
 public class SuccessfulLoginPage {
 
-    static void SuccessfulLoginPage() throws IOException {
+    static void SuccessfulLoginPage() throws IOException, ClassNotFoundException {
 
         System.out.println("\n\n\t\t\t*********** Welcome " + currentUser.getName() + " ************");
 

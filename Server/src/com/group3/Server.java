@@ -5,6 +5,7 @@ import com.group3.models.User;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,8 +18,12 @@ public class Server {
 
     static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
+    private ArrayList<ServerSocketManager> workerList = new ArrayList<>();
     Server(){
         this.usersList = saveData.loadUserData();
+    }
+    public List<ServerSocketManager> getWorkerList() {
+        return workerList;
     }
 
     public synchronized void createServer(){
@@ -30,7 +35,8 @@ public class Server {
                  *  Connection with client */
                 System.out.println("wait for connections");
                 this.connection = server.accept(); // Wait and create new connection if a client request arrives
-                ServerSocketManager serverTask = new ServerSocketManager(this.connection); // create a new socket task
+                ServerSocketManager serverTask = new ServerSocketManager(this.connection, this); // create a new socket task
+                workerList.add(serverTask);
 
                 serverTask.run(); // Run Task
                 /***
@@ -54,7 +60,7 @@ public class Server {
 
                 System.out.println("wait for connections");
                 this.connection = this.server.accept();
-                executorService.execute(new ServerSocketManager(this.connection));
+                executorService.execute(new ServerSocketManager(this.connection,this));
             }
         } catch (Exception e){
             e.printStackTrace();

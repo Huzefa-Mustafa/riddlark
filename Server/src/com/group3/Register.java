@@ -19,7 +19,7 @@ class Register {
 
         if (usersList.isEmpty()) {
             addUser(userDetails);
-        } else if (userExist1(userDetails)) {
+        } else if (userExist(userDetails)) {
             response = new Response(1);
         } else {
             addUser(userDetails);
@@ -33,7 +33,7 @@ class Register {
         userDetails.display();
         System.out.println("****************************************\n");
     }
-    private static boolean userExist1(User clientUserDetails) {
+    private static boolean userExist(User clientUserDetails) {
         for (User user : usersList) {
             if (user.getName().equals(clientUserDetails.getName())) {
                 return true;

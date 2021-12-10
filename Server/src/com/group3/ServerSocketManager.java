@@ -21,7 +21,9 @@ public class ServerSocketManager implements Runnable {
     static Response response = new Response();
     static User currentUser = new User();
     static String UserName;
-    ServerSocketManager(Socket s) {
+    static Server server;
+    ServerSocketManager(Socket s,Server server) {
+        this.server = server;
         this.connection = s;
     }
     @Override
