@@ -4,10 +4,7 @@ import com.group3.models.Request;
 import com.group3.models.Response;
 import com.group3.models.User;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,8 @@ public class ServerSocketManager implements Runnable {
     static User currentUser = new User();
     static String UserName;
     static Server server;
+    static BufferedWriter sockwriter;
+    static BufferedReader socekReader;
     ServerSocketManager(Socket s,Server server) {
         this.server = server;
         this.connection = s;
@@ -52,7 +51,7 @@ public class ServerSocketManager implements Runnable {
             oos.close();
             connection.close();
 
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

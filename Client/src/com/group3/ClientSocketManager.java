@@ -14,7 +14,9 @@ public class ClientSocketManager{
     static Request request = new Request();
     static Response response = new Response();
     static Socket connection;
-    private InputStream serverIn;
+    static BufferedWriter sockWriter;
+    static BufferedReader sockReader;
+    static PrintWriter printWriter;
 
 
     public ClientSocketManager(Request request, int port) {
@@ -44,15 +46,32 @@ public class ClientSocketManager{
     }
 
     public Response sendRequest2() {
-        try {
-            connection = new Socket("localhost", port);
-            oos = new ObjectOutputStream(connection.getOutputStream());
-            oos.writeUnshared(request);
 
+        try {
+            boolean keepRunnung = true;
+            while (keepRunnung) {
+
+                connection = new Socket("localhost", port);
+                oos = new ObjectOutputStream(connection.getOutputStream());
+                ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
+
+                oos.writeUnshared(request);
+
+                response = (Response) ois.readUnshared();
+                System.out.println(response.getMessage());
+                if (response.getMessage().equalsIgnoreCase("break")) {
+                    System.out.println("break");
+                    break;
+                }
+                return response;
+            }
+            oos.close();
+            ois.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return response;
     }
 

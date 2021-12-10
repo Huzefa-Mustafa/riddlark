@@ -18,7 +18,7 @@ public class WelcomePage  {
 
     }
 
-    public void mainMenu() throws IOException {
+    public void mainMenu() throws IOException, ClassNotFoundException {
 
         System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
 
