@@ -33,7 +33,7 @@ public class ServerSocketManager implements Runnable {
 
 
             request = (Request) ois.readObject();
-            switch (request.getType()) {
+            switch (request.getSelectedOption()) {
                 case 1 -> Login.login();
                 case 2 -> Register.register();
                 case 3 -> PlayGame.playGame(request.getUser());
