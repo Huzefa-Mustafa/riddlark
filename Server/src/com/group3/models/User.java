@@ -5,11 +5,16 @@ import java.io.Serializable;
 public class User implements Serializable {
     String name;
     String password;
+    User user;
     boolean isReady;
-
+    String groupID;
+    Boolean isLoggedIn;
     public User() {
     }
-
+    public User(String groupID, User user) {
+        this.groupID = groupID;
+        this.user = user;
+    }
     public User( String name, String password) {
         this.name = name;
         this.password = password;
@@ -40,9 +45,34 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getGroupID() {
+        return this.groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
+    public Boolean getIsLoggedInState() {
+        return this.isLoggedIn;
+    }
+
+    public void setIsLoggedIn(Boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+
     public void display(){
         System.out.println("\t\tname :" + name);
         System.out.println("\t\tpass :" + password);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", isReady=" + isReady +
+                ", groupID='" + groupID + '\'' +
+                ", isLoggedIn=" + isLoggedIn +
+                '}';
+    }
 }
