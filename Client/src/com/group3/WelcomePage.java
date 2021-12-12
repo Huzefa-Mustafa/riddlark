@@ -14,11 +14,8 @@ public class WelcomePage  {
     static User currentUser;
     static int port = 1234, choice;
 
-    WelcomePage() {
 
-    }
-
-    public void mainMenu() throws IOException, ClassNotFoundException {
+    public WelcomePage() throws IOException, ClassNotFoundException {
 
         System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
 

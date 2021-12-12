@@ -2,6 +2,7 @@ package com.group3;
 
 import com.group3.models.User;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,37 +11,56 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class Server {
+public class Server extends Thread {
     static ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     static ServerSocket server;
-    static Socket connection;
+//    static Socket connection;
+    private final int serverPort;
 
     static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
     private ArrayList<ServerSocketManager> workerList = new ArrayList<>();
-    Server(){
+    Server(int serverPort){
         this.usersList = saveData.loadUserData();
+        this.serverPort =serverPort;
     }
     public List<ServerSocketManager> getWorkerList() {
         return workerList;
     }
 
-    public synchronized void createServer(){
+    @Override
+    public void run() {
+        try {
+            ServerSocket serverSocket = new ServerSocket(serverPort);
+            while (true) {
+                System.out.println("About to accept client connection...");
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Accepted connection from " + clientSocket);
+                ServerSocketManager serverTask = new ServerSocketManager(this, clientSocket     );
+                workerList.add(serverTask);
+                serverTask.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+  /*  public synchronized void createServer(){
         try {
             int port = 1234;
             this.server = new ServerSocket(port);
             while (true){
-                /***
-                 *  Connection with client */
+                *//***
+                 *  Connection with client *//*
                 System.out.println("wait for connections");
                 this.connection = server.accept(); // Wait and create new connection if a client request arrives
                 ServerSocketManager serverTask = new ServerSocketManager(this.connection, this); // create a new socket task
                 workerList.add(serverTask);
 
                 serverTask.run(); // Run Task
-                /***
-                 /* Close socket */
+                *//***
+                 /* Close socket *//*
                 this.connection.close(); // close Socket connection
             }
         } catch (Exception e) {
@@ -49,8 +69,8 @@ public class Server {
             System.out.println(e.toString());
             e.printStackTrace();
         }
-    }
-    public void createServer2(){
+    }*/
+   /* public void createServer2(){
         try {
 //            ServerSocket serverSocket = new ServerSocket(1234);
             int port = 1234;
@@ -65,7 +85,7 @@ public class Server {
         } catch (Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 }
 
 

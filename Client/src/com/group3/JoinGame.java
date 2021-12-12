@@ -35,8 +35,12 @@ public class  JoinGame {
                 Request request = new Request(choice, clientReply, user); //Create a Request
                 System.out.println("Client reply: " + request.getUserReply());
 
+                StreamManager client = new StreamManager(new Request(choice, user));
+                Response response = client.sendRequestLoop();
+
+
                 ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
-                clientSocket.sendRequest2(); //Run Task
+                clientSocket.run(); //Run Task
                  // print response from server
 
 

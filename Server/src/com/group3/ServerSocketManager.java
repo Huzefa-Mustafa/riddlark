@@ -9,9 +9,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerSocketManager implements Runnable {
+public class ServerSocketManager  extends Thread {
 
-    static Socket connection;
+    static Socket clientSocket;
     static ObjectOutputStream oos;
     static ObjectInputStream ois;
     static Request request;
@@ -21,17 +21,68 @@ public class ServerSocketManager implements Runnable {
     static Server server;
     static BufferedWriter sockwriter;
     static BufferedReader socekReader;
-    ServerSocketManager(Socket s,Server server) {
+    ServerSocketManager(Server server,Socket clientSocket) {
         this.server = server;
-        this.connection = s;
+        this.clientSocket = clientSocket;
     }
     @Override
     public void run() {
         try {
 
-            oos = new ObjectOutputStream(connection.getOutputStream());
-            ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
+            handleClientSocket();
+/*
+            boolean keepRunning = true;
+            while (keepRunning) {
 
+                oos = new ObjectOutputStream(connection.getOutputStream());
+                ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
+
+
+                request = (Request) ois.readObject();
+                switch (request.getSelectedOption()) {
+                    case 1 -> Login.login();
+                    case 2 -> Register.register();
+                    case 3 -> PlayGame.playGame(request.getUser());
+                    case 4 -> {*/
+/*JoinRoom.joinRoom();*//*
+}
+                    case 5 -> {*/
+/*Result.result();*//*
+}
+                    case 6 -> {
+                        System.out.println("exiting");
+                        break;
+                    }
+                    case 7 -> {*/
+/*PlayGame.playGame();*//*
+}
+                    case 8 -> {*/
+/*CheckIfRecord.checkIfRecord();*//*
+}
+                    default -> System.out.println("WRONG CHOICE");
+                }
+                oos.writeUnshared(response);
+                oos.flush();
+
+            }
+            ois.close();
+            oos.close();
+            connection.close();
+*/
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleClientSocket() throws IOException, ClassNotFoundException {
+
+        boolean keepRunning = true;
+
+        ois = new ObjectInputStream(new DataInputStream(clientSocket.getInputStream()));
+        oos = new ObjectOutputStream(clientSocket.getOutputStream());
+
+        while (keepRunning) {
 
             request = (Request) ois.readObject();
             switch (request.getSelectedOption()) {
@@ -40,19 +91,19 @@ public class ServerSocketManager implements Runnable {
                 case 3 -> PlayGame.playGame(request.getUser());
                 case 4 -> {/*JoinRoom.joinRoom();*/}
                 case 5 -> {/*Result.result();*/}
-                case 6 -> System.out.println("exiting");
+                case 6 -> {
+                    System.out.println("exiting");
+                    break;
+                }
                 case 7 -> {/*PlayGame.playGame();*/}
                 case 8 -> {/*CheckIfRecord.checkIfRecord();*/}
                 default -> System.out.println("WRONG CHOICE");
             }
             oos.writeUnshared(response);
-
-            ois.close();
+          /*  ois.close();
             oos.close();
-            connection.close();
+            clientSocket.close();*/
 
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

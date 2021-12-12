@@ -5,9 +5,14 @@ import com.group3.models.Response;
 
 import java.io.IOException;
 
+import static com.group3.App.serverIn;
+import static com.group3.App.serverOut;
+import static com.group3.ClientSocketManager.*;
 import static com.group3.WelcomePage.*;
 
 class Login {
+
+
     static void Login() throws IOException, ClassNotFoundException {
 
             do {
@@ -15,9 +20,18 @@ class Login {
                 user.setName(scanner.nextLine());
                 System.out.print("\tEnter your password : ");
                 user.setPassword(scanner.nextLine());
-
-                ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
+                StreamManager client = new StreamManager(new Request(choice, user));
                 Response response = client.sendRequest();
+
+
+                /*ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
+                Response response = client.sendRequest3();*/
+
+
+/*
+                ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
+                Response response = client.sendRequest();*/
+
 
                 if (response.getErrorCode() == 0) {
                     System.out.println("\n\n\t**************** logged in successfully ****************");

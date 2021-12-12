@@ -32,9 +32,6 @@ public class PlayGame {
 //        setUserName();
    //     System.out.println(request.getUserReply());
        // Request request = new Request();
-        boolean keepRunning = true;
-        while (keepRunning) {
-
             if ((request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("y")) && !groupList.isEmpty()) {
 
                 List<User> players = group.getPlayers();
@@ -44,7 +41,6 @@ public class PlayGame {
                         System.out.println(player.getName() + " user name");
                         System.out.println(worker + " workerList name");
                         worker.response.setMessage(player.getName() + " Added in Group");
-                        oos.writeUnshared(response);
                     }
                 }
                 /*response.setMessage("break")*/
@@ -57,7 +53,6 @@ public class PlayGame {
                 System.out.println("Empty GroupList, New Group Created : " + group.toString());
                 response = new Response();
                 response.setMessage(user.getName() + " added to Group with ID: " + group.getGroupID());
-                oos.writeUnshared(response);
 
             } else {
                 Iterator<Group> iter = groupList.iterator();
@@ -69,7 +64,6 @@ public class PlayGame {
                             System.out.println("Previous Group : " + prevGroup.toString());
                             response = new Response();
                             response.setMessage(user.getName() + " added to Group with ID: " + prevGroup.getGroupID());
-                            oos.writeUnshared(response);
                         } else if (!iter.hasNext()) {
                             Group newGroup = new Group();
                             newGroup.addPlayer(user);
@@ -77,7 +71,6 @@ public class PlayGame {
                             System.out.println("New Group Created : " + newGroup.toString());
                             response = new Response();
                             response.setMessage(user.getName() + " added to Group with ID: " + newGroup.getGroupID());
-                            oos.writeUnshared(response);
                             break;
                         }
                     }
@@ -86,13 +79,6 @@ public class PlayGame {
                     System.out.println("Error in PlayGame class. \nMessage: " + e.getMessage() + "\n Stacktrace: " + e.getLocalizedMessage());
                     e.printStackTrace();
                 }
-            }
-
-            try {
-                request = (Request) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
         }
        }
 

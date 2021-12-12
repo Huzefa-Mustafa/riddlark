@@ -1,3 +1,4 @@
+/*
 package com.group3;
 
 
@@ -28,21 +29,25 @@ public class PlayGameWorker implements Runnable {
         outputStream.write(("Hi There: ").getBytes());
         outputStream.write(("Time is now " + new Date() + "\n").getBytes());
         String line ;
+*/
 /*        do {
             line = reader.readLine();
             System.out.println("From Client: " + line);
             String msg = "You typed :" + line + "\n";
             outputStream.write(msg.getBytes());
             outputStream.flush();
-        }while(!"quit".equalsIgnoreCase(line));*/
+        }while(!"quit".equalsIgnoreCase(line));*//*
 
-       /* while ((line = reader.readLine())) {
+
+       */
+/* while ((line = reader.readLine())) {
             if ("quit".equalsIgnoreCase(line)) {
                 break;
             }
             String msg = "You typed :" + line + "\n";
             outputStream.write(msg.getBytes());
-        }*/
+        }*//*
+
 
 
 
@@ -80,3 +85,4 @@ public class PlayGameWorker implements Runnable {
 
     }
 }
+*/
