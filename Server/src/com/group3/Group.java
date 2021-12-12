@@ -4,6 +4,7 @@ import com.group3.models.Response;
 import com.group3.models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Group {
     /**
@@ -53,6 +54,10 @@ public class Group {
      * remove all players from the list of players.
      * */
     public void removeAllPlayers() { this.players.removeAll(this.players); }
+
+    public List<User> getPlayers() {
+        return players;
+    }
 
     @Override
     public String toString() {

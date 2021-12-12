@@ -8,7 +8,7 @@ import java.io.IOException;
 import static com.group3.WelcomePage.*;
 
 class Login {
-    static void Login() throws IOException {
+    static void Login() throws IOException, ClassNotFoundException {
 
             do {
                 System.out.print("\n\tEnter your User name : ");
