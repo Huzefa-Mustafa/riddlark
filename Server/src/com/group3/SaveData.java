@@ -2,13 +2,10 @@ package com.group3;
 
 import com.google.gson.Gson;
 import com.group3.models.User;
-//import com.group3.*;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import static com.group3.ServerSocketManager.*;
 public class SaveData {
     ArrayList<User> userList = new ArrayList<>();
     String[] fileNames = {"Users.txt"};
