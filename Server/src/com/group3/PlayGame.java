@@ -1,18 +1,12 @@
 package com.group3;
 
-import com.group3.models.Request;
 import com.group3.models.Response;
 import com.group3.models.User;
 
-import java.io.*;
-import java.net.Socket;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import static com.group3.ClientSocketManager.port;
-import static com.group3.Server.server;
-import static com.group3.Server.usersList;
 import static com.group3.ServerSocketManager.*;
 
 public class PlayGame {
@@ -32,25 +26,31 @@ public class PlayGame {
 //        setUserName();
    //     System.out.println(request.getUserReply());
        // Request request = new Request();
-        boolean keepRunning = true;
-        while (keepRunning) {
 
-            if ((request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("y")) && !groupList.isEmpty()) {
+        if((request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("y"))) {
+            System.out.println("Client User : " + user.getName() + " Reply >>" + request.getUserReply());
+//            runMsgThread();
+        }
+//        boolean keepRunning = true;
+//        while (keepRunning) {
 
-                List<User> players = group.getPlayers();
-                List<ServerSocketManager> workerList = ServerSocketManager.server.getWorkerList();
-                for (ServerSocketManager worker : workerList) {
-                    for (User player : players) {
-                        System.out.println(player.getName() + " user name");
-                        System.out.println(worker + " workerList name");
-                        worker.response.setMessage(player.getName() + " Added in Group");
-                        oos.writeUnshared(response);
-                    }
-                }
-                /*response.setMessage("break")*/
-                ;
-                System.out.println(user.getName() + "Reply >>" + request.getUserReply());
-            } else if (groupList.isEmpty()) {
+//            if ((request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("y")) && !groupList.isEmpty()) {
+//
+//                List<User> players = group.getPlayers();
+//                List<ServerSocketManager> workerList = ServerSocketManager.server.getWorkerList();
+//                for (ServerSocketManager worker : workerList) {
+//                    for (User player : players) {
+//                        System.out.println(player.getName() + " user name");
+//                        System.out.println(worker + " workerList name");
+//                        worker.response.setMessage(player.getName() + " Added in Group");
+//                        oos.writeUnshared(response);
+//                    }
+//                }
+//                /*response.setMessage("break")*/
+//                ;
+//                System.out.println(user.getName() + "Reply >>" + request.getUserReply());
+//            }
+            else if (groupList.isEmpty()) {
                 group = new Group();
                 group.addPlayer(user);
                 groupList.add(group);
@@ -88,12 +88,21 @@ public class PlayGame {
                 }
             }
 
-            try {
-                request = (Request) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+//            try {
+//                request = (Request) ois.readObject();
+//                System.out.println("Request >> " + request);
+//            } catch (IOException | ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
        }
 
+
+    private static void runMsgThread(Group group) throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            Response response = new Response();
+            response.setMessage("You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.");
+            Thread.sleep(1000);
+        }
+    }
 }

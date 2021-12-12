@@ -3,24 +3,25 @@ package com.group3;
 import com.group3.models.Request;
 import com.group3.models.Response;
 
-import java.io.*;
-import java.net.Socket;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import static com.group3.ClientSocketManager.*;
-import static com.group3.ClientSocketManager.port;
-import static com.group3.WelcomePage.*;
+import static com.group3.WelcomePage.choice;
+import static com.group3.WelcomePage.user;
 
 public class  JoinGame {
 
     static ClientSocketManager clientSocketManager;
     static Response response;
     public static void joinGame() throws IOException, ClassNotFoundException {
-        /*ClientSocketManager clientSocketManager = new ClientSocketManager(new Request(choice, user), port);
+        ClientSocketManager clientSocketManager = new ClientSocketManager(new Request(choice, user), port);
         response = clientSocketManager.sendRequest();
 
-        System.out.println("Server Reply >> " + response.getMessage() );*/
+        System.out.println("Server Reply >> " + response.getMessage() );
 //
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -33,10 +34,10 @@ public class  JoinGame {
                 break;
             } else if ("y".equalsIgnoreCase(clientReply)) {
                 Request request = new Request(choice, clientReply, user); //Create a Request
-                System.out.println("Client reply: " + request.getUserReply());
+//                System.out.println("Client reply: " + request.getUserReply());
 
                 ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
-                clientSocket.sendRequest2(); //Run Task
+                clientSocket.sendRequest(); //Run Task
                  // print response from server
 
 
