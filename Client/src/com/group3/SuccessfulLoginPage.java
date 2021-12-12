@@ -1,7 +1,10 @@
 package com.group3;
 
+import com.group3.models.Request;
+
 import java.io.IOException;
 
+import static com.group3.ClientSocketManager.port;
 import static com.group3.WelcomePage.*;
 
 public class SuccessfulLoginPage {
@@ -33,6 +36,11 @@ public class SuccessfulLoginPage {
     }
 
     private static void logout() {
+        // User requesting logout
+        System.out.println("Requesting log out!");
+        Request request = new Request(choice, "logOut", user); //Create a Request
+        ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
+        clientSocket.sendRequest(); //Run Task
         currentUser = null;
         loggedIn = false;
     }

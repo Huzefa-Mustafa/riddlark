@@ -13,22 +13,33 @@ public class PlayGame {
     /**
      * The PlayGame Starts The Game Called **** RIDDLARK ****
      * */
-    static ArrayList<Group> groupList = new ArrayList<>();
+    private static ArrayList<Group> groupList = new ArrayList<>();
     static User userName;
     static Group group;
     /**
-     * @param user to be willing to participate in the game
+//     * @param user to be willing to participate in the game
      * */
 /*    public List<Group> getgroupList() {
         return groupList;
     }*/
-    static void playGame(User user) throws IOException {
+    static void playGame() throws IOException {
 //        setUserName();
    //     System.out.println(request.getUserReply());
        // Request request = new Request();
-
+        User user = request.getUser();
         if((request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("y"))) {
-            System.out.println("Client User : " + user.getName() + " Reply >>" + request.getUserReply());
+//            user = request.getUser();
+            String groupID = user.getGroupID() ;
+            System.out.println(
+                "Client User : " + user.getName() + "" +
+                "\nGroup ID : " +  groupID +
+                "\nReply >> " + request.getUserReply()
+            );
+            response = new Response();
+            response.setMessage(user.getName() + " belongs to group with ID : " + user.getGroupID());
+//            System.out.println("");
+//            Group group = getGroupById(groupID);
+
 //            runMsgThread();
         }
 //        boolean keepRunning = true;
@@ -54,9 +65,13 @@ public class PlayGame {
                 group = new Group();
                 group.addPlayer(user);
                 groupList.add(group);
-                System.out.println("Empty GroupList, New Group Created : " + group.toString());
+                System.out.println("Empty GroupList, New Group Created : " + group.getGroupID());
                 response = new Response();
-                response.setMessage(user.getName() + " added to Group with ID: " + group.getGroupID());
+                user.setGroupID(group.getGroupID());
+//                User nUser = new User(group.getGroupID(), user);
+                response.setUser(user);
+                request.setUser(user);
+                response.setMessage(user.getName() + " added to Group with ID: " + user.getGroupID());
                 oos.writeUnshared(response);
 
             } else {
@@ -104,5 +119,12 @@ public class PlayGame {
             response.setMessage("You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.");
             Thread.sleep(1000);
         }
+    }
+
+    private static Group getGroupById(String groupID){
+        for (Group group : groupList){
+            if (group.getGroupID() == groupID) { return group; }
+        }
+        return null;
     }
 }

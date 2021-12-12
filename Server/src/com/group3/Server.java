@@ -18,6 +18,7 @@ public class Server {
 
     static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
+    static ArrayList<User> loggedInUserList = new ArrayList<>();
     private ArrayList<ServerSocketManager> workerList = new ArrayList<>();
     Server(){
         this.usersList = saveData.loadUserData();

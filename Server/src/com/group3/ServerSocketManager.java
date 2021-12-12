@@ -6,8 +6,8 @@ import com.group3.models.User;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+
+import static com.group3.Server.loggedInUserList;
 
 public class ServerSocketManager implements Runnable {
 
@@ -37,8 +37,8 @@ public class ServerSocketManager implements Runnable {
             switch (request.getSelectedOption()) {
                 case 1 -> Login.login();
                 case 2 -> Register.register();
-                case 3 -> PlayGame.playGame(request.getUser());
-                case 4 -> {/*JoinRoom.joinRoom();*/}
+                case 3 -> PlayGame.playGame();
+                case 4 -> removeUserFromLoggedInList(request.getUser());
                 case 5 -> {/*Result.result();*/}
                 case 6 -> System.out.println("exiting");
                 case 7 -> {/*PlayGame.playGame();*/}
@@ -54,5 +54,12 @@ public class ServerSocketManager implements Runnable {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private static synchronized void removeUserFromLoggedInList(User user) {
+        loggedInUserList.removeIf(i -> i.getName().equals(user.getName()));
+        System.out.println(user.getName() + " Requesting log out! , No. of Logged In Users now " + loggedInUserList.size());
+
     }
 }

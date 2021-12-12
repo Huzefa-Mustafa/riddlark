@@ -8,7 +8,6 @@ public class User implements Serializable {
     User user;
     boolean isReady;
     String groupID;
-    Boolean isLoggedIn;
     public User() {
     }
     public User(String groupID, User user) {
@@ -53,14 +52,6 @@ public class User implements Serializable {
         this.groupID = groupID;
     }
 
-    public Boolean getIsLoggedInState() {
-        return this.isLoggedIn;
-    }
-
-    public void setIsLoggedIn(Boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
-    }
-
     public void display(){
         System.out.println("\t\tname :" + name);
         System.out.println("\t\tpass :" + password);
@@ -72,7 +63,6 @@ public class User implements Serializable {
                 "name='" + name + '\'' +
                 ", isReady=" + isReady +
                 ", groupID='" + groupID + '\'' +
-                ", isLoggedIn=" + isLoggedIn +
                 '}';
     }
 }

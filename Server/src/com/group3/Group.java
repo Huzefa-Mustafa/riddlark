@@ -1,6 +1,5 @@
 package com.group3;
 
-import com.group3.models.Response;
 import com.group3.models.User;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class Group {
     /**
      * @return the current group id.
      * */
-    public int getGroupID(){ return this.groupID; }
+    public String getGroupID(){ return String.valueOf(this.groupID); }
     /**
      * @param user The user object to be added in the list of players.
      * */

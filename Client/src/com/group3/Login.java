@@ -31,7 +31,10 @@ class Login {
                     System.out.println("\n\t********* log in failed ( user name not found ) **********");
                     break;
                 } else if (response.getErrorCode() == 4) {
-                    System.out.println("\n\t**************** No registered user ****************");
+                    System.out.println("\n\t**************** No Registered User ****************");
+                    break;
+                } else if (response.getErrorCode() == 5) {
+                    System.out.println("\n\t**************** User Already logged In ( Use different username ) ****************");
                     break;
                 }
             } while (!loggedIn);
