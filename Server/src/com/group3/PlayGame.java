@@ -37,10 +37,20 @@ public class PlayGame {
             );
             response = new Response();
             response.setMessage(user.getName() + " belongs to group with ID : " + user.getGroupID());
-//            System.out.println("");
-//            Group group = getGroupById(groupID);
+            Group group = getGroupById(groupID);
+            System.out.println("Current groupID: " + group.getGroupID());
 
-//            runMsgThread();
+            new Thread(() -> {
+                try {
+                    while (group.getTotalPlayers() < 3) {
+                        Response response = new Response();
+                        response.setMessage("You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.");
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         }
 //        boolean keepRunning = true;
 //        while (keepRunning) {
@@ -112,18 +122,15 @@ public class PlayGame {
 //        }
        }
 
-
-    private static void runMsgThread(Group group) throws InterruptedException {
-        for (int i = 0; i < 10; i++) {
-            Response response = new Response();
-            response.setMessage("You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.");
-            Thread.sleep(1000);
-        }
-    }
+//
+//    private static void runMsgThread(Group group) throws InterruptedException {
+//
+//
+//    }
 
     private static Group getGroupById(String groupID){
         for (Group group : groupList){
-            if (group.getGroupID() == groupID) { return group; }
+            if (group.getGroupID().equals(groupID)) { return group; }
         }
         return null;
     }
