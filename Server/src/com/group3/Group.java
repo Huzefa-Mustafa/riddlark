@@ -10,7 +10,7 @@ public class Group {
      * */
     private static int groupID = 10000;
     private int numberOfGroups;
-    static ArrayList<User> players = new ArrayList<>();
+    private ArrayList<User> players = new ArrayList<>();
     private Boolean isPlaying;
 
     Group(){
@@ -20,7 +20,7 @@ public class Group {
     /**
      * @return the current group id.
      * */
-    public int getGroupID(){ return this.groupID; }
+    public String getGroupID(){ return String.valueOf(this.groupID); }
     /**
      * @param user The user object to be added in the list of players.
      * */

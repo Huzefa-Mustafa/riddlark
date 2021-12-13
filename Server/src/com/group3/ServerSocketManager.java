@@ -7,6 +7,8 @@ import com.group3.models.User;
 import java.io.*;
 import java.net.Socket;
 
+import static com.group3.Server.loggedInUserList;
+
 public class ServerSocketManager  extends Thread {
 
     static Socket clientSocket;
@@ -28,45 +30,9 @@ public class ServerSocketManager  extends Thread {
         try {
 
             handleClientSocket();
-/*
-            boolean keepRunning = true;
-            while (keepRunning) {
-
-                oos = new ObjectOutputStream(connection.getOutputStream());
-                ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
-
-
-                request = (Request) ois.readObject();
-                switch (request.getSelectedOption()) {
-                    case 1 -> Login.login();
-                    case 2 -> Register.register();
-                    case 3 -> PlayGame.playGame(request.getUser());
-                    case 4 -> {*/
-/*JoinRoom.joinRoom();*//*
-}
-                    case 5 -> {*/
-/*Result.result();*//*
-}
-                    case 6 -> {
-                        System.out.println("exiting");
-                        break;
-                    }
-                    case 7 -> {*/
-/*PlayGame.playGame();*//*
-}
-                    case 8 -> {*/
-/*CheckIfRecord.checkIfRecord();*//*
-}
-                    default -> System.out.println("WRONG CHOICE");
-                }
-                oos.writeUnshared(response);
-                oos.flush();
-
-            }
             ois.close();
             oos.close();
-            connection.close();
-*/
+            clientSocket.close();
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -86,8 +52,8 @@ public class ServerSocketManager  extends Thread {
             switch (request.getSelectedOption()) {
                 case 1 -> Login.login();
                 case 2 -> Register.register();
-                case 3 -> PlayGame.playGame(request.getUser());
-                case 4 -> {/*JoinRoom.joinRoom();*/}
+                case 3 -> PlayGame.playGame();
+                case 4 -> removeUserFromLoggedInList(request.getUser());
                 case 5 -> {/*Result.result();*/}
                 case 6 -> {
                     System.out.println("exiting");
@@ -104,5 +70,10 @@ public class ServerSocketManager  extends Thread {
             clientSocket.close();*/
 
         }
+    }
+    private static synchronized void removeUserFromLoggedInList(User user) {
+        loggedInUserList.removeIf(i -> i.getName().equals(user.getName()));
+        System.out.println(user.getName() + " Requesting log out! , No. of Logged In Users now " + loggedInUserList.size());
+
     }
 }

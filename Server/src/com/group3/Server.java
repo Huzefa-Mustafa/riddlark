@@ -20,6 +20,7 @@ public class Server extends Thread {
 
     static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
+    static ArrayList<User> loggedInUserList = new ArrayList<>();
     static ArrayList<ServerSocketManager> workerList = new ArrayList<>();
     static ServerSocketManager serverTask;
     Server(int serverPort){
