@@ -6,8 +6,6 @@ import com.group3.models.User;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ServerSocketManager  extends Thread {
 
@@ -79,11 +77,11 @@ public class ServerSocketManager  extends Thread {
 
         boolean keepRunning = true;
 
-        ois = new ObjectInputStream(new DataInputStream(clientSocket.getInputStream()));
-        oos = new ObjectOutputStream(clientSocket.getOutputStream());
 
         while (keepRunning) {
 
+            oos = new ObjectOutputStream(clientSocket.getOutputStream());
+            ois = new ObjectInputStream(new DataInputStream(clientSocket.getInputStream()));
             request = (Request) ois.readObject();
             switch (request.getSelectedOption()) {
                 case 1 -> Login.login();
@@ -100,6 +98,7 @@ public class ServerSocketManager  extends Thread {
                 default -> System.out.println("WRONG CHOICE");
             }
             oos.writeUnshared(response);
+
           /*  ois.close();
             oos.close();
             clientSocket.close();*/

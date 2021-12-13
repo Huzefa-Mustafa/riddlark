@@ -6,10 +6,10 @@ import com.group3.models.Response;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
-import static com.group3.ClientSocketManager.*;
-import static com.group3.ClientSocketManager.port;
+import static com.group3.StreamManager.oos;
 import static com.group3.WelcomePage.*;
 
 public class  JoinGame {
@@ -35,15 +35,18 @@ public class  JoinGame {
                 Request request = new Request(choice, clientReply, user); //Create a Request
                 System.out.println("Client reply: " + request.getUserReply());
 
-                StreamManager client = new StreamManager(new Request(choice, user));
-                Response response = client.sendRequestLoop();
+                StreamManager client = new StreamManager(request);
+                Response response = client.sendRequest();
+                System.out.println("Client reply: " + request.getUserReply());
 
 
-                ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
-                clientSocket.run(); //Run Task
                  // print response from server
 
+/*                Request request = new Request(choice, clientReply, user); //Create a Request
+                System.out.println("Client reply: " + request.getUserReply());
 
+                ClientSocketManager clientSocket = new ClientSocketManager(request, WelcomePage.port); // create a new socket task
+                clientSocket.sendRequest(); //Run Task*/
 
 /*                while (true) {
                     response = (Response) ois.readUnshared();
@@ -56,7 +59,7 @@ public class  JoinGame {
         }
     }
 
-
+/*
     private static void commmunicationLoop() throws IOException {
         sockReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         printWriter = new PrintWriter(connection.getOutputStream(), true);
@@ -68,7 +71,7 @@ public class  JoinGame {
             }
             System.out.println(input);
         }
-    }
+    }*/
 
 
 }

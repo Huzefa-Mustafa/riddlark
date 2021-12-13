@@ -7,6 +7,7 @@ import com.group3.models.User;
 import java.util.Scanner;
 
 import static com.group3.WelcomePage.*;
+import static com.group3.WelcomePage.user;
 
 class Register {
      static void register() {
@@ -32,7 +33,7 @@ class Register {
              }
              User user = new User(name, password);
 
-             ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
+             StreamManager client = new StreamManager(new Request(choice, user));
              Response response = client.sendRequest();
              if (response.getErrorCode() == 0) {
                  System.out.println("\n\t******** User created successfully **********");

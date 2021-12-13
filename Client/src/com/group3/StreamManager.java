@@ -21,10 +21,11 @@ public class StreamManager {
 
     public Response sendRequest() {
         try{
-            oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
+            oos = new ObjectOutputStream(socket.getOutputStream());
 
             oos.writeUnshared(request);
+            oos.flush();
 
             response = (Response) ois.readUnshared();
         } catch (IOException | ClassNotFoundException e) {
@@ -36,13 +37,9 @@ public class StreamManager {
     public Response sendRequestLoop() {
         try{
             oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
             oos.writeUnshared(request);
-            while (true) {
+                ois = new ObjectInputStream(new DataInputStream(socket.getInputStream()));
                 response = (Response) ois.readUnshared();
-                System.out.println(response.getMessage());
-            }
-
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

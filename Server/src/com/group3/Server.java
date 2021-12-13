@@ -20,7 +20,8 @@ public class Server extends Thread {
 
     static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
-    private ArrayList<ServerSocketManager> workerList = new ArrayList<>();
+    static ArrayList<ServerSocketManager> workerList = new ArrayList<>();
+    static ServerSocketManager serverTask;
     Server(int serverPort){
         this.usersList = saveData.loadUserData();
         this.serverPort =serverPort;
@@ -37,7 +38,7 @@ public class Server extends Thread {
                 System.out.println("About to accept client connection...");
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
-                ServerSocketManager serverTask = new ServerSocketManager(this, clientSocket     );
+                serverTask = new ServerSocketManager(this, clientSocket     );
                 workerList.add(serverTask);
                 serverTask.start();
             }

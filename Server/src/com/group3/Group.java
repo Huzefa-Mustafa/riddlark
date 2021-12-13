@@ -1,10 +1,8 @@
 package com.group3;
 
-import com.group3.models.Response;
 import com.group3.models.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Group {
     /**
@@ -12,7 +10,7 @@ public class Group {
      * */
     private static int groupID = 10000;
     private int numberOfGroups;
-    private ArrayList<User> players = new ArrayList<>();
+    static ArrayList<User> players = new ArrayList<>();
     private Boolean isPlaying;
 
     Group(){
@@ -55,7 +53,8 @@ public class Group {
      * */
     public void removeAllPlayers() { this.players.removeAll(this.players); }
 
-    public List<User> getPlayers() {
+    public ArrayList<User> getPlayers(String user) {
+        System.out.println("printing in group us : " + user);
         return players;
     }
 

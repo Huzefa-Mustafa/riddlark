@@ -3,11 +3,10 @@ package com.group3;
 import com.group3.models.Response;
 import com.group3.models.User;
 
-import java.util.Iterator;
-
-import static com.group3.ServerSocketManager.*;
-import static com.group3.Server.usersList;
 import static com.group3.Server.saveData;
+import static com.group3.Server.usersList;
+import static com.group3.ServerSocketManager.request;
+import static com.group3.ServerSocketManager.response;
 
 class Register {
 
@@ -33,7 +32,7 @@ class Register {
         userDetails.display();
         System.out.println("****************************************\n");
     }
-    private static boolean userExist(User clientUserDetails) {
+    static boolean userExist(User clientUserDetails) {
         for (User user : usersList) {
             if (user.getName().equals(clientUserDetails.getName())) {
                 return true;

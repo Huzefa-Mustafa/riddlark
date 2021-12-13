@@ -48,9 +48,9 @@ public class App {
         try{
             this.socket = new Socket(serverName, serverPort);
             System.out.println("Client port is " + socket.getLocalPort());
-//            serverOut = new ObjectOutputStream(socket.getOutputStream());
-//            serverIn = socket.getInputStream();
-//            dataInputStream = new DataInputStream(new ObjectInputStream(serverIn));
+/*            serverOut = new ObjectOutputStream(socket.getOutputStream());
+            serverIn = socket.getInputStream();
+            dataInputStream = new DataInputStream(new ObjectInputStream(serverIn));*/
             return true;
         } catch (Exception e) {
             e.printStackTrace();
