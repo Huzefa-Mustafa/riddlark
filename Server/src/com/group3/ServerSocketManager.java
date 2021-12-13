@@ -9,9 +9,9 @@ import java.net.Socket;
 
 import static com.group3.Server.loggedInUserList;
 
-public class ServerSocketManager  extends Thread {
+public class ServerSocketManager implements Runnable {
 
-    static Socket clientSocket;
+    static Socket connection;
     static ObjectOutputStream oos;
     static ObjectInputStream ois;
     static Request request;
@@ -21,33 +21,18 @@ public class ServerSocketManager  extends Thread {
     static Server server;
     static BufferedWriter sockwriter;
     static BufferedReader socekReader;
-    ServerSocketManager(Server server,Socket clientSocket) {
+    ServerSocketManager(Socket s,Server server) {
         this.server = server;
-        this.clientSocket = clientSocket;
+        this.connection = s;
     }
     @Override
     public void run() {
         try {
 
-            handleClientSocket();
-            ois.close();
-            oos.close();
-            clientSocket.close();
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleClientSocket() throws IOException, ClassNotFoundException {
-
-        boolean keepRunning = true;
+            oos = new ObjectOutputStream(connection.getOutputStream());
+            ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
 
 
-        while (keepRunning) {
-
-            oos = new ObjectOutputStream(clientSocket.getOutputStream());
-            ois = new ObjectInputStream(new DataInputStream(clientSocket.getInputStream()));
             request = (Request) ois.readObject();
             switch (request.getSelectedOption()) {
                 case 1 -> Login.login();
@@ -55,22 +40,23 @@ public class ServerSocketManager  extends Thread {
                 case 3 -> PlayGame.playGame();
                 case 4 -> removeUserFromLoggedInList(request.getUser());
                 case 5 -> {/*Result.result();*/}
-                case 6 -> {
-                    System.out.println("exiting");
-                    break;
-                }
+                case 6 -> System.out.println("exiting");
                 case 7 -> {/*PlayGame.playGame();*/}
                 case 8 -> {/*CheckIfRecord.checkIfRecord();*/}
                 default -> System.out.println("WRONG CHOICE");
             }
             oos.writeUnshared(response);
 
-          /*  ois.close();
+            ois.close();
             oos.close();
-            clientSocket.close();*/
+            connection.close();
 
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
     }
+
     private static synchronized void removeUserFromLoggedInList(User user) {
         loggedInUserList.removeIf(i -> i.getName().equals(user.getName()));
         System.out.println(user.getName() + " Requesting log out! , No. of Logged In Users now " + loggedInUserList.size());

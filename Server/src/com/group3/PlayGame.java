@@ -6,11 +6,9 @@ import com.group3.models.User;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import static com.group3.Server.serverTask;
-import static com.group3.Server.workerList;
-import static com.group3.ServerSocketManager.*;
+import static com.group3.ServerSocketManager.request;
+import static com.group3.ServerSocketManager.response;
 
 public class PlayGame {
     /**
@@ -104,18 +102,18 @@ public class PlayGame {
                 System.out.println("Error in PlayGame class. \nMessage: " + e.getMessage() + "\n Stacktrace: " + e.getLocalizedMessage());
                 e.printStackTrace();
             }
-        }
+        }/*
         workerList.add(serverTask); // adding running thread to array to send data all user at once
         List<ServerSocketManager> workerList = ServerSocketManager.server.getWorkerList(); //Have to seee
         List<User> players = group.getPlayers(user.getName());
         for (ServerSocketManager worker : workerList) {
             for (User player : players) {
-                /*System.out.println(player.getName() + " user name");
-                System.out.println(worker + " workerList name" + player.getName() + " user name");*/
+                *//*System.out.println(player.getName() + " user name");
+                System.out.println(worker + " workerList name" + player.getName() + " user name");*//*
 //                    worker.response.setMessage(player.getName() + " Added in Group");
                 System.out.println(player);
             }
-        }
+        }*/
     }
 
     private static void runMsgThread(Group group) throws InterruptedException {

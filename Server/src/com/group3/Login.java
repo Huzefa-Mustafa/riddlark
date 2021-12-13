@@ -7,7 +7,7 @@ import static com.group3.Server.loggedInUserList;
 import static com.group3.Server.usersList;
 import static com.group3.ServerSocketManager.*;
 
-class Login {
+class Login implements Runnable{
     static synchronized void login() {
 
         int status = 3;
@@ -63,5 +63,10 @@ class Login {
             if(user.getName().equals(requestingUser.getName())) { return true; }
         }
         return false;
+    }
+
+    @Override
+    public void run() {
+         login ();
     }
 }
