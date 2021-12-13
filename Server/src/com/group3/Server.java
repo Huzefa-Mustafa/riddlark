@@ -39,7 +39,7 @@ public class Server extends Thread {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
                 serverTask = new ServerSocketManager(this, clientSocket     );
-                workerList.add(serverTask);
+//                workerList.add(serverTask);     // Have to work here
                 serverTask.start();
             }
         } catch (IOException e) {

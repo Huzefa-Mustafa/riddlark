@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.group3.Server.serverTask;
+import static com.group3.Server.workerList;
 import static com.group3.ServerSocketManager.request;
 import static com.group3.ServerSocketManager.response;
 
@@ -68,7 +70,8 @@ public class PlayGame {
                 e.printStackTrace();
             }
         }
-        List<ServerSocketManager> workerList = ServerSocketManager.server.getWorkerList();
+        workerList.add(serverTask); // adding running thread to array to send data all user at once
+        List<ServerSocketManager> workerList = ServerSocketManager.server.getWorkerList(); //Have to seee
         List<User> players = group.getPlayers(user.getName());
         for (ServerSocketManager worker : workerList) {
             for (User player : players) {

@@ -34,7 +34,7 @@ public class StreamManager {
         return response;
     }
 
-    public Response sendRequestLoop() {
+/*    public Response sendRequestLoop() {
         try{
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeUnshared(request);
@@ -45,5 +45,5 @@ public class StreamManager {
             e.printStackTrace();
         }
         return response;
-    }
+    }*/
 }
