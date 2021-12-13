@@ -20,7 +20,7 @@ public class  JoinGame {
     public static void joinGame() throws IOException, ClassNotFoundException {
         ClientSocketManager clientSocketManager = new ClientSocketManager(new Request(choice, user), port);
         response = clientSocketManager.sendRequest();
-
+        user = response.getUser();
         System.out.println("Server Reply >> " + response.getMessage() );
 //
         Scanner scanner = new Scanner(System.in);
@@ -37,8 +37,14 @@ public class  JoinGame {
 //                System.out.println("Client reply: " + request.getUserReply());
 
                 ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
-                clientSocket.sendRequest(); //Run Task
-                 // print response from server
+                response = clientSocket.sendRequest(); //Run Task
+                if (response.getUser() != null) {
+//                    User user = response.getUser();
+                    System.out.println("Server Reply >> " + user.toString() );
+                }
+
+
+                System.out.println("Server Reply >> " + response.getMessage() );
 
 
 
