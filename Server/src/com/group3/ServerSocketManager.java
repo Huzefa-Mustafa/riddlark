@@ -9,11 +9,8 @@ import java.net.Socket;
 
 import static com.group3.Server.loggedInUserList;
 
-public class ServerSocketManager implements Runnable {
+public class ServerSocketManager extends Thread {
 
-    static Socket connection;
-    static ObjectOutputStream oos;
-    static ObjectInputStream ois;
     static Request request;
     static Response response = new Response();
     static User currentUser = new User();
@@ -21,45 +18,75 @@ public class ServerSocketManager implements Runnable {
     static Server server;
     static BufferedWriter sockwriter;
     static BufferedReader socekReader;
-    ServerSocketManager(Socket s,Server server) {
-        this.server = server;
+
+    static ObjectOutputStream oos;
+    static ObjectInputStream ois;
+    static Socket connection;
+
+
+    ServerSocketManager(Socket s,ObjectInputStream ois, ObjectOutputStream oos) {
         this.connection = s;
+        this.ois = ois;
+        this.oos = oos;
     }
     @Override
     public void run() {
-        try {
+        while (true) {
 
-            oos = new ObjectOutputStream(connection.getOutputStream());
-            ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
+            try {
+
+//            oos = new ObjectOutputStream(connection.getOutputStream());
+//            ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
 
 
-            request = (Request) ois.readObject();
-            switch (request.getSelectedOption()) {
-                case 1 -> Login.login();
-                case 2 -> Register.register();
-                case 3 -> PlayGame.playGame();
-                case 4 -> removeUserFromLoggedInList(request.getUser());
-                case 5 -> {/*Result.result();*/}
-                case 6 -> System.out.println("exiting");
-                case 7 -> {/*PlayGame.playGame();*/}
-                case 8 -> {/*CheckIfRecord.checkIfRecord();*/}
-                default -> System.out.println("WRONG CHOICE");
+                request = (Request) this.ois.readObject();
+                if(request.getSelectedOption() == 4) {
+                    removeUserFromLoggedInList(request.getUser());
+                    System.out.println("Client " + this.connection + " sends exit...");
+                    System.out.println("Closing this connection.");
+                    this.connection.close();
+                    System.out.println("Connection closed");
+                    break;
+                }
+                switch (request.getSelectedOption()) {
+                    case 1 -> Login.login();
+                    case 2 -> Register.register();
+                    case 3 -> PlayGame.playGame();
+//                case 4 -> {/**/;}
+//                case 5 -> {/*Result.result();*/}
+//                case 6 -> System.out.println("exiting");
+//                case 7 -> {/*PlayGame.playGame();*/}
+//                case 8 -> {/*CheckIfRecord.checkIfRecord();*/}
+                    default -> System.out.println("WRONG CHOICE");
+                }
+                this.oos.writeUnshared(response);
+
+
+
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            oos.writeUnshared(response);
+        }
+        try
+        {
+            this.ois.close();
+            this.oos.close();
+            this.connection.close();
 
-            ois.close();
-            oos.close();
-            connection.close();
-
-        } catch (IOException | ClassNotFoundException e) {
+        }catch(IOException e){
             e.printStackTrace();
         }
-
     }
 
     private static synchronized void removeUserFromLoggedInList(User user) {
         loggedInUserList.removeIf(i -> i.getName().equals(user.getName()));
         System.out.println(user.getName() + " Requesting log out! , No. of Logged In Users now " + loggedInUserList.size());
 
+    }
+    private synchronized void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        System.out.println(objectInputStream.readObject());
+
+        request = (Request) objectInputStream.readObject();
+        System.out.println(request);
     }
 }

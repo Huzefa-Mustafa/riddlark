@@ -7,13 +7,9 @@ import static com.group3.Server.loggedInUserList;
 import static com.group3.Server.usersList;
 import static com.group3.ServerSocketManager.*;
 
-class Login {
-
-
+class Login{
 
     static synchronized void login() {
-
-
 
         int status = 3;
         User user = request.getUser();
@@ -69,4 +65,6 @@ class Login {
         }
         return false;
     }
+
+
 }

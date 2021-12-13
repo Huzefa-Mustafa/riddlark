@@ -2,6 +2,7 @@ package com.group3;
 
 import com.group3.models.User;
 
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.concurrent.Executors;
 public class Server {
     static ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    static ServerSocket server;
+    static ServerSocket serverSocket;
     static Socket connection;
 
     static SaveData saveData = new SaveData();
@@ -27,46 +28,58 @@ public class Server {
         return workerList;
     }
 
-    public synchronized void createServer(){
-        try {
+    public synchronized void createServer() throws IOException {
+
             int port = 1234;
-            this.server = new ServerSocket(port);
+            this.serverSocket = new ServerSocket(port);
             while (true){
-                /***
-                 *  Connection with client */
-                System.out.println("wait for connections");
-                this.connection = server.accept(); // Wait and create new connection if a client request arrives
-                ServerSocketManager serverTask = new ServerSocketManager(this.connection, this); // create a new socket task
-                workerList.add(serverTask);
 
-                serverTask.run(); // Run Task
-                /***
-                 /* Close socket */
-                this.connection.close(); // close Socket connection
+                Socket s = null;
+                try {
+                    /***
+                     *  Connection with client */
+                    System.out.println("wait for connections");
+                    s = serverSocket.accept(); // Wait and create new connection if a client request arrives
+                    System.out.println("A new client is connected : " + s);
+                    // obtaining input and out stream
+                    ObjectInputStream ois = new ObjectInputStream(new DataInputStream(s.getInputStream()));
+                    ObjectOutputStream oos = new ObjectOutputStream(new DataOutputStream(s.getOutputStream()));
+                    System.out.println("Assigning new thread for this client");
+                    // create a new thread object
+                    Thread clientThread = new ServerSocketManager(s, ois, oos); // create a new socket task
+        //                workerList.add(serverTask);
+                    // Invoking the start() method
+                    clientThread.start();
+        //                serverTask.run(); // Run Task/**/
+
+                    /***
+                     /* Close socket */
+//                    this.connection.close(); // close Socket connection
+                } catch (Exception e) {
+                    //TODO: handle exception
+                    System.out.println("Could not connect to client");
+                    System.out.println(e.toString());
+                    e.printStackTrace();
+                }
             }
-        } catch (Exception e) {
-            //TODO: handle exception
-            System.out.println("Could not connect to client");
-            System.out.println(e.toString());
-            e.printStackTrace();
-        }
-    }
-    public void createServer2(){
-        try {
-//            ServerSocket serverSocket = new ServerSocket(1234);
-            int port = 1234;
-            this.server = new ServerSocket(port);
 
-            while (true) {
-
-                System.out.println("wait for connections");
-                this.connection = this.server.accept();
-                executorService.execute(new ServerSocketManager(this.connection,this));
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
+//    public void createServer2(){
+//        try {
+////            ServerSocket serverSocket = new ServerSocket(1234);
+//            int port = 1234;
+//            this.server = new ServerSocket(port);
+//
+//            while (true) {
+//
+//                System.out.println("wait for connections");
+//                this.connection = this.server.accept();
+//                executorService.execute(new ServerSocketManager(this.connection,this));
+//            }
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 
