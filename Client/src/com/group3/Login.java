@@ -14,18 +14,17 @@ class Login {
     static Request request = new Request();
     static Response response = new Response();
 
-    static void Login(Socket s) throws IOException, ClassNotFoundException {
+    static void Login(Socket s, ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
 
-        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-        ObjectInputStream ois = new ObjectInputStream(new DataInputStream(s.getInputStream()));
+//        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+//        ObjectInputStream ois = new ObjectInputStream(new DataInputStream(s.getInputStream()));
 
-        while (true) {
+        while (!s.isClosed()) {
             System.out.print("\n\tEnter your User name : ");
             user.setName(scanner.nextLine());
             if ("q".equals(user.getName())) {
 
                 System.out.println("Exit!"); // if keyboard input equal to ´q´ close client process
-//                s.close();
                 break;
             }
             System.out.print("\tEnter your password : ");
@@ -42,7 +41,8 @@ class Login {
 
                 loggedIn = true;
 //                user.setName(currentUser.getName());
-                SuccessfulLoginPage.SuccessfulLoginPage();
+//
+                SuccessfulLoginPage.SuccessfulLoginPage(s);
             } else if (response.getErrorCode() == 2) {
                 System.out.println("\n\t********* log in failed ( Password incorrect ) **********");
             } else if (response.getErrorCode() == 3) {

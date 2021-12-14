@@ -3,13 +3,14 @@ package com.group3;
 import com.group3.models.Request;
 
 import java.io.IOException;
+import java.net.Socket;
 
 import static com.group3.ClientSocketManager.port;
 import static com.group3.WelcomePage.*;
 
 public class SuccessfulLoginPage {
 
-    static void SuccessfulLoginPage() throws IOException, ClassNotFoundException {
+    static void SuccessfulLoginPage(Socket s) throws IOException, ClassNotFoundException {
 
         System.out.println("\n\n\t\t\t*********** Welcome " + user.getName() + " ************");
 

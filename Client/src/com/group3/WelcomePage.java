@@ -45,7 +45,7 @@ public class WelcomePage  {
 
             System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
 
-            while (true) {
+            while (!s.isClosed()) {
 
                 oos.writeUnshared(request);
 
@@ -88,7 +88,7 @@ public class WelcomePage  {
 
                 switch (choice) {
 //                    case 0 -> About.about();
-                    case 1 -> Login.Login(s);
+                    case 1 -> Login.Login(s, ois, oos);
                     case 2 -> Register.register();
                     default -> System.out.println("\n\t************** Please Enter Correct Choice! **************");
                 }
