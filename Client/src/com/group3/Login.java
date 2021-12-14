@@ -41,7 +41,25 @@ class Login {
             oos.writeUnshared(request);
 
             response = (Response) ois.readUnshared();
-
+            if (response.getErrorCode() == 0) {
+                System.out.println("\n\n\t**************** logged in successfully ****************");
+//                currentUser = response.getUser();
+                System.out.println("\n\n\t\t\t*********** Welcome " + user.getName() + " ************");
+                loggedIn = true;
+//                user.setName(currentUser.getName());
+                SuccessfulLoginPage.SuccessfulLoginPage();
+            } else if (response.getErrorCode() == 2) {
+                System.out.println("\n\t********* log in failed ( Password incorrect ) **********");
+            } else if (response.getErrorCode() == 3) {
+                System.out.println("\n\t********* log in failed ( user name not found ) **********");
+                break;
+            } else if (response.getErrorCode() == 4) {
+                System.out.println("\n\t**************** No Registered User ****************");
+                break;
+            } else if (response.getErrorCode() == 5) {
+                System.out.println("\n\t**************** User Already logged In ( Use different username ) ****************");
+                break;
+            }
 
         }
         scanner.close();

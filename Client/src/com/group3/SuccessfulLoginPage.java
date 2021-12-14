@@ -11,7 +11,7 @@ public class SuccessfulLoginPage {
 
     static void SuccessfulLoginPage() throws IOException, ClassNotFoundException {
 
-        System.out.println("\n\n\t\t\t*********** Welcome " + currentUser.getName() + " ************");
+        System.out.println("\n\n\t\t\t*********** Welcome " + user.getName() + " ************");
 
         do {
             System.out.println("\n\t╷–––––––––––––––––––––––––––––╷");

@@ -9,7 +9,8 @@ import java.util.Iterator;
 
 import static com.group3.ServerSocketManager.*;
 
-public class PlayGame {
+
+public class PlayGame implements Runnable {
     /**
      * The PlayGame Starts The Game Called **** RIDDLARK ****
      * */
@@ -43,7 +44,7 @@ public class PlayGame {
             new Thread(() -> {
                 try {
                     while (group.getTotalPlayers() < 3) {
-                        Response response = new Response();
+                        response = new Response();
                         response.setMessage("You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.");
                         Thread.sleep(1000);
                     }
@@ -51,6 +52,18 @@ public class PlayGame {
                     e.printStackTrace();
                 }
             }).start();
+
+            /*
+            *
+            * Testing Threads
+            * */
+//            Thread t = new Thread("My first thread");
+//
+//            t.start();
+//
+//            String threadName = t.getName();
+//            System.out.println(threadName);
+
         }
 //        boolean keepRunning = true;
 //        while (keepRunning) {
@@ -133,5 +146,14 @@ public class PlayGame {
             if (group.getGroupID().equals(groupID)) { return group; }
         }
         return null;
+    }
+
+    @Override
+    public void run() {
+        try {
+            playGame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
