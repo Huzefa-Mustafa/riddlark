@@ -37,11 +37,9 @@ class Login {
             if (response.getErrorCode() == 0) {
                 System.out.println("\n\n\t**************** logged in successfully ****************");
 //                currentUser = response.getUser();
-<<<<<<< HEAD
+
 //                System.out.println("\n\n\t\t\t*********** Welcome " + user.getName() + " ************");
-=======
-                System.out.println("\n\n\t\t\t*********** Welcome " + user.getName() + " ************");
->>>>>>> origin/client
+
                 loggedIn = true;
 //                user.setName(currentUser.getName());
                 SuccessfulLoginPage.SuccessfulLoginPage();

@@ -1,6 +1,7 @@
 package com.group3;
 
 import com.google.gson.Gson;
+import com.group3.models.Riddle;
 import com.group3.models.User;
 
 import java.io.*;
