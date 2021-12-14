@@ -19,6 +19,7 @@ public class Server {
 
     static SaveData saveData = new SaveData();
     static ArrayList<User> usersList = new ArrayList<>();
+
     static ArrayList<User> loggedInUserList = new ArrayList<>();
     private ArrayList<ServerSocketManager> workerList = new ArrayList<>();
     Server(){
@@ -47,16 +48,15 @@ public class Server {
                     System.out.println("Assigning new thread for this client");
                     // create a new thread object
                     Thread clientThread = new ServerSocketManager(s, ois, oos); // create a new socket task
-        //                workerList.add(serverTask);
                     // Invoking the start() method
                     clientThread.start();
-        //                serverTask.run(); // Run Task/**/
 
                     /***
                      /* Close socket */
-//                    this.connection.close(); // close Socket connection
                 } catch (Exception e) {
                     //TODO: handle exception
+                    s.close();
+
                     System.out.println("Could not connect to client");
                     System.out.println(e.toString());
                     e.printStackTrace();
@@ -64,22 +64,6 @@ public class Server {
             }
 
     }
-//    public void createServer2(){
-//        try {
-////            ServerSocket serverSocket = new ServerSocket(1234);
-//            int port = 1234;
-//            this.server = new ServerSocket(port);
-//
-//            while (true) {
-//
-//                System.out.println("wait for connections");
-//                this.connection = this.server.accept();
-//                executorService.execute(new ServerSocketManager(this.connection,this));
-//            }
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 }
 
 

@@ -1,8 +1,15 @@
 package com.group3;
 
+import com.group3.models.Request;
+import com.group3.models.Response;
 import com.group3.models.User;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.Scanner;
 
 
@@ -14,43 +21,86 @@ public class WelcomePage  {
     static User currentUser;
     static int port = 1234, choice;
 
+    static Request request = new Request();
+    static Response response = new Response();
+    InetAddress ip;
+    Socket s;
+    ObjectOutputStream oos;
+    ObjectInputStream ois;
     WelcomePage() {
 
     }
 
     public void mainMenu() throws IOException, ClassNotFoundException {
 
-        System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
+        try {
+            ip = InetAddress.getByName("localhost");
 
-        do {
-            System.out.println("\n\t╷–––––––––––––––––––––––––––––╷");
-            System.out.println("\t│            MENU             │");
-            System.out.println("\t│–––––––––––––––––––––––––––––│");
-            System.out.println("\t│        PLEASE ENTER         │");
-            System.out.println("\t│    **** 0: About    ****    │");
-            System.out.println("\t│    **** 1: Login    ****    │");
-            System.out.println("\t│    **** 2: Register ****    │");
+            s = new Socket(ip, port);
+
+
+            oos = new ObjectOutputStream(s.getOutputStream());
+            ois = new ObjectInputStream(new DataInputStream(s.getInputStream()));
+
+
+            System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
+
+            while (true) {
+
+                oos.writeUnshared(request);
+
+                response = (Response) ois.readUnshared();
+
+//                if(response.getMessage() != null){
+//                    System.out.println("Server Reply >> " + response.getMessage() );
+//                }
+
+                System.out.println("\n\t\t╷–––––––––––––––––––––––––––––╷");
+                System.out.println("\t\t│            MENU             │");
+                System.out.println("\t\t│–––––––––––––––––––––––––––––│");
+                System.out.println("\t\t│        PLEASE ENTER         │");
+//                System.out.println("\t\t│    **** 0: About    ****    │");
+                System.out.println("\t\t│    **** 1: Login    ****    │");
+                System.out.println("\t\t│    **** 2: Register ****    │");
 //            System.out.println("\t│   3. Host a room            │");
 //            System.out.println("\t│   4. Join a room            │");
 //            System.out.println("\t│   5. Hall Of Fame           │");
-            System.out.println("\t│    **** 4: Quit     ****    │");
-            System.out.println("\t│_____________________________│");
-            System.out.println("\n  please enter your choice");
-            System.out.print("  Your choice : ");
+//            System.out.println("\t│    **** 4: Quit     ****    │");
+                System.out.println("\t\t│_____________________________│");
+                System.out.println("\n  Please enter your choice");
+                System.out.print("  Your Choice : ");
 
-            String input = scanner.nextLine();
-            if (checkIfDigit(input)) choice = Integer.parseInt(input);
-            else choice = 10;
+                System.out.print("INFO: Enter ´q´ to stop session\n");
+                String input = scanner.nextLine();
+                if ("q".equals(input)) {
 
-            switch (choice) {
-                case 0 -> About.about();
-                case 1 -> Login.Login();
-                case 2 -> Register.register();
-                case 3 -> GetRecords.getRecords();
-                case 4 -> System.out.println("\n\t************** GOOD BYE **************");
-                default -> System.out.println("\n\t************** please enter correct choice **************");
+                    System.out.println("Exit!"); // if keyboard input equal to ´q´ close client process
+                    System.out.println("\n\t************** GOOD BYE **************");
+                    request.setUserReply("closeConnection");
+                    oos.writeUnshared(request);
+                    System.out.println("Closing this connection : " + s);
+                    s.close();
+                    System.out.println("Connection closed");
+                    break;
+                }
+                if (checkIfDigit(input)) choice = Integer.parseInt(input);
+                else choice = 10;
+
+                switch (choice) {
+//                    case 0 -> About.about();
+                    case 1 -> Login.Login(s);
+                    case 2 -> Register.register();
+                    default -> System.out.println("\n\t************** Please Enter Correct Choice! **************");
+                }
             }
-        } while (choice != 6);
+            // closing resources
+            scanner.close();
+            ois.close();
+            oos.close();
+//            s.close();
+        } catch( Exception e ){
+            e.printStackTrace();
+        }
 
 
     }

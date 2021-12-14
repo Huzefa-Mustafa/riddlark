@@ -31,7 +31,7 @@ public class ServerSocketManager extends Thread {
     }
     @Override
     public void run() {
-        while (true) {
+        while (!this.connection.isClosed()) {
 
             try {
 
@@ -39,15 +39,23 @@ public class ServerSocketManager extends Thread {
 //            ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
 
 
-                request = (Request) this.ois.readObject();
-                if(request.getSelectedOption() == 4) {
-                    removeUserFromLoggedInList(request.getUser());
+//                request =  (Request) this.ois.readObject();
+                readObject(this.ois);
+//                User user = request.getUser();
+//                System.out.println(user.toString());
+
+                if (request.getUserReply() != null && request.getUserReply().equalsIgnoreCase("closeConnection")) {
+//                    removeUserFromLoggedInList(request.getUser());
                     System.out.println("Client " + this.connection + " sends exit...");
                     System.out.println("Closing this connection.");
                     this.connection.close();
                     System.out.println("Connection closed");
                     break;
                 }
+
+//                if(request.getSelectedOption() == 4) {
+//
+//                }
                 switch (request.getSelectedOption()) {
                     case 1 -> Login.login();
                     case 2 -> Register.register();
@@ -57,7 +65,17 @@ public class ServerSocketManager extends Thread {
 //                case 6 -> System.out.println("exiting");
 //                case 7 -> {/*PlayGame.playGame();*/}
 //                case 8 -> {/*CheckIfRecord.checkIfRecord();*/}
-                    default -> System.out.println("WRONG CHOICE");
+                    default -> {
+                        System.out.println(
+                            "{"+
+                                "\n\tSocket Info: " + this.connection +
+                                "\n\tConnection State : " +  this.connection.isConnected() +
+                                "\n\tUser Selection : " + request.getSelectedOption() +
+                                "\n\tUser Reply >> " + request.getUserReply() +
+                            "\n}"
+                        );
+                        response.setMessage("Invalid Command");
+                    }
                 }
                 this.oos.writeUnshared(response);
 
@@ -69,9 +87,10 @@ public class ServerSocketManager extends Thread {
         }
         try
         {
+            // closing resources
             this.ois.close();
             this.oos.close();
-            this.connection.close();
+//            this.connection.close();
 
         }catch(IOException e){
             e.printStackTrace();
@@ -84,9 +103,8 @@ public class ServerSocketManager extends Thread {
 
     }
     private synchronized void readObject(ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
-        System.out.println(objectInputStream.readObject());
-
-        request = (Request) objectInputStream.readObject();
-        System.out.println(request);
+        synchronized(objectInputStream) {
+            request = (Request) objectInputStream.readObject();
+        }
     }
 }
