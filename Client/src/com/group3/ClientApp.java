@@ -7,7 +7,7 @@ import static com.group3.Client.client;
 
 public class ClientApp {
     public static void main(String[] args) throws IOException {
-        client = new Client("localhost", 8818);
+        client = new Client("localhost", 5555);
         client.addUserStatusListener(new UserStatusListener() {
             @Override
             public void online(String login) {
@@ -23,10 +23,7 @@ public class ClientApp {
             System.err.println("Connect failed.");
         } else {
             System.out.println("Connect successful");
-            if(client.login("guest","guest")){
-                System.out.println("Login successful");
-            }
-//            client.welcomePage();
+            client.welcomePage();
         }
     }
 
