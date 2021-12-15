@@ -3,6 +3,7 @@ package com.group3;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Client {
 //    private final String serverName;
@@ -16,7 +17,8 @@ public class Client {
     static Client client;
 
     static String SERVERNAME;
-    static int PORT;
+    static int PORT, choice;
+    static Scanner scanner = new Scanner(System.in);
 
     public Client(String serverName, int serverPort) {
         this.SERVERNAME = serverName;
@@ -46,38 +48,10 @@ public class Client {
     }
 
     public void welcomePage() throws IOException {
-        String welcome = """
-                \r
-                \t **** WELCOME TO RIDDLARK ****\r
-                """;
-        String menu = """
-                \t
-                \r            ****  MENU  ****           \t
-                \r              PLEASE Write         \t
-                \r          **** 1 : Login    ****   \t
-                \r          **** 2 : Register ****   \t
-                \r          **** 3 : Quit     ****    \r
-                """;
-        System.out.println(welcome + "\n" + menu);
-/*        if(client.login("123","123")){
+/*        if (login("123", "123")) {
             System.out.println("Login successful");
         }*/
+         ClientWorker.clientWorker();
     }
 
-    public boolean login(String login, String password) throws IOException {
-        String cmd = "login " + login + " " + password + "\n";
-        serverOut.write(cmd.getBytes());
-        bufferedIn = new BufferedReader(new InputStreamReader(serverIn));
-        String response = bufferedIn.readLine();
-        System.out.println("Response Line:" + response);
-
-        if ("ok login".equalsIgnoreCase(response)) {
-            startMessageReader();
-            return true;
-        } else {
-            return false;
-        }
-    }
-    static void startMessageReader() {
-    }
 }

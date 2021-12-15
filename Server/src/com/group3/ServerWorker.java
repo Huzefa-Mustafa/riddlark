@@ -20,6 +20,7 @@ public class ServerWorker extends Thread {
     static ArrayList<User> loggedInUserList = new ArrayList<>();
     static User user = null;
     static File file = new File("userdata.txt");
+    private Properties properties;
 
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
@@ -31,15 +32,20 @@ public class ServerWorker extends Thread {
     public void run() {
 
         handleClientSocket();
+
     }
     static{
+
         if (!file.exists()) {
             try {
                 file.createNewFile();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+
     }
 
     private void handleClientSocket() {
@@ -62,8 +68,8 @@ public class ServerWorker extends Thread {
                 \rPlease enter your choice           \r
                 \rYour Choice :                      \r
                 """;
-            outputStream.write(welcome.getBytes());
-            outputStream.write(menu.getBytes());
+//          outputStream.write(welcome.getBytes());
+//            outputStream.write(menu.getBytes());
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -72,31 +78,11 @@ public class ServerWorker extends Thread {
                     String cmd = tokens[0];
                     if ("q".equalsIgnoreCase(cmd)) {
                         break;
-                    } else if ("1".equalsIgnoreCase(cmd)) {
-                        String l = """
-
-                            \rTo login Write username space and your password
-                            \r            For example
-                            \rguest 1234
-                            \r""";
-
-                        outputStream.write(l.getBytes());
-                        line = reader.readLine();
-                        tokens = StringUtils.split(line);
-//                        handleLogin(outputStream, tokens);
+                    } else if ("login".equalsIgnoreCase(cmd)) {
                         new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens);
-                    } else if ("2".equalsIgnoreCase(cmd)) {
-                        String l = """
 
-                            \rTo register Write username space and your password
-                            \r            For example
-                            \rguest 1234
-                            \r""";
-                        outputStream.write(l.getBytes());
-                        line = reader.readLine();
-                        tokens = StringUtils.split(line);
+                    } else if ("registration".equalsIgnoreCase(cmd)) {
                         handleRegistration(outputStream, tokens);
-                        outputStream.write(menu.getBytes());
                     }
                 }
 
@@ -108,15 +94,15 @@ public class ServerWorker extends Thread {
     }
 
     private void handleRegistration(OutputStream outputStream, String[] tokens) throws IOException {
-        if (tokens.length == 2) {
-            String user = tokens[0];
-            String password = tokens[1];
+        if (tokens.length == 3) {
+            String user = tokens[1];
+            String password = tokens[2];
             Properties properties = new Properties();
             properties.load(new FileInputStream(file));
             if (!properties.containsKey(user)) {
                 properties.setProperty(user, password);
                 properties.store(new FileOutputStream(file), "TCP");
-                String msg = "\r Register Successful\n\r";
+                String msg = "ok registration\n";
                 outputStream.write(msg.getBytes());
                 System.out.println("User Registeration in succesfully: " + login);
             }

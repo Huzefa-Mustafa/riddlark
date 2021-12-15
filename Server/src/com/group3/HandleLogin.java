@@ -7,23 +7,30 @@ import static com.group3.ServerWorker.*;
 
 
 public class HandleLogin {
+    public void handleLogin(OutputStream outputStream, String[] tokens) throws IOException {
+        if (tokens.length == 3) {
+            String login = tokens[1];
+            String password = tokens[2];
 
+            if ((login.equals("123") && password.equals("123"))) {
+                String msg = "ok login\n";
+                outputStream.write(msg.getBytes());
+                System.out.println("User logged in succesfully: " + login);
 
+            }
+        }
+    }
     public void loginHandler(OutputStream outputStream,InputStream inputStream, String[] tokens) throws IOException {
-
-        if (tokens.length == 2) {
-            String userName = tokens[0];
-            String password = tokens[1];
-
-
-
-
+        if (tokens.length == 3) {
+            String userName = tokens[1];
+            String password = tokens[2];
 
             Properties properties = new Properties();
             properties.load(new FileInputStream(file));
             if (properties.containsKey(userName)) {
                 if (password.equals(properties.getProperty(userName))) {
-                    outputStream.write("\rLogin successful,,,\r\n".getBytes());
+                    String msg = "ok login\n";
+                    outputStream.write(msg.getBytes());
                     System.out.println("Login successful.");
                     user = new User(userName, password);
 //                    this.login = userName;
@@ -87,22 +94,6 @@ public class HandleLogin {
             } else {
                 outputStream.write("\rUsername does not exist,,,\r\n".getBytes());
             }
-/*            for (String u : usersList) {
-                String[] userArray= StringUtils.split(";");
-                System.out.println(u);
-                if ((u.equals(userArray[0])) && u.equals(userArray[1])) {
-
-                        String msg = "ok login\n\r";
-                        outputStream.write(msg.getBytes());
-                        this.login = login;
-                        System.out.println("User logged in succesfully: " + login);
-
-                } else {
-                    String msg = "error login\n\r";
-                    outputStream.write(msg.getBytes());
-                    System.err.println("Login failed for " + login);
-                }
-            }*/
 
         }
     }
