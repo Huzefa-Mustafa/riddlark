@@ -11,13 +11,14 @@ import java.util.Properties;
 public class ServerWorker extends Thread {
     private final Server server;
     private final Socket clientSocket;
-    private BufferedReader inputStream;
+//    private BufferedReader inputStream;
     private PrintWriter outoutStream;
     private OutputStream outputStream;
+    private InputStream inputStream;
     private String login = null;
     static ArrayList<User> usersList = new ArrayList<>();
     static ArrayList<User> loggedInUserList = new ArrayList<>();
-
+    static User user = null;
     static File file = new File("userdata.txt");
 
     public ServerWorker(Server server, Socket clientSocket) {
@@ -43,7 +44,7 @@ public class ServerWorker extends Thread {
 
     private void handleClientSocket() {
         try {
-            InputStream inputStream = clientSocket.getInputStream();
+            this.inputStream = clientSocket.getInputStream();
             this.outputStream = clientSocket.getOutputStream();
 
             String welcome = """
@@ -82,7 +83,8 @@ public class ServerWorker extends Thread {
                         outputStream.write(l.getBytes());
                         line = reader.readLine();
                         tokens = StringUtils.split(line);
-                        handleLogin(outputStream, tokens);
+//                        handleLogin(outputStream, tokens);
+                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens);
                     } else if ("2".equalsIgnoreCase(cmd)) {
                         String l = """
 
@@ -123,70 +125,6 @@ public class ServerWorker extends Thread {
 
     private void handleLogin(OutputStream outputStream, String[] tokens) throws IOException {
 
-        if (tokens.length == 2) {
-            String userName = tokens[0];
-            String password = tokens[1];
-            User user = new User(userName,password);
-            Properties properties = new Properties();
-            properties.load(new FileInputStream(file));
-            if (properties.containsKey(userName)) {
-                if (password.equals(properties.getProperty(userName))) {
-                    outputStream.write("\rLogin successful,,,\r\n".getBytes());
-                    System.out.println("Login successful.");
-
-                    this.login = userName;
-
-
-                    if (loggedInUserList.isEmpty()) {
-                        loggedInUserList.add(user);
-                    } else if (checkIfLoggedIn(user)) {
-                        System.out.println("Incoming user trying to attempt multiple access!");
-                    } else {
-                        loggedInUserList.add(user);
-                    }
-                    System.out.println("New User Logged in, No. of Logged In Users now " + loggedInUserList.size());
-
-//                    List<ServerWorker> workerList = server.getWorkerList();
-//                    // send current user all other online logins
-//                    for(ServerWorker worker : workerList) {
-//                        if (worker.getLogin() != null) {
-//                            if (!login.equals(worker.getLogin())) {
-//                                String msg2 = "online " + worker.getLogin() + "\n";
-//                                send(msg2);
-//                            }
-//                        }
-//                    }
-
-                    // send other online users current user's status
-//                    String onlineMsg = "online " + login + "\n";
-//                    for(ServerWorker worker : workerList) {
-//                        if (!login.equals(worker.getLogin())) {
-//                            worker.send(onlineMsg);
-//                        }
-//                    }
-                } else {
-                    outputStream.write("\rWrong password,,,\r\n".getBytes());
-                }
-            } else {
-                outputStream.write("\rUsername does not exist,,,\r\n".getBytes());
-            }
-/*            for (String u : usersList) {
-                String[] userArray= StringUtils.split(";");
-                System.out.println(u);
-                if ((u.equals(userArray[0])) && u.equals(userArray[1])) {
-
-                        String msg = "ok login\n\r";
-                        outputStream.write(msg.getBytes());
-                        this.login = login;
-                        System.out.println("User logged in succesfully: " + login);
-
-                } else {
-                    String msg = "error login\n\r";
-                    outputStream.write(msg.getBytes());
-                    System.err.println("Login failed for " + login);
-                }
-            }*/
-        }
     }
 
     private void handleLogoff() throws IOException {
@@ -211,12 +149,6 @@ public class ServerWorker extends Thread {
                 e.printStackTrace();
             }
         }
-    }
-    private Boolean checkIfLoggedIn(User requestingUser) {
-        for(User user : loggedInUserList){
-            if(user.getName().equals(requestingUser.getName())) { return true; }
-        }
-        return false;
     }
     private String getLogin() {
         return login;
