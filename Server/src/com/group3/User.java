@@ -5,6 +5,7 @@ public class User  {
     String password;
     User user;
     boolean isReady;
+    String userReply;
     String groupID;
 
     public User() {
@@ -52,6 +53,13 @@ public class User  {
         this.groupID = groupID;
     }
 
+    public String getUserReply() {
+        return this.userReply;
+    }
+
+    public void setUserReply(String userReply) {
+        this.userReply = userReply;
+    }
     public void display(){
         System.out.println("\t\tname :" + name);
         System.out.println("\t\tpass :" + password);
