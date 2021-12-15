@@ -10,16 +10,22 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 import static com.group3.ClientSocketManager.*;
-import static com.group3.WelcomePage.choice;
-import static com.group3.WelcomePage.user;
+import static com.group3.WelcomePage.*;
+import static com.group3.WelcomePage.ois;
+import static com.group3.WelcomePage.oos;
+import static com.group3.WelcomePage.request;
 
 public class  JoinGame {
 
     static ClientSocketManager clientSocketManager;
     static Response response;
     public static void joinGame() throws IOException, ClassNotFoundException {
-        ClientSocketManager clientSocketManager = new ClientSocketManager(new Request(choice, user), port);
-        response = clientSocketManager.sendRequest();
+        /*ClientSocketManager clientSocketManager = new ClientSocketManager(new Request(choice, user), port);
+        response = clientSocketManager.sendRequest();*/
+        request = new Request(choice, user);
+        oos.writeUnshared(request);
+
+        response = (Response) ois.readUnshared();
         user = response.getUser();
         System.out.println("Server Reply >> " + response.getMessage() );
 //
@@ -34,10 +40,14 @@ public class  JoinGame {
                 break;
             } else if ("y".equalsIgnoreCase(clientReply)) {
                 Request request = new Request(choice, clientReply, user); //Create a Request
+                request = new Request(choice, user);
+                oos.writeUnshared(request);
+
+                response = (Response) ois.readUnshared();
 //                System.out.println("Client reply: " + request.getUserReply());
 
-                ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
-                response = clientSocket.sendRequest(); //Run Task
+/*                ClientSocketManager clientSocket = new ClientSocketManager(request,port); // create a new socket task
+                response = clientSocket.sendRequest(); //Run Task*/
                 if (response.getUser() != null) {
 //                    User user = response.getUser();
                     System.out.println("Server Reply >> " + user.toString() );

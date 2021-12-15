@@ -16,9 +16,13 @@ class Login {
                 System.out.print("\tEnter your password : ");
                 user.setPassword(scanner.nextLine());
 
-                ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
-                Response response = client.sendRequest();
+               /* ClientSocketManager client = new ClientSocketManager(new Request(choice, user), port);
+                Response response = client.sendRequest();*/
+                request = new Request(choice, user);
+                oos.writeUnshared(request);
+                oos.flush();
 
+                response = (Response) ois.readUnshared();
                 if (response.getErrorCode() == 0) {
                     System.out.println("\n\n\t**************** logged in successfully ****************");
                     currentUser = response.getUser();

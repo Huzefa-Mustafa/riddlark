@@ -28,7 +28,7 @@ public class ClientSocketManager{
 
 
         try {
-            connection = new Socket("localhost", port);
+            Socket connection = new Socket("localhost", port);
             oos = new ObjectOutputStream(connection.getOutputStream());
             ois = new ObjectInputStream(new DataInputStream(connection.getInputStream()));
 

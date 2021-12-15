@@ -7,9 +7,12 @@ import static com.group3.Server.loggedInUserList;
 import static com.group3.Server.usersList;
 import static com.group3.ServerSocketManager.*;
 
-class Login {
+class Login extends Thread {
 
-
+    @Override
+    public void run() {
+        login();
+    }
 
     static synchronized void login() {
 

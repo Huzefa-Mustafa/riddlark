@@ -1,8 +1,15 @@
 package com.group3;
 
+import com.group3.models.Request;
+import com.group3.models.Response;
 import com.group3.models.User;
 
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.Scanner;
 
 
@@ -14,11 +21,24 @@ public class WelcomePage  {
     static User currentUser;
     static int port = 1234, choice;
 
+    static Request request = new Request();
+    static Response response = new Response();
+    static InetAddress ip;
+    static Socket s;
+    static ObjectOutputStream oos;
+    static ObjectInputStream ois;
     WelcomePage() {
 
     }
 
     public void mainMenu() throws IOException, ClassNotFoundException {
+        ip = InetAddress.getByName("localhost");
+
+        s = new Socket(ip, port);
+
+
+        oos = new ObjectOutputStream(s.getOutputStream());
+        ois = new ObjectInputStream(new DataInputStream(s.getInputStream()));
 
         System.out.println("\n\t************** WELCOME TO RIDDLARK **************");
 
