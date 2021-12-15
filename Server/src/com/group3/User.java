@@ -1,20 +1,20 @@
-package com.group3.models;
+package com.group3;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User  {
     String name;
     String password;
     User user;
     boolean isReady;
     String groupID;
+
     public User() {
+
     }
     public User(String groupID, User user) {
         this.groupID = groupID;
         this.user = user;
     }
-    public User( String name, String password) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
         this.isReady = false;

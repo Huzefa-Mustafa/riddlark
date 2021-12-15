@@ -15,7 +15,9 @@ public class ServerWorker extends Thread {
     private PrintWriter outoutStream;
     private OutputStream outputStream;
     private String login = null;
-    static ArrayList<String> usersList = new ArrayList<String>();
+    static ArrayList<User> usersList = new ArrayList<>();
+    static ArrayList<User> loggedInUserList = new ArrayList<>();
+
     static File file = new File("userdata.txt");
 
     public ServerWorker(Server server, Socket clientSocket) {
@@ -51,10 +53,13 @@ public class ServerWorker extends Thread {
             String menu = """
                 \t
                 \r            ****  MENU  ****           \t
-                \r              PLEASE Write         \t
+                \r              PLEASE SELECT         \t
                 \r          **** 1 : Login    ****   \t
                 \r          **** 2 : Register ****   \t
-                \r          **** 3 : Quit     ****    \r
+                \r                                   \r
+                \rINFO: Enter 'q' to stop session    \r
+                \rPlease enter your choice           \r
+                \rYour Choice :                      \r
                 """;
             outputStream.write(welcome.getBytes());
             outputStream.write(menu.getBytes());
@@ -64,7 +69,7 @@ public class ServerWorker extends Thread {
                 String[] tokens = StringUtils.split(line);
                 if (tokens != null && tokens.length > 0) {
                     String cmd = tokens[0];
-                    if ("3".equalsIgnoreCase(cmd)) {
+                    if ("q".equalsIgnoreCase(cmd)) {
                         break;
                     } else if ("1".equalsIgnoreCase(cmd)) {
                         String l = """
@@ -73,6 +78,7 @@ public class ServerWorker extends Thread {
                             \r            For example
                             \rguest 1234
                             \r""";
+
                         outputStream.write(l.getBytes());
                         line = reader.readLine();
                         tokens = StringUtils.split(line);
@@ -116,34 +122,48 @@ public class ServerWorker extends Thread {
     }
 
     private void handleLogin(OutputStream outputStream, String[] tokens) throws IOException {
+
         if (tokens.length == 2) {
-            String login = tokens[0];
+            String userName = tokens[0];
             String password = tokens[1];
+            User user = new User(userName,password);
             Properties properties = new Properties();
             properties.load(new FileInputStream(file));
-            if (properties.containsKey(login)) {
-                if (password.equals(properties.getProperty(login))) {
+            if (properties.containsKey(userName)) {
+                if (password.equals(properties.getProperty(userName))) {
                     outputStream.write("\rLogin successful,,,\r\n".getBytes());
                     System.out.println("Login successful.");
-                    this.login = login;
-                    List<ServerWorker> workerList = server.getWorkerList();
-                    // send current user all other online logins
-                    for(ServerWorker worker : workerList) {
-                        if (worker.getLogin() != null) {
-                            if (!login.equals(worker.getLogin())) {
-                                String msg2 = "online " + worker.getLogin() + "\n";
-                                send(msg2);
-                            }
-                        }
+
+                    this.login = userName;
+
+
+                    if (loggedInUserList.isEmpty()) {
+                        loggedInUserList.add(user);
+                    } else if (checkIfLoggedIn(user)) {
+                        System.out.println("Incoming user trying to attempt multiple access!");
+                    } else {
+                        loggedInUserList.add(user);
                     }
+                    System.out.println("New User Logged in, No. of Logged In Users now " + loggedInUserList.size());
+
+//                    List<ServerWorker> workerList = server.getWorkerList();
+//                    // send current user all other online logins
+//                    for(ServerWorker worker : workerList) {
+//                        if (worker.getLogin() != null) {
+//                            if (!login.equals(worker.getLogin())) {
+//                                String msg2 = "online " + worker.getLogin() + "\n";
+//                                send(msg2);
+//                            }
+//                        }
+//                    }
 
                     // send other online users current user's status
-                    String onlineMsg = "online " + login + "\n";
-                    for(ServerWorker worker : workerList) {
-                        if (!login.equals(worker.getLogin())) {
-                            worker.send(onlineMsg);
-                        }
-                    }
+//                    String onlineMsg = "online " + login + "\n";
+//                    for(ServerWorker worker : workerList) {
+//                        if (!login.equals(worker.getLogin())) {
+//                            worker.send(onlineMsg);
+//                        }
+//                    }
                 } else {
                     outputStream.write("\rWrong password,,,\r\n".getBytes());
                 }
@@ -192,7 +212,12 @@ public class ServerWorker extends Thread {
             }
         }
     }
-
+    private Boolean checkIfLoggedIn(User requestingUser) {
+        for(User user : loggedInUserList){
+            if(user.getName().equals(requestingUser.getName())) { return true; }
+        }
+        return false;
+    }
     private String getLogin() {
         return login;
     }
