@@ -62,9 +62,8 @@ public class HandleLogin {
                         String line;
                         String menu = """
                                         \t
-                                        \r            ****     RIDDLARK     ****           \t
-                                        \r                   PLEASE SELECT                 \t
-                                        \r            ****   1 : Play Game  ****           \t
+                                        \r            ****   START RIDDLARK   ****         \t
+                                        \r             Please Enter 'y' to continue        \t
                                         \r                                                 \r
                                         \rINFO: Enter 'q' to stop session                  \r
                                         \rPlease enter your choice                         \r
@@ -75,8 +74,9 @@ public class HandleLogin {
                         line = reader.readLine();
                         String clientReply = line;
                         System.out.println(clientReply);
+                        user.setUserReply(clientReply);
 
-                        new PlayGame().playGameHandler(outputStream, inputStream, clientReply);
+                        if(clientReply.equals("y")) new PlayGame().playGameHandler(outputStream, inputStream, user);
                     }
 
 
