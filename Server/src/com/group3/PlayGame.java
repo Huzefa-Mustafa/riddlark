@@ -34,6 +34,7 @@ public class PlayGame {
             Group group = getGroupById(groupID);
             System.out.println("Current groupID: " + group.getGroupID());
             runMgsThread(group, outputStream);
+            return true;
         } else if (groupList.isEmpty()) {
             Group group = new Group();
             group.addPlayer(user);
@@ -45,7 +46,7 @@ public class PlayGame {
             outputStream.write((serverReply + "\n").getBytes());
 //            line = reader.readLine();
 //            String clientReply = line;
-
+            return true;
         } else {
             Iterator<Group> iter = groupList.iterator();
             try {
@@ -58,6 +59,7 @@ public class PlayGame {
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
 //                        runMgsThread(prevGroup,outputStream);
+                        return true;
                     } else if (!iter.hasNext()) {
                         Group newGroup = new Group();
                         newGroup.addPlayer(user);
@@ -67,9 +69,10 @@ public class PlayGame {
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
 //                        runMgsThread(newGroup, outputStream);
+                        return true;
                     }
                 }
-
+                return false;
             } catch (Exception e) {
                 System.out.println("Error in PlayGame class. \nMessage: " + e.getMessage() + "\n Stacktrace: " + e.getLocalizedMessage());
                 e.printStackTrace();
