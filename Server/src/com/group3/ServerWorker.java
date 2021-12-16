@@ -13,7 +13,7 @@ public class ServerWorker extends Thread {
     private OutputStream outputStream;
     private InputStream inputStream;
     private BufferedReader reader;
-    private String login = null;
+    static String login = null;
     static ArrayList<User> usersList = new ArrayList<>();
     static ArrayList<User> loggedInUserList = new ArrayList<>();
     static User user = null;
@@ -26,7 +26,11 @@ public class ServerWorker extends Thread {
 
     @Override
     public void run() {
-        handleClientSocket();
+        try {
+            handleClientSocket();
+        } catch (IOException e) {
+            System.out.println("An error occurred when connecting to new client or communication with that client.");
+        }
     }
     static{
 
@@ -39,11 +43,11 @@ public class ServerWorker extends Thread {
         }
     }
 
-    private void handleClientSocket() {
+    private void handleClientSocket() throws IOException {
         try {
             this.inputStream = clientSocket.getInputStream();
             this.outputStream = clientSocket.getOutputStream();
-            this. reader = new BufferedReader(new InputStreamReader(inputStream));
+            this.reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -53,14 +57,31 @@ public class ServerWorker extends Thread {
                     if ("q".equalsIgnoreCase(cmd)) {
                         break;
                     } else if ("login".equalsIgnoreCase(cmd)) {
-                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens,this.reader);
+                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens, this.reader);
                     } else if ("registration".equalsIgnoreCase(cmd)) {
                         handleRegistration(outputStream, tokens);
+                    }else if ("quit".equalsIgnoreCase(cmd)) {
+                        break;
                     }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } finally {
+            quit();
+
+        }
+    }
+
+    private void quit() {
+        if (login == null) {
+            login = " Unknown user";
+        }
+        System.out.println("The connection ended for" + login);
+        try {
+            inputStream.close();
+            outputStream.close();
+            clientSocket.close();
+            } catch (IOException e) {
+            System.out.println("Exception in getName : " + e.getMessage());
         }
     }
 

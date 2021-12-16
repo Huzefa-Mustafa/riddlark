@@ -11,6 +11,7 @@ public class HandleLogin {
         if (tokens.length == 3) {
             String userName = tokens[1];
             String password = tokens[2];
+            login=userName;
             user = new User(userName, password);
             if (checkIfLoggedIn(user)) {
                 String msg = "User is already logged in\n";
@@ -31,7 +32,7 @@ public class HandleLogin {
                             line = reader.readLine();
                             if (line.equalsIgnoreCase("1")) {
                                 boolean playGame = new PlayGame().playGameHandler(outputStream, inputStream, reader, user);
-                            } else if(user.getUserReply().equalsIgnoreCase("q")) {
+                            } else if(line.equalsIgnoreCase("q")) {
                                 break;
                             }
                         }

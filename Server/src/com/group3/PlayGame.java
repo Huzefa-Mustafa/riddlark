@@ -32,9 +32,9 @@ public class PlayGame {
             user.setIsReadyState(true);
             System.out.println(
                     "\rClient User : " + user.getName() +
-                    "\rUser Ready to Play : " + user.getIsReadyState() +
+                            "\rUser Ready to Play : " + user.getIsReadyState() +
 
-                    "\rReply >> " + user.getUserReply()
+                            "\rReply >> " + user.getUserReply()
             );
             String waitMsg ="Server Reply>>  No. of ready players in lobby are "+ lobbyGroup.getTotalReadyPlayer().size() +
                     "/" + lobbyGroup.getTotalPlayers() + ". Please wait for other players to join.";
@@ -115,7 +115,7 @@ public class PlayGame {
                 lobbyGroup.removePlayer(readyPlayer);
             }
             String waitMsg ="Server Reply>> You belong to group with id" + group1.getGroupID() +
-                ". No of players in group are " + group1.getTotalPlayers();
+                    ". No of players in group are " + group1.getTotalPlayers();
 
             group1.runGroupMsgThread(waitMsg);
         } else if (isReadyPlayerList.size() == 5) {
@@ -134,9 +134,9 @@ public class PlayGame {
             user.setIsReadyState(true);
             System.out.println(
                     "\rClient User : " + user.getName() +
-                    "\rGroup ID : " + user.getGroupID() +
+                            "\rGroup ID : " + user.getGroupID() +
 
-                    "\rReply >> " + user.getUserReply()
+                            "\rReply >> " + user.getUserReply()
             );
             runMgsThread(group, user, outputStream);
 
