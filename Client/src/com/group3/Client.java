@@ -2,15 +2,9 @@ package com.group3;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
-//    private final String serverName;
-//    private final int serverPort;
-
-    static ArrayList<UserStatusListener> userStatusListeners = new ArrayList<>();
-
     static Socket socket;
     static OutputStream serverOut;
     static InputStream serverIn;
@@ -40,18 +34,7 @@ public class Client {
         return false;
     }
 
-    public void addUserStatusListener(UserStatusListener listener) {
-        userStatusListeners.add(listener);
-    }
-
-    public void removeUserStatusListener(UserStatusListener listener) {
-        userStatusListeners.remove(listener);
-    }
-
     public void welcomePage() throws IOException {
-/*        if (login("123", "123")) {
-            System.out.println("Login successful");
-        }*/
          ClientWorker.clientWorker();
     }
 
