@@ -96,7 +96,7 @@ public class PlayGame {
         new Thread(() -> {
             try {
                 int i = 1;
-                while (i < 5) {
+                while (i <= 5) {
                     String waitMsg ="\rServer Reply>> Your Group ID: "+ group.getGroupID() +
                             ". No. of ready players in group are "+ group.getTotalReadyPlayer() +
                             "/" + group.getTotalPlayers() + ". Game starts in T - " + i;

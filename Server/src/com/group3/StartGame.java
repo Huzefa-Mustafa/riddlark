@@ -1,2 +1,5 @@
-package com.group3;public class StartGame {
+package com.group3;
+
+public class StartGame {
+
 }
