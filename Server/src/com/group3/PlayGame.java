@@ -35,11 +35,9 @@ public class PlayGame {
             groupList.add(group);
             System.out.println("Empty GroupList, New Group Created : " + group.getGroupID());
             user.setGroupID(group.getGroupID());
-            String serverReply ="\rServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
+            String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             outputStream.write((serverReply + "\n").getBytes());
-
-
             readyPlayerListener(user, group, reader, outputStream);
             return true;
         } else {
