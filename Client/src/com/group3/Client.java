@@ -37,5 +37,18 @@ public class Client {
     public void welcomePage() throws IOException {
          ClientWorker.clientWorker();
     }
+    public static void close() {
+        try {
+            if (serverOut != null) {
+                String cmd = "quit ";
+                serverOut.write(cmd.getBytes());
+            }
+            if (socket != null) {
+                socket.close();
+            }
+        } catch (IOException e) {
+            System.exit(0);
+        }
+    }
 
 }

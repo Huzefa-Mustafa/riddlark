@@ -33,7 +33,7 @@ public class PlayGame {
                         prevGroup.addPlayer(user);
                         System.out.println("Previous Group : " + prevGroup.toString());
                         user.setGroupID(prevGroup.getGroupID());
-                        String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
+                        String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
                         readyPlayerListener(user, prevGroup, reader, outputStream);
                         return true;
@@ -43,7 +43,7 @@ public class PlayGame {
                         groupList.add(newGroup);
                         System.out.println("New Group Created : " + newGroup.toString());
                         user.setGroupID(newGroup.getGroupID());
-                        String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
+                        String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
                         readyPlayerListener(user, newGroup, reader, outputStream);
                         return true;
@@ -82,7 +82,7 @@ public class PlayGame {
                 int i = 1;
                 while (i <= 5) {
                     if(group.getIsPlayingState()){break;}
-                    String waitMsg ="\rServer Reply>> Your Group ID: "+ group.getGroupID() +
+                    String waitMsg ="Server Reply>> Your Group ID: "+ group.getGroupID() +
                             ". No. of ready players in group are "+ group.getTotalReadyPlayer() +
                             "/" + group.getTotalPlayers() + ". Game starts in T - " + i;
                     outputStream.write((waitMsg + "\n").getBytes());
@@ -98,7 +98,7 @@ public class PlayGame {
                     /*
                      *  'E' is for termination
                      * */
-                    String serverReply ="\nE Server Reply>>" + user.getName() + " remove from group with ID: " + user.getGroupID();
+                    String serverReply ="E Server Reply>>" + user.getName() + " remove from group with ID: " + user.getGroupID();
                     outputStream.write((serverReply + "\n").getBytes());
                 }
             } catch (InterruptedException | IOException e) {

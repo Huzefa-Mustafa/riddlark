@@ -3,60 +3,73 @@ package com.group3;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.net.ConnectException;
 
 import static com.group3.Client.*;
 
 public class ClientWorker {
 
     public static void clientWorker() throws IOException {
-        String welcome = """
-                \r
-                \t **** WELCOME TO RIDDLARK ****\r
-                """;
-        System.out.println(welcome);
-        while (!socket.isClosed()) {
+        try {
 
-            String menu = """
-                    \t
-                    \r            ****  MENU  ****           \t
-                    \r              PLEASE Write         \t
-                    \r          **** 1 : Login    ****   \t
-                    \r          **** 2 : Register ****   \t
-                    \r          **** 3 : Quit     ****    \r
+
+            String welcome = """
+                    \r
+                    \t **** WELCOME TO RIDDLARK ****\r
                     """;
-            System.out.println(menu);
-            System.out.println("\n  Please enter your choice");
-            System.out.print("  Your Choice : ");
-            String input = scanner.nextLine();
-            if (checkIfDigit(input)) choice = Integer.parseInt(input);
-            else choice = 10;
+            System.out.println(welcome);
+            while (!socket.isClosed()) {
 
-            String userName = null;
-            String password = null;
-            if (choice == 1) {
-                System.out.print("\n\tEnter your User name : ");
-                userName = scanner.nextLine();
-                System.out.print("\tEnter your password : ");
-                password=scanner.nextLine();
-                if (login(userName, password)) {
-                    System.out.println("\t\t\nLogin successful");
-                }else {
-                    System.out.println("\t\t\nLogin failed");
-                }
-            }else if (choice == 2) {
-                System.out.print("\n\tEnter your User name : ");
-                userName = scanner.nextLine();
-                System.out.print("\tEnter your password : ");
-                password=scanner.nextLine();
-                if (registration(userName, password)) {
-                    System.out.println("Registration successful");
-                }else {
-                    System.err.println("Registration failed try with new user name");
-                }
-            } else if (choice == 3) {
-                break;
-            }else System.out.println("\n\t************** Please Enter Correct Choice! **************");
+                String menu = """
+                        \t
+                        \r            ****  MENU  ****           \t
+                        \r              PLEASE Write         \t
+                        \r          **** 1 : Login    ****   \t
+                        \r          **** 2 : Register ****   \t
+                        \r          **** 3 : Quit     ****    \r
+                        """;
+                System.out.println(menu);
+                System.out.println("\n  Please enter your choice");
+                System.out.print("  Your Choice : ");
+                String input = scanner.nextLine();
+                if (checkIfDigit(input)) choice = Integer.parseInt(input);
+                else choice = 10;
 
+                String userName = null;
+                String password = null;
+                if (choice == 1) {
+                    System.out.print("\n\tEnter your User name : ");
+                    userName = scanner.nextLine();
+                    System.out.print("\tEnter your password : ");
+                    password = scanner.nextLine();
+                    if (login(userName, password)) {
+                        System.out.println("\t\t\nLogin successful");
+                    } else {
+                        System.out.println("\t\t\nLogin failed");
+                    }
+                } else if (choice == 2) {
+                    System.out.print("\n\tEnter your User name : ");
+                    userName = scanner.nextLine();
+                    System.out.print("\tEnter your password : ");
+                    password = scanner.nextLine();
+                    if (registration(userName, password)) {
+                        System.out.println("Registration successful");
+                    } else {
+                        System.err.println("Registration failed try with new user name");
+                    }
+                } else if (choice == 3) {
+                    System.out.println("Thank you for Playing byeeee!");
+                    close();
+                } else System.out.println("\n\t************** Please Enter Correct Choice! **************");
+
+            }
+        }
+         catch (ConnectException e) {
+            System.out.println("The server is not running." + e);
+        }catch (IOException e) {
+            System.out.println("The connection to the server was lost.");
+        } finally {
+            close();
         }
 
     }
@@ -124,7 +137,7 @@ public class ClientWorker {
         }
     }
 
-    private static void startMessageReader() {
+    private static void  startMessageReader() {
         try {
             String line;
             while (true) {
