@@ -39,9 +39,9 @@ public class ClientWorker {
                 System.out.print("\tEnter your password : ");
                 password=scanner.nextLine();
                 if (login(userName, password)) {
-                    System.out.println("Login successful");
+                    System.out.println("\t\t\nLogin successful");
                 }else {
-                    System.out.println("\tLogin failed");
+                    System.out.println("\t\t\nLogin failed");
                 }
             }else if (choice == 2) {
                 System.out.print("\n\tEnter your User name : ");
@@ -76,13 +76,9 @@ public class ClientWorker {
         serverOut.write(cmd.getBytes());
 
         String response = bufferedIn.readLine();
-        System.out.println("Response Line:" + response);
+        System.out.println("\t\nResponse Line: " + response);
 
         if ("ok login".equalsIgnoreCase(response)) {
-//            String write = "hi word \n"; //\n is needed to send data out
-//            serverOut.write(write.getBytes());
-//            response = bufferedIn.readLine();
-//            System.out.println("Response Line:" + response);
             startPlayGame();
             return true;
         } else {
@@ -111,12 +107,13 @@ public class ClientWorker {
                 System.out.println(response);
                 while (!"q".equalsIgnoreCase(write)) {
 
-                    System.out.println("Press y to get Ready!!!");
-                    System.out.println("INFO: Enter 'q' to stop session");
+                    System.out.println("\t\t\nPress y to get Ready!!!");
+                    System.out.println("\t\tINFO: Enter 'q' to stop session");
                     write = scanner.nextLine();
                     serverOut.write((write+"\n").getBytes());
                     if ("y".equalsIgnoreCase(write)) {
                         startMessageReader();
+                        break;
                     }else if ("q".equalsIgnoreCase(write)) {
                         break;
                     }else System.out.println("\n\t************** Please Enter Correct option! **************");
@@ -137,52 +134,11 @@ public class ClientWorker {
                     String cmd = tokens[0];
                     System.out.println(line);
                     if ("Server Reply>>".equalsIgnoreCase(cmd)) {
-                        handleOnline(tokens);
                     }
-
-
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
-        }
-/*        Thread t = new Thread() {
-            @Override
-            public void run() {
-
-                readMessageLoop();
-            }
-        };
-        t.start();*/
-    }
-
-    private static void readMessageLoop() {
-        try {
-            String line;
-            while (true) {
-                line = bufferedIn.readLine();
-                String[] tokens = StringUtils.split(line);
-                System.out.println("Hi");
-                if (tokens != null && tokens.length > 0) {
-                    String cmd = tokens[0];
-                    if ("Server Reply>>".equalsIgnoreCase(cmd)) {
-                        handleOnline(tokens);
-                    }
-
-
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void handleOnline(String[] tokens) {
-        String login = tokens[1];
-        for(UserStatusListener listener : userStatusListeners) {
-            listener.online(login);
         }
     }
 

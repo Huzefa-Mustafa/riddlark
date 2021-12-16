@@ -10,17 +10,8 @@ public class PlayGame {
      * */
     private static ArrayList<Group> groupList = new ArrayList<>();
     static User userName;
-    /**
-     //     * @param user to be willing to participate in the game
-     * */
+
     public Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user) throws IOException {
-//        if(user.getUserReply() == "q"){
-//            System.out.println(
-//                    "\rClient User : " + user.getName() +
-//                    "\rReply >> " + user.getUserReply()
-//            );
-//            return false;
-//        }
 
 
         if (groupList.isEmpty()) {
@@ -30,7 +21,6 @@ public class PlayGame {
             System.out.println("Empty GroupList, New Group Created : " + group.getGroupID());
             user.setGroupID(group.getGroupID());
             String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             outputStream.write((serverReply + "\n").getBytes());
             readyPlayerListener(user, group, reader, outputStream);
             return true;

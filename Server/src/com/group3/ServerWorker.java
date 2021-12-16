@@ -5,14 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 public class ServerWorker extends Thread {
     private final Server server;
     private final Socket clientSocket;
-//    private BufferedReader inputStream;
-    private PrintWriter outoutStream;
     private OutputStream outputStream;
     private InputStream inputStream;
     private BufferedReader reader;
@@ -21,32 +18,25 @@ public class ServerWorker extends Thread {
     static ArrayList<User> loggedInUserList = new ArrayList<>();
     static User user = null;
     static File file = new File("userdata.txt");
-    private Properties properties;
 
     public ServerWorker(Server server, Socket clientSocket) {
         this.server = server;
         this.clientSocket=clientSocket;
-//        new Thread(this).start();
     }
 
     @Override
     public void run() {
-
         handleClientSocket();
-
     }
     static{
 
         if (!file.exists()) {
             try {
                 file.createNewFile();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
 
     private void handleClientSocket() {
@@ -55,24 +45,6 @@ public class ServerWorker extends Thread {
             this.outputStream = clientSocket.getOutputStream();
             this. reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String welcome = """
-                \r
-                \t **** WELCOME TO RIDDLARK ****\r
-                """;
-            String menu = """
-                \t
-                \r            ****  MENU  ****           \t
-                \r              PLEASE SELECT         \t
-                \r          **** 1 : Login    ****   \t
-                \r          **** 2 : Register ****   \t
-                \r                                   \r
-                \rINFO: Enter 'q' to stop session    \r
-                \rPlease enter your choice           \r
-                \rYour Choice :                      \r
-                """;
-//          outputStream.write(welcome.getBytes());
-//            outputStream.write(menu.getBytes());
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = StringUtils.split(line);
@@ -82,15 +54,10 @@ public class ServerWorker extends Thread {
                         break;
                     } else if ("login".equalsIgnoreCase(cmd)) {
                         new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens,this.reader);
-/*                        String response = reader.readLine();
-                        System.out.println("Response Line:" + response);*/
-
                     } else if ("registration".equalsIgnoreCase(cmd)) {
                         handleRegistration(outputStream, tokens);
                     }
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,34 +80,4 @@ public class ServerWorker extends Thread {
         }
     }
 
-    private void handleLogin(OutputStream outputStream, String[] tokens) throws IOException {
-
-    }
-
-    private void handleLogoff() throws IOException {
-        server.removeWorker(this);
-        List<ServerWorker> workerList = server.getWorkerList();
-
-        // send other online users current user's status
-        String onlineMsg = "offline " + login + "\n";
-        for(ServerWorker worker : workerList) {
-            if (!login.equals(worker.getLogin())) {
-                worker.send(onlineMsg);
-            }
-        }
-        clientSocket.close();
-    }
-
-    private void send(String msg) {
-        if (login != null) {
-            try {
-                outputStream.write(msg.getBytes());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    private String getLogin() {
-        return login;
-    }
 }
