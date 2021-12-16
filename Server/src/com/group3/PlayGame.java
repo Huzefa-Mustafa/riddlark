@@ -33,9 +33,10 @@ public class PlayGame {
             user.setGroupID(group.getGroupID());
             String serverReply ="\rServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            outputStream.write(serverReply.getBytes());
+            outputStream.write((serverReply + "\n").getBytes());
 //            line = reader.readLine();
 //            String clientReply = line;
+            runMgsThread(group, outputStream);
 
         } else {
             Iterator<Group> iter = groupList.iterator();
@@ -47,7 +48,8 @@ public class PlayGame {
                         System.out.println("Previous Group : " + prevGroup.toString());
                         user.setGroupID(prevGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-                        outputStream.write(serverReply.getBytes());
+                        outputStream.write((serverReply + "\n").getBytes());
+                        runMgsThread(prevGroup,outputStream);
                     } else if (!iter.hasNext()) {
                         Group newGroup = new Group();
                         newGroup.addPlayer(user);
@@ -55,8 +57,8 @@ public class PlayGame {
                         System.out.println("New Group Created : " + newGroup.toString());
                         user.setGroupID(newGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-                        outputStream.write(serverReply.getBytes());
-
+                        outputStream.write((serverReply + "\n").getBytes());
+                        runMgsThread(newGroup, outputStream);
                     }
                 }
 
@@ -68,7 +70,19 @@ public class PlayGame {
 
         }
     }
-
+    private static void runMgsThread(Group group, OutputStream outputStream){
+        new Thread(() -> {
+            try {
+                while (group.getTotalPlayers() < 3) {
+                    String waitMsg ="\rServer Reply>> You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.";
+                    outputStream.write((waitMsg + "\n").getBytes());
+                    Thread.sleep(5000);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
     private static Group getGroupById(String groupID){
         for (Group group : groupList){
             if (group.getGroupID().equals(groupID)) { return group; }
