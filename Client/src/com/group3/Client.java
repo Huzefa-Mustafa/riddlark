@@ -9,7 +9,8 @@ public class Client {
 //    private final String serverName;
 //    private final int serverPort;
 
-    private ArrayList<UserStatusListener> userStatusListeners = new ArrayList<>();
+    static ArrayList<UserStatusListener> userStatusListeners = new ArrayList<>();
+
     static Socket socket;
     static OutputStream serverOut;
     static InputStream serverIn;

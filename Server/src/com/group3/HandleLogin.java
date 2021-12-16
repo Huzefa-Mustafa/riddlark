@@ -67,23 +67,13 @@ public class HandleLogin {
 
                     if(user != null){
                         String line;
-                        String menu = """
-                                        \t
-                                        \r            ****   START RIDDLARK   ****         \t
-                                        \r             Please Enter 'y' to continue        \t
-                                        \r                                                 \r
-                                        \rINFO: Enter 'q' to stop session                  \r
-                                        \rPlease enter your choice                         \r
-                                        \rYour Choice :                                    \r
-                                        """;
                         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                        outputStream.write(menu.getBytes());
                         line = reader.readLine();
                         String clientReply = line;
                         System.out.println(clientReply);
                         user.setUserReply(clientReply);
 
-                        if(clientReply.equals("y")) new PlayGame().playGameHandler(outputStream, inputStream, user);
+                        if(clientReply.equalsIgnoreCase("y")) new PlayGame().playGameHandler(outputStream, inputStream, user);
                     }
 
 

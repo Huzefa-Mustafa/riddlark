@@ -1,5 +1,7 @@
 package com.group3;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 
 import static com.group3.Client.*;
@@ -51,7 +53,9 @@ public class ClientWorker {
                 }else {
                     System.err.println("Registration failed try with new user name");
                 }
-            }
+            } else if (choice == 3) {
+                break;
+            }else System.out.println("\n\t************** Please Enter Correct Choice! **************");
 
         }
 
@@ -75,12 +79,98 @@ public class ClientWorker {
         System.out.println("Response Line:" + response);
 
         if ("ok login".equalsIgnoreCase(response)) {
-            startMessageReader();
+            startPlayGame();
             return true;
         } else {
             return false;
         }
     }
+
+    private static void startPlayGame() throws IOException {
+
+        String write = null;
+        while (!"q".equalsIgnoreCase(write)) {
+            String menu = """
+                    \t
+                    \r            ****   START RIDDLARK   ****         \t
+                    \r             Please Enter 'y' to continue        \t
+                    \r                                                 \r
+                    \rINFO: Enter 'q' to stop session                  \r
+                    \rPlease enter your choice                         \r
+                    \rYour Choice :                                    \r
+                    """;
+            System.out.println(menu);
+            write = scanner.nextLine();
+            if ("y".equalsIgnoreCase(write)) {
+                System.out.println(write);
+                serverOut.write(write.getBytes());
+                startMessageReader();
+
+            } else if ("q".equalsIgnoreCase(write)) {
+                break;
+            }else System.out.println("\n\t************** Please Enter Correct option! **************");
+        }
+    }
+
+    private static void startMessageReader() {
+        try {
+            String line;
+            while (true) {
+                line = bufferedIn.readLine();
+                String[] tokens = StringUtils.split(line);
+                System.out.println("Hi");
+                if (tokens != null && tokens.length > 0) {
+                    String cmd = tokens[0];
+                    if ("Server Reply>>".equalsIgnoreCase(cmd)) {
+                        handleOnline(tokens);
+                    }
+
+
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+/*        Thread t = new Thread() {
+            @Override
+            public void run() {
+
+                readMessageLoop();
+            }
+        };
+        t.start();*/
+    }
+
+    private static void readMessageLoop() {
+        try {
+            String line;
+            while (true) {
+                line = bufferedIn.readLine();
+                String[] tokens = StringUtils.split(line);
+                System.out.println("Hi");
+                if (tokens != null && tokens.length > 0) {
+                    String cmd = tokens[0];
+                    if ("Server Reply>>".equalsIgnoreCase(cmd)) {
+                        handleOnline(tokens);
+                    }
+
+
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void handleOnline(String[] tokens) {
+        String login = tokens[1];
+        for(UserStatusListener listener : userStatusListeners) {
+            listener.online(login);
+        }
+    }
+
     static boolean checkIfDigit(String input) {
         if (input.length() == 0) return false;
         for (int i = 0; i < input.length(); i++) {
@@ -91,6 +181,4 @@ public class ClientWorker {
         return true;
     }
 
-    static void startMessageReader() {
-    }
 }

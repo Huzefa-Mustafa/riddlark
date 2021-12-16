@@ -31,7 +31,7 @@ public class PlayGame {
             groupList.add(group);
             System.out.println("Empty GroupList, New Group Created : " + group.getGroupID());
             user.setGroupID(group.getGroupID());
-            String serverReply ="\rServer Reply >> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
+            String serverReply ="\rServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             outputStream.write(serverReply.getBytes());
 //            line = reader.readLine();
@@ -46,7 +46,7 @@ public class PlayGame {
                         prevGroup.addPlayer(user);
                         System.out.println("Previous Group : " + prevGroup.toString());
                         user.setGroupID(prevGroup.getGroupID());
-                        String serverReply ="\nServer Reply >> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
+                        String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write(serverReply.getBytes());
                     } else if (!iter.hasNext()) {
                         Group newGroup = new Group();
@@ -54,7 +54,7 @@ public class PlayGame {
                         groupList.add(newGroup);
                         System.out.println("New Group Created : " + newGroup.toString());
                         user.setGroupID(newGroup.getGroupID());
-                        String serverReply ="\nServer Reply >> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
+                        String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write(serverReply.getBytes());
 
                     }
