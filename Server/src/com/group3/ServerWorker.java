@@ -29,7 +29,7 @@ public class ServerWorker extends Thread {
     public void run() {
         try {
             handleClientSocket();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("An error occurred when connecting to new client or communication with that client.");
         }
     }
@@ -44,7 +44,7 @@ public class ServerWorker extends Thread {
         }
     }
 
-    private void handleClientSocket() throws IOException {
+    private void handleClientSocket() throws IOException, InterruptedException {
         try {
             this.inputStream = clientSocket.getInputStream();
             this.outputStream = clientSocket.getOutputStream();

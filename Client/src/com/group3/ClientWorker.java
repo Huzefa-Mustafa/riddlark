@@ -11,8 +11,6 @@ public class ClientWorker {
 
     public static void clientWorker() throws IOException {
         try {
-
-
             String welcome = """
                     \r
                     \t **** WELCOME TO RIDDLARK ****\r
@@ -114,8 +112,8 @@ public class ClientWorker {
                     """;
             System.out.println(menu);
             write = scanner.nextLine();
-            serverOut.write((write+"\n").getBytes());
             if ("1".equalsIgnoreCase(write)) {
+                serverOut.write((write+"\n").getBytes());
                 String response = bufferedIn.readLine();
                 System.out.println(response);
                 while (!"q".equalsIgnoreCase(write)) {
@@ -123,8 +121,8 @@ public class ClientWorker {
                     System.out.println("\t\t\nPress y to get Ready!!!");
                     System.out.println("\t\tINFO: Enter 'q' to stop session");
                     write = scanner.nextLine();
-                    serverOut.write((write+"\n").getBytes());
                     if ("y".equalsIgnoreCase(write)) {
+                        serverOut.write((write+"\n").getBytes());
                         startMessageReader();
                         break;
                     }else if ("q".equalsIgnoreCase(write)) {

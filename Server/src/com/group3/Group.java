@@ -10,15 +10,11 @@ public class Group {
     private int numberOfGroups;
     private ArrayList<User> players = new ArrayList<>();
     private Boolean isPlaying;
-//    private OutputStream outputStream;
-//    private InputStream inputStream;
-//    private BufferedReader reader;
+
     Group(){
         ++groupID;
         this.isPlaying = Boolean.FALSE;
-//        this.outputStream = outputStream;
-//        this.inputStream = inputStream;
-//        this.reader = reader;
+
     }
     /**
      * @return the current group id.
