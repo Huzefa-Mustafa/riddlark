@@ -5,14 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class Server  extends Thread{
     private final int serverPort;
     static ArrayList<ServerWorker> workerList = new ArrayList<>();
-
-    static Vector<ServerWorker> ar = new Vector<>();
-
     public Server(int serverPort) {
         this.serverPort = serverPort;
     }
@@ -25,6 +21,7 @@ public class Server  extends Thread{
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
                 ServerWorker worker = new ServerWorker(this, clientSocket);
+                worker.setName("Worker"+workerList.size()+1);
                 workerList.add(worker);
                 worker.start();
             }

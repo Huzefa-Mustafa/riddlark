@@ -58,7 +58,7 @@ public class ServerWorker extends Thread {
                     if ("q".equalsIgnoreCase(cmd)) {
                         break;
                     } else if ("login".equalsIgnoreCase(cmd)) {
-                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens, this.reader,this.server);
+                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens, this.reader, this.server, this.getName());
                     } else if ("registration".equalsIgnoreCase(cmd)) {
                         handleRegistration(outputStream, tokens);
                     }else if ("quit".equalsIgnoreCase(cmd)) {

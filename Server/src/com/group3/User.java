@@ -7,7 +7,7 @@ public class User  {
     boolean isReady;
     String userReply;
     String groupID;
-
+    String threadWorkerName;
     public User() {
 
     }
@@ -60,6 +60,17 @@ public class User  {
     public void setUserReply(String userReply) {
         this.userReply = userReply;
     }
+
+    public String getWorkerName() {
+        return this.threadWorkerName;
+    }
+
+    public void setWorkerName(String threadWorkerName) {
+        this.threadWorkerName = threadWorkerName;
+    }
+
+
+
     public void display(){
         System.out.println("\t\tname :" + name);
         System.out.println("\t\tpass :" + password);
