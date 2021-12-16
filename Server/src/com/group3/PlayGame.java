@@ -13,23 +13,17 @@ public class PlayGame {
     /**
      //     * @param user to be willing to participate in the game
      * */
-    public Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, User user) throws IOException {
-        if(user.getUserReply() == "q"){
-            System.out.println(
-                    "\rClient User : " + user.getName() +
-                    "\rReply >> " + user.getUserReply()
-            );
-            return false;
-        }
+    public Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user) throws IOException {
+//        if(user.getUserReply() == "q"){
+//            System.out.println(
+//                    "\rClient User : " + user.getName() +
+//                    "\rReply >> " + user.getUserReply()
+//            );
+//            return false;
+//        }
 
-        if(user.getUserReply() == "y"){
+        if(user.getUserReply().equalsIgnoreCase("y")){
             String groupID = user.getGroupID();
-            user.setIsReadyState(true);
-            System.out.println(
-                    "\rClient User : " + user.getName() + "" +
-                    "\rGroup ID : " + groupID +
-                    "\rReply >> " + user.getUserReply()
-            );
 
             Group group = getGroupById(groupID);
             System.out.println("Current groupID: " + group.getGroupID());
@@ -44,8 +38,9 @@ public class PlayGame {
             String serverReply ="\rServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             outputStream.write((serverReply + "\n").getBytes());
-//            line = reader.readLine();
-//            String clientReply = line;
+
+
+            readyPlayerListener(user, group, reader, outputStream);
             return true;
         } else {
             Iterator<Group> iter = groupList.iterator();
@@ -58,7 +53,7 @@ public class PlayGame {
                         user.setGroupID(prevGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
-//                        runMgsThread(prevGroup,outputStream);
+                        readyPlayerListener(user, prevGroup, reader, outputStream);
                         return true;
                     } else if (!iter.hasNext()) {
                         Group newGroup = new Group();
@@ -68,7 +63,7 @@ public class PlayGame {
                         user.setGroupID(newGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
-//                        runMgsThread(newGroup, outputStream);
+                        readyPlayerListener(user, newGroup, reader, outputStream);
                         return true;
                     }
                 }
@@ -80,16 +75,34 @@ public class PlayGame {
 
 
         }
+        return false;
+    }
+
+    private static void readyPlayerListener(User user ,Group group, BufferedReader reader, OutputStream outputStream) throws IOException {
+        String line = reader.readLine();
+        if(line.equalsIgnoreCase("y")){
+            user.setUserReply(line);
+            user.setIsReadyState(true);
+            System.out.println(
+                    "\rClient User : " + user.getName() +
+                    "\rGroup ID : " + user.getGroupID() +
+
+                    "\rReply >> " + user.getUserReply()
+            );
+            runMgsThread(group, outputStream);
+        }
     }
     private static void runMgsThread(Group group, OutputStream outputStream){
         new Thread(() -> {
             try {
                 int i = 1;
                 while (i < 5) {
-                    String waitMsg ="\rServer Reply>> Your Group ID: "+ group.getGroupID() + ". No. of ready players in group are "+ group.getTotalReadyPlayer() + "/" + group.getTotalPlayers() + ". Game starts in T - " + i;
+                    String waitMsg ="\rServer Reply>> Your Group ID: "+ group.getGroupID() +
+                            ". No. of ready players in group are "+ group.getTotalReadyPlayer() +
+                            "/" + group.getTotalPlayers() + ". Game starts in T - " + i;
                     outputStream.write((waitMsg + "\n").getBytes());
-                    i++;
                     Thread.sleep(5000);
+                    i++;
                 }
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();

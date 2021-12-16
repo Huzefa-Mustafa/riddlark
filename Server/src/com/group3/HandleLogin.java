@@ -50,9 +50,10 @@ public class HandleLogin {
                         String clientReply = line;
                         System.out.println(clientReply);
                         user.setUserReply(clientReply);
-                        while (!user.getUserReply().equalsIgnoreCase("q")) {
-                            if(clientReply.equalsIgnoreCase("1")) new PlayGame().playGameHandler(outputStream, inputStream, user);
-
+                        if (!user.getUserReply().equalsIgnoreCase("q")) {
+                            if(clientReply.equalsIgnoreCase("1")) {
+                                boolean playGame = new PlayGame().playGameHandler(outputStream, inputStream, reader, user);
+                            }
                         }
                         removeLoggedIn(user);
 
