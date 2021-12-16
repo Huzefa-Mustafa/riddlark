@@ -21,7 +21,7 @@ public class PlayGame {
 
         lobbyGroup.addPlayer(user);
 
-        System.out.println("Lobby group created : " + lobbyGroup.getGroupID());
+        System.out.println("User is added in lobby ");
 
         String serverReply ="Server Reply>> Hello " + user.getName() + "! Welcome to Riddlark.";
         outputStream.write((serverReply + "\n").getBytes());
@@ -89,7 +89,7 @@ public class PlayGame {
                             ". No of players in group are " + group1.getTotalPlayers();
                     worker.outputStream.write((waitMsg + "\n").getBytes());
                 }
-                new PlayGame();
+//                new PlayGame();
             }
 
     }
