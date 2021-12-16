@@ -1,9 +1,6 @@
 package com.group3;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Group {
     /**
@@ -69,8 +66,8 @@ public class Group {
         return isReadyUserList;
     }
 
-    public List<User> getPlayers() {
-        return players;
+    public ArrayList<User> getPlayers() {
+        return this.players;
     }
 
     @Override
