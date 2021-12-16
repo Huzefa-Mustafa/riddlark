@@ -9,7 +9,6 @@ import java.util.List;
 public class Server  extends Thread{
     private final int serverPort;
     static ArrayList<ServerWorker> workerList = new ArrayList<>();
-
     public Server(int serverPort) {
         this.serverPort = serverPort;
     }
@@ -22,6 +21,7 @@ public class Server  extends Thread{
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Accepted connection from " + clientSocket);
                 ServerWorker worker = new ServerWorker(this, clientSocket);
+                worker.setName("Worker"+workerList.size()+1);
                 workerList.add(worker);
                 worker.start();
             }
