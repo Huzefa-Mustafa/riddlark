@@ -40,55 +40,22 @@ public class HandleLogin {
                         outputStream.write(msg.getBytes());
                         System.out.println("Login successful.");
                         loggedInUserList.add(user);
-/*                    reader = new BufferedReader(new InputStreamReader(inputStream));
-                    String response = reader.readLine();
-                    System.out.println("Response Line:" + response);*/
-                        user = new User(userName, password);
-//                    this.login = userName;
 
-//                        if (loggedInUserList.isEmpty()) {
-//                            loggedInUserList.add(user);
-//                        } else if (checkIfLoggedIn(user)) {
-//                            System.out.println("Incoming user trying to attempt multiple access!");
-//                        } else {
-//                            loggedInUserList.add(user);
-//                        }
+//                        user = new User(userName, password);
+
                         System.out.println("New User Logged in, No. of Logged In Users now " + loggedInUserList.size());
-//                    List<ServerWorker> workerList = server.getWorkerList();
-//                    // send current user all other online logins
-//                    for(ServerWorker worker : workerList) {
-//                        if (worker.getLogin() != null) {
-//                            if (!login.equals(worker.getLogin())) {
-//                                String msg2 = "online " + worker.getLogin() + "\n";
-//                                send(msg2);
-//                            }
-//                        }
-//                    }
+                        String line;
+                        line = reader.readLine();
+                        System.out.println("Response Line:" + line);
+                        String clientReply = line;
+                        System.out.println(clientReply);
+                        user.setUserReply(clientReply);
+                        while (!user.getUserReply().equalsIgnoreCase("q")) {
+                            if(clientReply.equalsIgnoreCase("1")) new PlayGame().playGameHandler(outputStream, inputStream, user);
 
-                        // send other online users current user's status
-//                    String onlineMsg = "online " + login + "\n";
-//                    for(ServerWorker worker : workerList) {
-//                        if (!login.equals(worker.getLogin())) {
-//                            worker.send(onlineMsg);
-//                        }
-//                    }
-                        /*
-                         * play Game code
-                         * */
-
-                        if(user != null){
-                            String line;
-                            reader = new BufferedReader(new InputStreamReader(inputStream));
-//                        String response = reader.readLine();
-//                        System.out.println("Response Line:" + response);
-                            line = reader.readLine();
-                            System.out.println("Response Line:" + line);
-                            String clientReply = line;
-                            System.out.println(clientReply);
-                            user.setUserReply(clientReply);
-
-                            if(clientReply.equalsIgnoreCase("y")) new PlayGame().playGameHandler(outputStream, inputStream, user);
                         }
+                        removeLoggedIn(user);
+
 
 
 
@@ -113,5 +80,8 @@ public class HandleLogin {
             }
         }
         return false;
+    }
+    private void removeLoggedIn(User requestingUser) {
+        loggedInUserList.removeIf(user -> user.getName().equals(requestingUser.getName()));
     }
 }

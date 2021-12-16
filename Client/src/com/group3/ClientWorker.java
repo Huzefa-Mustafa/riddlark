@@ -97,7 +97,7 @@ public class ClientWorker {
             String menu = """
                     \t
                     \r            ****   START RIDDLARK   ****         \t
-                    \r             Please Enter 'y' to continue        \t
+                    \r             Please Enter '1' to Play Game       \t
                     \r                                                 \r
                     \rINFO: Enter 'q' to stop session                  \r
                     \rPlease enter your choice                         \r
@@ -105,9 +105,9 @@ public class ClientWorker {
                     """;
             System.out.println(menu);
             write = scanner.nextLine();
-            if ("y".equalsIgnoreCase(write)) {
+            serverOut.write((write+"\n").getBytes());
+            if ("1".equalsIgnoreCase(write)) {
                 System.out.println(write);
-                serverOut.write((write+"\n").getBytes());
                 startMessageReader();
 
             } else if ("q".equalsIgnoreCase(write)) {
