@@ -33,7 +33,7 @@ public class PlayGame {
             user.setGroupID(group.getGroupID());
             String serverReply ="\rServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            outputStream.write(serverReply.getBytes());
+            outputStream.write((serverReply+"\n").getBytes());
 //            line = reader.readLine();
 //            String clientReply = line;
 
@@ -47,7 +47,7 @@ public class PlayGame {
                         System.out.println("Previous Group : " + prevGroup.toString());
                         user.setGroupID(prevGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-                        outputStream.write(serverReply.getBytes());
+                        outputStream.write((serverReply+"\n").getBytes());
                     } else if (!iter.hasNext()) {
                         Group newGroup = new Group();
                         newGroup.addPlayer(user);
@@ -55,7 +55,7 @@ public class PlayGame {
                         System.out.println("New Group Created : " + newGroup.toString());
                         user.setGroupID(newGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-                        outputStream.write(serverReply.getBytes());
+                        outputStream.write((serverReply+"\n").getBytes());
 
                     }
                 }
@@ -65,8 +65,9 @@ public class PlayGame {
                 e.printStackTrace();
             }
 
-
         }
+        for (int i = 0;i<10;)
+
     }
 
     private static Group getGroupById(String groupID){
