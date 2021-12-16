@@ -79,6 +79,10 @@ public class ClientWorker {
         System.out.println("Response Line:" + response);
 
         if ("ok login".equalsIgnoreCase(response)) {
+//            String write = "hi word \n"; //\n is needed to send data out
+//            serverOut.write(write.getBytes());
+//            response = bufferedIn.readLine();
+//            System.out.println("Response Line:" + response);
             startPlayGame();
             return true;
         } else {
@@ -103,7 +107,7 @@ public class ClientWorker {
             write = scanner.nextLine();
             if ("y".equalsIgnoreCase(write)) {
                 System.out.println(write);
-                serverOut.write(write.getBytes());
+                serverOut.write((write+"\n").getBytes());
                 startMessageReader();
 
             } else if ("q".equalsIgnoreCase(write)) {
@@ -118,9 +122,9 @@ public class ClientWorker {
             while (true) {
                 line = bufferedIn.readLine();
                 String[] tokens = StringUtils.split(line);
-                System.out.println("Hi");
                 if (tokens != null && tokens.length > 0) {
                     String cmd = tokens[0];
+                    System.out.println(line);
                     if ("Server Reply>>".equalsIgnoreCase(cmd)) {
                         handleOnline(tokens);
                     }

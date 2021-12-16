@@ -20,7 +20,7 @@ public class HandleLogin {
             }
         }
     }
-    public void loginHandler(OutputStream outputStream,InputStream inputStream, String[] tokens) throws IOException {
+    public void loginHandler(OutputStream outputStream, InputStream inputStream, String[] tokens, BufferedReader reader) throws IOException {
         if (tokens.length == 3) {
             String userName = tokens[1];
             String password = tokens[2];
@@ -32,6 +32,9 @@ public class HandleLogin {
                     String msg = "ok login\n";
                     outputStream.write(msg.getBytes());
                     System.out.println("Login successful.");
+/*                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    String response = reader.readLine();
+                    System.out.println("Response Line:" + response);*/
                     user = new User(userName, password);
 //                    this.login = userName;
 
@@ -67,8 +70,11 @@ public class HandleLogin {
 
                     if(user != null){
                         String line;
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+//                        String response = reader.readLine();
+//                        System.out.println("Response Line:" + response);
                         line = reader.readLine();
+                        System.out.println("Response Line:" + line);
                         String clientReply = line;
                         System.out.println(clientReply);
                         user.setUserReply(clientReply);

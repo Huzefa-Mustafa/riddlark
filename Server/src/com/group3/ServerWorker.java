@@ -15,6 +15,7 @@ public class ServerWorker extends Thread {
     private PrintWriter outoutStream;
     private OutputStream outputStream;
     private InputStream inputStream;
+    private BufferedReader reader;
     private String login = null;
     static ArrayList<User> usersList = new ArrayList<>();
     static ArrayList<User> loggedInUserList = new ArrayList<>();
@@ -52,6 +53,7 @@ public class ServerWorker extends Thread {
         try {
             this.inputStream = clientSocket.getInputStream();
             this.outputStream = clientSocket.getOutputStream();
+            this. reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String welcome = """
                 \r
@@ -70,7 +72,7 @@ public class ServerWorker extends Thread {
                 """;
 //          outputStream.write(welcome.getBytes());
 //            outputStream.write(menu.getBytes());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = StringUtils.split(line);
@@ -79,7 +81,9 @@ public class ServerWorker extends Thread {
                     if ("q".equalsIgnoreCase(cmd)) {
                         break;
                     } else if ("login".equalsIgnoreCase(cmd)) {
-                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens);
+                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens,this.reader);
+/*                        String response = reader.readLine();
+                        System.out.println("Response Line:" + response);*/
 
                     } else if ("registration".equalsIgnoreCase(cmd)) {
                         handleRegistration(outputStream, tokens);
