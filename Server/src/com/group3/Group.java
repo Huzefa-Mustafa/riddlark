@@ -1,8 +1,6 @@
 package com.group3;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +13,15 @@ public class Group {
     private int numberOfGroups;
     private ArrayList<User> players = new ArrayList<>();
     private Boolean isPlaying;
-    private OutputStream outputStream;
-    private InputStream inputStream;
-    private BufferedReader reader;
-    Group(OutputStream outputStream, InputStream inputStream, BufferedReader reader){
+//    private OutputStream outputStream;
+//    private InputStream inputStream;
+//    private BufferedReader reader;
+    Group(){
         ++groupID;
         this.isPlaying = Boolean.FALSE;
-        this.outputStream = outputStream;
-        this.inputStream = inputStream;
-        this.reader = reader;
+//        this.outputStream = outputStream;
+//        this.inputStream = inputStream;
+//        this.reader = reader;
     }
     /**
      * @return the current group id.
@@ -70,7 +68,7 @@ public class Group {
         }
         return isReadyUserList;
     }
-    void runGroupMsgThread(String message) {
+    void runGroupMsgThread(OutputStream outputStream,String message) {
         new Thread(() -> {
             try {
                 while (!this.getIsPlayingState()) {

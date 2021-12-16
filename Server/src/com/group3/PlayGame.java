@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import static com.group3.ServerWorker.*;
-
 //import static com.group3.ServerWorker.*;
 public class PlayGame {
     /**
@@ -15,31 +13,41 @@ public class PlayGame {
      * */
     private static ArrayList<Group> groupList = new ArrayList<>();
     static User userName;
-    static Group lobbyGroup = new Group(outputStream,inputStream,reader);
+    static Group lobbyGroup = new Group();
     static ArrayList<User> isReadyPlayerList = new ArrayList<>();
     public synchronized Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user) throws IOException {
 
 
         lobbyGroup.addPlayer(user);
 //        groupList.add(group);
+/*        for (ServerWorker worker : workerList) {
+            if (worker.getIsReadyState() != null)
+
+        }*/
         System.out.println("Lobby group created : " + lobbyGroup.getGroupID());
 //        user.setGroupID(group.getGroupID());
         String serverReply ="Server Reply>> Hello " + user.getName() + "! Welcome to Riddlark.";
         outputStream.write((serverReply + "\n").getBytes());
         String line = reader.readLine();
+
         if(line.equalsIgnoreCase("y")) {
             user.setUserReply(line);
             user.setIsReadyState(true);
             System.out.println(
-                    "\rClient User : " + user.getName() +
-                            "\rUser Ready to Play : " + user.getIsReadyState() +
+                    "Client User : " + user.getName() +
+                            "User Ready to Play : " + user.getIsReadyState() +
 
-                            "\rReply >> " + user.getUserReply()
+                            "Reply >> " + user.getUserReply()
             );
             String waitMsg ="Server Reply>>  No. of ready players in lobby are "+ lobbyGroup.getTotalReadyPlayer().size() +
                     "/" + lobbyGroup.getTotalPlayers() + ". Please wait for other players to join.";
 
-            lobbyGroup.runGroupMsgThread(waitMsg);
+            lobbyGroup.runGroupMsgThread(outputStream,waitMsg);
+        }
+        try {
+            splitLobbyPlayersInGroup(outputStream);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
 
@@ -97,7 +105,7 @@ public class PlayGame {
         return false;
     }
 
-    private static void splitLobbyPlayersInGroup(OutputStream outputStream, InputStream inputStream, BufferedReader reader) throws InterruptedException {
+    private static void splitLobbyPlayersInGroup(OutputStream outputStream) throws InterruptedException {
         /**
          * if total ready players = 2 , 3 and 4 : Create 1 group
          * if total ready players = 5 : Create 1 groups for 4 players and
@@ -106,24 +114,26 @@ public class PlayGame {
          * if total ready players = 7 : Create 2 groups of 3 and 2 players
          * if total ready players = 8 : Create 2 groups of 4 players each
          * */
-        Thread.sleep(30000);
-        isReadyPlayerList = lobbyGroup.getTotalReadyPlayer();
-        if (isReadyPlayerList.size() == 2 || isReadyPlayerList.size() == 3 || isReadyPlayerList.size() == 4){
-            Group group1 = new Group(outputStream, inputStream, reader);
-            for (User readyPlayer: isReadyPlayerList){
-                group1.addPlayer(readyPlayer);
-                lobbyGroup.removePlayer(readyPlayer);
-            }
-            String waitMsg ="Server Reply>> You belong to group with id" + group1.getGroupID() +
-                    ". No of players in group are " + group1.getTotalPlayers();
 
-            group1.runGroupMsgThread(waitMsg);
-        } else if (isReadyPlayerList.size() == 5) {
+            Thread.sleep(30000);
+            isReadyPlayerList = lobbyGroup.getTotalReadyPlayer();
+            if (isReadyPlayerList.size() == 2 || isReadyPlayerList.size() == 3 || isReadyPlayerList.size() == 4){
+                Group group1 = new Group();
+                for (User readyPlayer: isReadyPlayerList){
+                    group1.addPlayer(readyPlayer);
+                    lobbyGroup.removePlayer(readyPlayer);
+                }
+                String waitMsg ="Server Reply>> You belong to group with id" + group1.getGroupID() +
+                        ". No of players in group are " + group1.getTotalPlayers();
+
+                group1.runGroupMsgThread(outputStream,waitMsg);
+            } else if (isReadyPlayerList.size() == 5) {
 //            Group Group1 = new Group(); // of 4 players
-        } else if (isReadyPlayerList.size() > 5 ) {
+            } else if (isReadyPlayerList.size() > 5 ) {
 //            Group Group1 = new Group();
 //            Group Group2 = new Group();
-        }
+            }
+
     }
 
 
