@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import static com.group3.ServerWorker.loggedInUserList;
+
 //import static com.group3.ServerWorker.*;
 public class PlayGame {
     /**
@@ -16,8 +18,9 @@ public class PlayGame {
     static Group lobbyGroup = new Group();
     static ArrayList<User> isReadyPlayerList = new ArrayList<>();
     static ArrayList<ServerWorker> workerList = new ArrayList<>();
-    public synchronized Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user,Server server, String workerName) throws IOException {
+    private static ServerWorker worker;
 
+    public synchronized Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user,Server server, String workerName) throws IOException {
 
         lobbyGroup.addPlayer(user);
 //        groupList.add(group);
@@ -41,27 +44,27 @@ public class PlayGame {
                             "Reply >> " + user.getUserReply()
             );
 
-            ServerWorker worker = getCurrentWorker(user, server);
+            worker = getCurrentWorker(user, server);
 
             String waitMsg ="Server Reply>>  No. of ready players in lobby are "+ lobbyGroup.getTotalReadyPlayer().size() +
                     "/" + lobbyGroup.getTotalPlayers() + ". Please wait for other players to join.";
-            lobbyGroup.runGroupMsgThread(worker.outputStream,waitMsg);
+//            runGroupMsgThread(worker.outputStream, waitMsg, lobbyGroup);
 
-
+            worker.outputStream.write((waitMsg + "\n").getBytes());
 
 //
 //            List<ServerWorker> workerList = server.getWorkerList();
-//            for(ServerWorker worker : workerList) {
-//                if (loggedInUserList != null) {
-//                    if (!loggedInUserList.equals(worker.getName())) {
-//                        String msg = "online " + user.getName() + "\n";
-//                        outputStream.write(msg.getBytes());
-//                    }
-//                    String msg = "online " + user.getName() + "\n";
-//                    outputStream.write(msg.getBytes());
-//                }
-//
-//            }
+            for(ServerWorker worker : workerList) {
+                if (loggedInUserList != null) {
+                    if (!loggedInUserList.equals(worker.getName())) {
+                        String msg = "online " + user.getName() + "\n";
+                        outputStream.write(msg.getBytes());
+                    }
+                    String msg = "online " + user.getName() + "\n";
+                    outputStream.write(msg.getBytes());
+                }
+
+            }
 //            String onlineMsg = "others hii " + user.getName() + "\n";
 //            for(ServerWorker worker : workerList) {
 //                if (lobbyGroup.equals(worker.getName())) {
@@ -141,7 +144,7 @@ public class PlayGame {
         return null;
     }
 
-    private static void splitLobbyPlayersInGroup(OutputStream outputStream) throws InterruptedException {
+    private static void splitLobbyPlayersInGroup(OutputStream outputStream) throws InterruptedException, IOException {
         /**
          * if total ready players = 2 , 3 and 4 : Create 1 group
          * if total ready players = 5 : Create 1 groups for 4 players and
@@ -151,7 +154,8 @@ public class PlayGame {
          * if total ready players = 8 : Create 2 groups of 4 players each
          * */
 
-            Thread.sleep(30000);
+            Thread.sleep(50000);
+            String waitMsg;
             isReadyPlayerList = lobbyGroup.getTotalReadyPlayer();
             if (isReadyPlayerList.size() == 2 || isReadyPlayerList.size() == 3 || isReadyPlayerList.size() == 4){
                 Group group1 = new Group();
@@ -159,10 +163,27 @@ public class PlayGame {
                     group1.addPlayer(readyPlayer);
                     lobbyGroup.removePlayer(readyPlayer);
                 }
-                String waitMsg ="Server Reply>> You belong to group with id" + group1.getGroupID() +
-                        ". No of players in group are " + group1.getTotalPlayers();
+                System.out.println("New Group Created : " + group1.toString());
 
-                group1.runGroupMsgThread(outputStream,waitMsg);
+                waitMsg ="Server Reply>> You belong to group with id " + group1.getGroupID() +
+                        ". No of players in group are " + group1.getTotalPlayers();
+                outputStream.write((waitMsg + "\n").getBytes());
+                for(ServerWorker worker : workerList) {
+                    if (isReadyPlayerList != null) {
+                        if (isReadyPlayerList.equals(worker.getName())) {
+
+                            waitMsg ="Server Reply>> You belong to group with id " + group1.getGroupID() +
+                                    ". No of players in group are " + group1.getTotalPlayers();
+                            outputStream.write((waitMsg + "\n").getBytes());
+                        }
+
+                        waitMsg ="Server Reply>> No Players";
+                        outputStream.write((waitMsg + "\n").getBytes());
+                    }
+
+                }
+
+//                group1.runGroupMsgThread(outputStream,waitMsg);
             } else if (isReadyPlayerList.size() == 5) {
 //            Group Group1 = new Group(); // of 4 players
             } else if (isReadyPlayerList.size() > 5 ) {
@@ -171,7 +192,22 @@ public class PlayGame {
             }
 
     }
+    private void runGroupMsgThread(OutputStream outputStream,String message, Group group) {
+        new Thread(() -> {
+            try {
+                while (!group.getIsPlayingState()) {
+                    if(group.getIsPlayingState()) { break; }
 
+                    String waitMsg = message;
+                    outputStream.write((waitMsg + "\n").getBytes());
+
+                    Thread.sleep(10000);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 
     private static void readyPlayerListener(User user ,Group group, BufferedReader reader, OutputStream outputStream) throws IOException {
         String line = reader.readLine();
@@ -184,9 +220,6 @@ public class PlayGame {
 
                             "\rReply >> " + user.getUserReply()
             );
-            runMgsThread(group, user, outputStream);
-
-
         }
     }
     private static void runMgsThread(Group group, User user, OutputStream outputStream){

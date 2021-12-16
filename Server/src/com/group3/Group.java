@@ -68,22 +68,7 @@ public class Group {
         }
         return isReadyUserList;
     }
-    void runGroupMsgThread(OutputStream outputStream,String message) {
-        new Thread(() -> {
-            try {
-                while (!this.getIsPlayingState()) {
-                    if(this.getIsPlayingState()) { break; }
 
-                    String waitMsg = message;
-                    outputStream.write((waitMsg + "\n").getBytes());
-
-                    Thread.sleep(10000);
-                }
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
     public List<User> getPlayers() {
         return players;
     }
