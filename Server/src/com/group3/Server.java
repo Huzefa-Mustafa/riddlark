@@ -5,10 +5,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class Server  extends Thread{
     private final int serverPort;
     static ArrayList<ServerWorker> workerList = new ArrayList<>();
+
+    static Vector<ServerWorker> ar = new Vector<>();
 
     public Server(int serverPort) {
         this.serverPort = serverPort;

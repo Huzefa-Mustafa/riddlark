@@ -7,8 +7,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.group3.ServerWorker.loggedInUserList;
-
 //import static com.group3.ServerWorker.*;
 public class PlayGame {
     /**
@@ -19,7 +17,7 @@ public class PlayGame {
     static Group lobbyGroup = new Group();
     static ArrayList<User> isReadyPlayerList = new ArrayList<>();
     static ArrayList<ServerWorker> workerList = new ArrayList<>();
-    public synchronized Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user,Server server) throws IOException {
+    public synchronized Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user,Server server) throws IOException, InterruptedException {
 
 
         lobbyGroup.addPlayer(user);
@@ -48,23 +46,34 @@ public class PlayGame {
 
 //            lobbyGroup.runGroupMsgThread(outputStream,waitMsg);
             List<ServerWorker> workerList = server.getWorkerList();
-            for(ServerWorker worker : workerList) {
-                if (loggedInUserList != null) {
-                    if (!loggedInUserList.equals(worker.getName())) {
-                        String msg = "online " + user.getName() + "\n";
-                        outputStream.write(msg.getBytes());
+
+//            for(ServerWorker worker : workerList) {
+//                if (loggedInUserList != null) {
+//                    if (!loggedInUserList.equals(worker.getName())) {
+//                        String msg = "online " + user.getName() + "\n";
+//                        outputStream.write(msg.getBytes());
+//                    }
+//                    String msg = "online " + user.getName() + "\n";
+//                    outputStream.write(msg.getBytes());
+//                }
+//
+//            }
+
+            for (ServerWorker mc  : Server.ar) {
+
+                mc.outputStream.write(waitMsg.getBytes());
+            }
+/*            while (true) {
+                String onlineMsg = "others hii " + user.getName()+lobbyGroup.getTotalPlayers() + "\n";
+
+                for(ServerWorker worker : workerList) {
+                    if (loggedInUserList.equals(worker.getName())) {
+                        worker.outputStream.write(onlineMsg.getBytes());
+                        Thread.sleep(5000);
                     }
-                    String msg = "online " + user.getName() + "\n";
-                    outputStream.write(msg.getBytes());
                 }
 
-            }
-            String onlineMsg = "others hii " + user.getName() + "\n";
-            for(ServerWorker worker : workerList) {
-                if (!loggedInUserList.equals(worker.getName())) {
-                    worker.outputStream.write(onlineMsg.getBytes());
-                }
-            }
+            }*/
 
         }
         try {
