@@ -7,7 +7,7 @@ import static com.group3.ServerWorker.*;
 
 
 public class HandleLogin {
-    public void loginHandler(OutputStream outputStream, InputStream inputStream, String[] tokens, BufferedReader reader) throws IOException {
+    public void loginHandler(OutputStream outputStream, InputStream inputStream, String[] tokens, BufferedReader reader,Server server) throws IOException {
         if (tokens.length == 3) {
             String userName = tokens[1];
             String password = tokens[2];
@@ -31,7 +31,7 @@ public class HandleLogin {
                         while (!"q".equalsIgnoreCase(line)) {
                             line = reader.readLine();
                             if (line.equalsIgnoreCase("1")) {
-                                boolean playGame = new PlayGame().playGameHandler(outputStream, inputStream, reader, user);
+                                boolean playGame = new PlayGame().playGameHandler(outputStream, inputStream, reader, user, server);
                             } else if(line.equalsIgnoreCase("q")) {
                                 break;
                             }

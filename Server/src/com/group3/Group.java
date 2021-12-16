@@ -73,6 +73,7 @@ public class Group {
             try {
                 while (!this.getIsPlayingState()) {
                     if(this.getIsPlayingState()) { break; }
+
                     String waitMsg = message;
                     outputStream.write((waitMsg + "\n").getBytes());
 

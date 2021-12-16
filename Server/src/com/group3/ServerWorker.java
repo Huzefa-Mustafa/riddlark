@@ -10,13 +10,14 @@ import java.util.Properties;
 public class ServerWorker extends Thread {
     private final Server server;
     private final Socket clientSocket;
-    private OutputStream outputStream;
+    public OutputStream outputStream;
     private InputStream inputStream;
     private BufferedReader reader;
     static String login = null;
     static ArrayList<User> usersList = new ArrayList<>();
     static ArrayList<User> loggedInUserList = new ArrayList<>();
     static User user = null;
+    private ServerWorker serverWorker;
     static File file = new File("userdata.txt");
 
     public ServerWorker(Server server, Socket clientSocket) {
@@ -57,7 +58,7 @@ public class ServerWorker extends Thread {
                     if ("q".equalsIgnoreCase(cmd)) {
                         break;
                     } else if ("login".equalsIgnoreCase(cmd)) {
-                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens, this.reader);
+                        new HandleLogin().loginHandler(this.outputStream, this.inputStream, tokens, this.reader,this.server);
                     } else if ("registration".equalsIgnoreCase(cmd)) {
                         handleRegistration(outputStream, tokens);
                     }else if ("quit".equalsIgnoreCase(cmd)) {
