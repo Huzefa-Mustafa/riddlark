@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-//import static com.group3.ServerWorker.*;
 public class PlayGame {
     /**
      * The PlayGame Starts The Game Called **** RIDDLARK ****
@@ -21,13 +20,9 @@ public class PlayGame {
     public synchronized Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, BufferedReader reader, User user,Server server, String workerName) throws IOException {
 
         lobbyGroup.addPlayer(user);
-//        groupList.add(group);
-/*        for (ServerWorker worker : workerList) {
-            if (worker.getIsReadyState() != null)
 
-        }*/
         System.out.println("Lobby group created : " + lobbyGroup.getGroupID());
-//        user.setGroupID(group.getGroupID());
+
         String serverReply ="Server Reply>> Hello " + user.getName() + "! Welcome to Riddlark.";
         outputStream.write((serverReply + "\n").getBytes());
         String line = reader.readLine();
@@ -41,35 +36,12 @@ public class PlayGame {
 
                             "Reply >> " + user.getUserReply()
             );
-
             worker = getCurrentWorker(user, server);
 
             String waitMsg ="Server Reply>>  No. of ready players in lobby are "+ lobbyGroup.getTotalReadyPlayer().size() +
                     "/" + lobbyGroup.getTotalPlayers() + ". Please wait for other players to join.";
-//            runGroupMsgThread(worker.outputStream, waitMsg, lobbyGroup);
 
             worker.outputStream.write((waitMsg + "\n").getBytes());
-
-//
-//            List<ServerWorker> workerList = server.getWorkerList();
-//            for(ServerWorker worker : workerList) {
-//                if (loggedInUserList != null) {
-//                    if (!loggedInUserList.equals(worker.getName())) {
-//                        String msg = "online " + user.getName() + "\n";
-//                        outputStream.write(msg.getBytes());
-//                    }
-//                    String msg = "online " + user.getName() + "\n";
-//                    outputStream.write(msg.getBytes());
-//                }
-//
-//            }
-//            String onlineMsg = "others hii " + user.getName() + "\n";
-//            for(ServerWorker worker : workerList) {
-//                if (lobbyGroup.equals(worker.getName())) {
-//                    worker.outputStream.write(onlineMsg.getBytes());
-//                }
-//            }
-
         }
         try {
             splitLobbyPlayersInGroup(outputStream, server);
@@ -77,58 +49,6 @@ public class PlayGame {
             e.printStackTrace();
         }
 
-
-//        readyPlayerListener(user, group, reader, outputStream);
-
-
-
-
-
-
-
-
-
-//        if (groupList.isEmpty()) {
-//            Group group = new Group();
-//            group.addPlayer(user);
-//            groupList.add(group);
-//            System.out.println("Empty GroupList, New Group Created : " + group.getGroupID());
-//            user.setGroupID(group.getGroupID());
-//            String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-//            outputStream.write((serverReply + "\n").getBytes());
-//            readyPlayerListener(user, group, reader, outputStream);
-//            return true;
-//        } else {
-//            Iterator<Group> iter = groupList.iterator();
-//            try {
-//                while (iter.hasNext()) {
-//                    Group prevGroup = iter.next();
-//                    if (!prevGroup.isPlayer(user) && prevGroup.getTotalPlayers() < 6) {
-//                        prevGroup.addPlayer(user);
-//                        System.out.println("Previous Group : " + prevGroup.toString());
-//                        user.setGroupID(prevGroup.getGroupID());
-//                        String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-//                        outputStream.write((serverReply + "\n").getBytes());
-//                        readyPlayerListener(user, prevGroup, reader, outputStream);
-//                        return true;
-//                    } else if (!iter.hasNext()) {
-//                        Group newGroup = new Group();
-//                        newGroup.addPlayer(user);
-//                        groupList.add(newGroup);
-//                        System.out.println("New Group Created : " + newGroup.toString());
-//                        user.setGroupID(newGroup.getGroupID());
-//                        String serverReply ="Server Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
-//                        outputStream.write((serverReply + "\n").getBytes());
-//                        readyPlayerListener(user, newGroup, reader, outputStream);
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            } catch (Exception e) {
-//                System.out.println("Error in PlayGame class. \nMessage: " + e.getMessage() + "\n Stacktrace: " + e.getLocalizedMessage());
-//                e.printStackTrace();
-//            }
-//        }
         return false;
     }
 
@@ -163,31 +83,14 @@ public class PlayGame {
                 }
                 System.out.println("New Group Created : " + group1.toString());
 
-//                waitMsg ="Server Reply>> You belong to group with id " + group1.getGroupID() +
-//                        ". No of players in group are " + group1.getTotalPlayers();
-//                outputStream.write((waitMsg + "\n").getBytes());
                 for(User player : group1.getPlayers()) {
                     worker = getCurrentWorker(player, server);
                     waitMsg ="Server Reply>> You belong to group with id " + group1.getGroupID() +
                             ". No of players in group are " + group1.getTotalPlayers();
                     worker.outputStream.write((waitMsg + "\n").getBytes());
                 }
-//                for(ServerWorker worker : workerList) {
-//                    if (isReadyPlayerList != null) {
-//                        if (isReadyPlayerList.equals(worker.getName())) {
-//
-//                            waitMsg ="Server Reply>> You belong to group with id " + group1.getGroupID() +
-//                                    ". No of players in group are " + group1.getTotalPlayers();
-//                            outputStream.write((waitMsg + "\n").getBytes());
-//                        }
-//
-//                        waitMsg ="Server Reply>> No Players";
-//                        outputStream.write((waitMsg + "\n").getBytes());
-//                    }
-//
-//                }
+                new PlayGame();
 
-//                group1.runGroupMsgThread(outputStream,waitMsg);
             } else if (isReadyPlayerList.size() == 5) {
 //            Group Group1 = new Group(); // of 4 players
             } else if (isReadyPlayerList.size() > 5 ) {
