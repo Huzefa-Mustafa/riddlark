@@ -107,9 +107,20 @@ public class ClientWorker {
             write = scanner.nextLine();
             serverOut.write((write+"\n").getBytes());
             if ("1".equalsIgnoreCase(write)) {
-                System.out.println(write);
-                startMessageReader();
+                String response = bufferedIn.readLine();
+                System.out.println(response);
+                while (!"q".equalsIgnoreCase(write)) {
 
+                    System.out.println("Press y to get Ready!!!");
+                    System.out.println("INFO: Enter 'q' to stop session");
+                    write = scanner.nextLine();
+                    serverOut.write((write+"\n").getBytes());
+                    if ("y".equalsIgnoreCase(write)) {
+                        startMessageReader();
+                    }else if ("q".equalsIgnoreCase(write)) {
+                        break;
+                    }else System.out.println("\n\t************** Please Enter Correct option! **************");
+                }
             } else if ("q".equalsIgnoreCase(write)) {
                 break;
             }else System.out.println("\n\t************** Please Enter Correct option! **************");
