@@ -90,12 +90,6 @@ public class PlayGame {
                     worker.outputStream.write((waitMsg + "\n").getBytes());
                 }
                 new PlayGame();
-
-            } else if (isReadyPlayerList.size() == 5) {
-//            Group Group1 = new Group(); // of 4 players
-            } else if (isReadyPlayerList.size() > 5 ) {
-//            Group Group1 = new Group();
-//            Group Group2 = new Group();
             }
 
     }
