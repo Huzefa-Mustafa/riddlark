@@ -41,7 +41,7 @@ public class ClientWorker {
                 if (login(userName, password)) {
                     System.out.println("Login successful");
                 }else {
-                    System.err.println("Login failed");
+                    System.out.println("\tLogin failed");
                 }
             }else if (choice == 2) {
                 System.out.print("\n\tEnter your User name : ");
@@ -61,13 +61,13 @@ public class ClientWorker {
 
     }
 
-     static boolean registration(String login, String password) throws IOException {
+    static boolean registration(String login, String password) throws IOException {
         String cmd = "registration " + login + " " + password + "\n";
         serverOut.write(cmd.getBytes());
 
-         String response = bufferedIn.readLine();
-         System.out.println("Response Line:" + response);
-         return "ok registration".equalsIgnoreCase(response);
+        String response = bufferedIn.readLine();
+        System.out.println("Response Line:" + response);
+        return "ok registration".equalsIgnoreCase(response);
     }
 
 
@@ -97,7 +97,7 @@ public class ClientWorker {
             String menu = """
                     \t
                     \r            ****   START RIDDLARK   ****         \t
-                    \r             Please Enter 'y' to continue        \t
+                    \r             Please Enter '1' to Play Game       \t
                     \r                                                 \r
                     \rINFO: Enter 'q' to stop session                  \r
                     \rPlease enter your choice                         \r
@@ -105,9 +105,9 @@ public class ClientWorker {
                     """;
             System.out.println(menu);
             write = scanner.nextLine();
-            if ("y".equalsIgnoreCase(write)) {
+            serverOut.write((write+"\n").getBytes());
+            if ("1".equalsIgnoreCase(write)) {
                 System.out.println(write);
-                serverOut.write((write+"\n").getBytes());
                 startMessageReader();
 
             } else if ("q".equalsIgnoreCase(write)) {
