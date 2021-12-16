@@ -1,74 +1,72 @@
-{
-  "data" : [
-    {
-      "id": "001",
-      "riddle": "What can travel around the world while staying in a corner?",
-      "category": "funny",
-      "ans": "stamp",
-      "options": ["address","barber","submarine","stamp","firefly"]
-    },
-    {
-      "id": "002",
-      "riddle": "What has 4 eyes but can't see.",
-      "category": "funny",
-      "ans": "mississippi",
-      "options": ["lighthouse","elephant","periodic","president","mississippi"]
-    },
-    {
-      "id": "003",
-      "riddle": "What always goes to bed with its shoes on?",
-      "category": "funny",
-      "ans": "horse",
-      "options": ["horse","kittens","bulldog","catfish","donkey"]
-    },
-    {
-      "id": "004",
-      "riddle": "What can you catch but not throw?",
-      "category": "funny",
-      "ans": "cold",
-      "options": ["wine","cold","tail","sandwich","egg"]
-    },
-    {
-      "id": "005",
-      "riddle": "The shorter I am, the bigger I am. What am I?",
-      "category": "funny",
-      "ans": "temper",
-      "options": ["stairs","ruler","hole","temper","outside"]
-    },
-    {
-      "id": "006",
-      "riddle": "I will disappear every time you say my name. What am I?",
-      "category": "cool",
-      "ans": "silence",
-      "options": ["air","breath","silence","death","makeup"]
-    },
-    {
-      "id": "007",
-      "riddle": "What has one foot on each side and one in the middle?",
-      "category": "cool",
-      "ans": "yardstick",
-      "options": ["star","postman","glove","clock","yardstick"]
-    },
-    {
-      "id": "008",
-      "riddle": "Flat as a leaf, round as a ring. \nHas two eyes, can't see a thing.",
-      "category": "cool",
-      "ans": "button",
-      "options": ["orange","eyes","button","tomorrow","watermelon"]
-    },
-    {
-      "id": "009",
-      "riddle": "What has a tongue but cannot talk, \ngets around a lot but cannot walk?",
-      "category": "cool",
-      "ans": "shoe",
-      "options": ["star","postman","David","shoe","seesaw"]
-    },
-    {
-      "id": "010",
-      "riddle": "What is easy to get into, \nand hard to get out of?",
-      "category": "cool",
-      "ans": "trouble",
-      "options": ["heroine","trouble","hole","river","shoe"]
-    }
-  ]
-}
+[
+  {
+    "id": "001",
+    "riddle": "What can travel around the world while staying in a corner?",
+    "category": "funny",
+    "ans": "stamp",
+    "options": ["address, barber, submarine, stamp, firefly"]
+  },
+  {
+    "id": "002",
+    "riddle": "What has 4 eyes but can't see.",
+    "category": "funny",
+    "ans": "mississippi",
+    "options": ["lighthouse, elephant, periodic, president, mississippi"]
+  },
+  {
+    "id": "003",
+    "riddle": "What always goes to bed with its shoes on?",
+    "category": "funny",
+    "ans": "horse",
+    "options": ["horse,kittens,bulldog,catfish,donkey"]
+  },
+  {
+    "id": "004",
+    "riddle": "What can you catch but not throw?",
+    "category": "funny",
+    "ans": "cold",
+    "options": ["wine,cold,tail,sandwich,egg"]
+  },
+  {
+    "id": "005",
+    "riddle": "The shorter I am, the bigger I am. What am I?",
+    "category": "funny",
+    "ans": "temper",
+    "options": ["stairs,ruler,hole,temper,outside"]
+  },
+  {
+    "id": "006",
+    "riddle": "I will disappear every time you say my name. What am I?",
+    "category": "cool",
+    "ans": "silence",
+    "options": ["air","breath","silence","death","makeup"]
+  },
+  {
+    "id": "007",
+    "riddle": "What has one foot on each side and one in the middle?",
+    "category": "cool",
+    "ans": "yardstick",
+    "options": ["star","postman","glove","clock","yardstick"]
+  },
+  {
+    "id": "008",
+    "riddle": "Flat as a leaf, round as a ring. \nHas two eyes, can't see a thing.",
+    "category": "cool",
+    "ans": "button",
+    "options": ["orange","eyes","button","tomorrow","watermelon"]
+  },
+  {
+    "id": "009",
+    "riddle": "What has a tongue but cannot talk, \ngets around a lot but cannot walk?",
+    "category": "cool",
+    "ans": "shoe",
+    "options": ["star","postman","David","shoe","seesaw"]
+  },
+  {
+    "id": "010",
+    "riddle": "What is easy to get into, \nand hard to get out of?",
+    "category": "cool",
+    "ans": "trouble",
+    "options": ["heroine","trouble","hole","river","shoe"]
+  }
+]

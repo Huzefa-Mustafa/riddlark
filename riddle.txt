@@ -1,0 +1,11 @@
+#TCP
+riddle1=What can travel around the world while staying in a corner? Options: (address,barber,submarine,stamp,firefly)
+ans1=stamp
+riddle2=What has 4 eyes but can't see. Options: (lighthouse,elephant,periodic,president,mississippi)
+ans2=mississippi
+riddle3=What always goes to bed with its shoes on? Options: (horse,kittens,bulldog,catfish,donkey)
+ans3=horse
+riddle4=What can you catch but not throw? Options: (wine,cold,tail,sandwich,egg)
+ans4=cold
+riddle5=The shorter I am, the bigger I am. What am I? Options: (address,barber,submarine,stamp,firefly)
+ans5=temper
