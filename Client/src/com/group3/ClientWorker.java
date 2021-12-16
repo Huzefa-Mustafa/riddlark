@@ -39,9 +39,9 @@ public class ClientWorker {
                 System.out.print("\tEnter your password : ");
                 password=scanner.nextLine();
                 if (login(userName, password)) {
-                    System.out.println("Login successful");
+                    System.out.println("\t\t\nLogin successful");
                 }else {
-                    System.out.println("\tLogin failed");
+                    System.out.println("\t\t\nLogin failed");
                 }
             }else if (choice == 2) {
                 System.out.print("\n\tEnter your User name : ");
@@ -76,7 +76,7 @@ public class ClientWorker {
         serverOut.write(cmd.getBytes());
 
         String response = bufferedIn.readLine();
-        System.out.println("Response Line:" + response);
+        System.out.println("\t\nResponse Line: " + response);
 
         if ("ok login".equalsIgnoreCase(response)) {
             startPlayGame();
@@ -107,8 +107,8 @@ public class ClientWorker {
                 System.out.println(response);
                 while (!"q".equalsIgnoreCase(write)) {
 
-                    System.out.println("Press y to get Ready!!!");
-                    System.out.println("INFO: Enter 'q' to stop session");
+                    System.out.println("\t\t\nPress y to get Ready!!!");
+                    System.out.println("\t\tINFO: Enter 'q' to stop session");
                     write = scanner.nextLine();
                     serverOut.write((write+"\n").getBytes());
                     if ("y".equalsIgnoreCase(write)) {
