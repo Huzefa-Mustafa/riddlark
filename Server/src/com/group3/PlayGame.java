@@ -22,14 +22,8 @@ public class PlayGame {
 //            return false;
 //        }
 
-        if(user.getUserReply().equalsIgnoreCase("y")){
-            String groupID = user.getGroupID();
 
-            Group group = getGroupById(groupID);
-            System.out.println("Current groupID: " + group.getGroupID());
-            runMgsThread(group, outputStream);
-            return true;
-        } else if (groupList.isEmpty()) {
+        if (groupList.isEmpty()) {
             Group group = new Group();
             group.addPlayer(user);
             groupList.add(group);
@@ -87,20 +81,35 @@ public class PlayGame {
 
                     "\rReply >> " + user.getUserReply()
             );
-            runMgsThread(group, outputStream);
+            runMgsThread(group, user, outputStream);
+
+
         }
     }
-    private static void runMgsThread(Group group, OutputStream outputStream){
+    private static void runMgsThread(Group group, User user, OutputStream outputStream){
         new Thread(() -> {
             try {
                 int i = 1;
                 while (i <= 5) {
+                    if(group.getIsPlayingState()){break;}
                     String waitMsg ="\rServer Reply>> Your Group ID: "+ group.getGroupID() +
                             ". No. of ready players in group are "+ group.getTotalReadyPlayer() +
                             "/" + group.getTotalPlayers() + ". Game starts in T - " + i;
                     outputStream.write((waitMsg + "\n").getBytes());
+
                     Thread.sleep(5000);
                     i++;
+                }
+                if(group.getTotalPlayers() > 1 && group.getTotalReadyPlayer() > 1){
+                    group.setIsPlayingState(true);
+                    System.out.println("Starting game for current group "+group.getGroupID()+"!");
+                } else {
+                    group.removePlayer(user);
+                    /*
+                     *  'E' is for termination
+                     * */
+                    String serverReply ="\nE Server Reply>>" + user.getName() + " remove from group with ID: " + user.getGroupID();
+                    outputStream.write((serverReply + "\n").getBytes());
                 }
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
