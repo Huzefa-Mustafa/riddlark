@@ -1,5 +1,9 @@
 package com.group3;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +15,15 @@ public class Group {
     private int numberOfGroups;
     private ArrayList<User> players = new ArrayList<>();
     private Boolean isPlaying;
-
-    Group(){
-        groupID++;
+    private OutputStream outputStream;
+    private InputStream inputStream;
+    private BufferedReader reader;
+    Group(OutputStream outputStream, InputStream inputStream, BufferedReader reader){
+        ++groupID;
         this.isPlaying = Boolean.FALSE;
+        this.outputStream = outputStream;
+        this.inputStream = inputStream;
+        this.reader = reader;
     }
     /**
      * @return the current group id.
@@ -52,16 +61,30 @@ public class Group {
      * */
     public void removeAllPlayers() { this.players.removeAll(this.players); }
 
-    public int getTotalReadyPlayer() {
-        int totalReadyPlayers = 0;
+    public ArrayList<User> getTotalReadyPlayer() {
+        ArrayList<User> isReadyUserList = new ArrayList<>();
         for (User player : players) {
             if (player.getIsReadyState()) {
-                totalReadyPlayers += 1;
+                isReadyUserList.add(player);
             }
         }
-        return totalReadyPlayers;
+        return isReadyUserList;
     }
+    void runGroupMsgThread(String message) {
+        new Thread(() -> {
+            try {
+                while (!this.getIsPlayingState()) {
+                    if(this.getIsPlayingState()) { break; }
+                    String waitMsg = message;
+                    outputStream.write((waitMsg + "\n").getBytes());
 
+                    Thread.sleep(10000);
+                }
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
     public List<User> getPlayers() {
         return players;
     }
