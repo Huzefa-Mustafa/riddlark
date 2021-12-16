@@ -14,18 +14,18 @@ public class PlayGame {
      //     * @param user to be willing to participate in the game
      * */
     public void playGameHandler(OutputStream outputStream, InputStream inputStream, User user) throws IOException {
-
-        if (groupList.isEmpty()) {
+        if(user.getUserReply() == "y"){
             String groupID = user.getGroupID();
             System.out.println(
-                    "Client User : " + user.getName() + "" +
-                    "\nGroup ID : " + groupID +
-                    "\nReply >> " + user.getUserReply()
+                    "\rClient User : " + user.getName() + "" +
+                    "\rGroup ID : " + groupID +
+                    "\rReply >> " + user.getUserReply()
             );
-//            Group group = getGroupById(groupID);
-//            System.out.println("Current groupID: " + group.getGroupID());
+            Group group = getGroupById(groupID);
+            System.out.println("Current groupID: " + group.getGroupID());
+            runMgsThread(group, outputStream);
 
-
+        } else if (groupList.isEmpty()) {
             Group group = new Group();
             group.addPlayer(user);
             groupList.add(group);
@@ -36,7 +36,6 @@ public class PlayGame {
             outputStream.write((serverReply + "\n").getBytes());
 //            line = reader.readLine();
 //            String clientReply = line;
-            runMgsThread(group, outputStream);
 
         } else {
             Iterator<Group> iter = groupList.iterator();
@@ -49,7 +48,7 @@ public class PlayGame {
                         user.setGroupID(prevGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
-                        runMgsThread(prevGroup,outputStream);
+//                        runMgsThread(prevGroup,outputStream);
                     } else if (!iter.hasNext()) {
                         Group newGroup = new Group();
                         newGroup.addPlayer(user);
@@ -58,7 +57,7 @@ public class PlayGame {
                         user.setGroupID(newGroup.getGroupID());
                         String serverReply ="\nServer Reply>> "+ user.getName() + " added to Group with ID: " + user.getGroupID();
                         outputStream.write((serverReply + "\n").getBytes());
-                        runMgsThread(newGroup, outputStream);
+//                        runMgsThread(newGroup, outputStream);
                     }
                 }
 
