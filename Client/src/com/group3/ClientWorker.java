@@ -41,7 +41,6 @@ public class ClientWorker {
                     System.out.print("\tEnter your password : ");
                     password = scanner.nextLine();
                     if (login(userName, password)) {
-                        System.out.println("\t\t\nLogin successful");
                     } else {
                         System.out.println("\t\t\nLogin failed");
                     }
@@ -130,6 +129,7 @@ public class ClientWorker {
                     }else System.out.println("\n\t************** Please Enter Correct option! **************");
                 }
             } else if ("q".equalsIgnoreCase(write)) {
+                serverOut.write((write+"\n").getBytes());
                 break;
             }else System.out.println("\n\t************** Please Enter Correct option! **************");
         }
