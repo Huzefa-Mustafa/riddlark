@@ -41,7 +41,7 @@ public class ClientWorker {
                 if (login(userName, password)) {
                     System.out.println("Login successful");
                 }else {
-                    System.err.println("Login failed");
+                    System.out.println("\tLogin failed");
                 }
             }else if (choice == 2) {
                 System.out.print("\n\tEnter your User name : ");
