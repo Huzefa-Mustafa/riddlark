@@ -52,6 +52,16 @@ public class Group {
      * */
     public void removeAllPlayers() { this.players.removeAll(this.players); }
 
+    public int getTotalReadyPlayer() {
+        int totalReadyPlayers = 0;
+        for (User player : players) {
+            if (player.getIsReadyState()) {
+                totalReadyPlayers += 1;
+            }
+        }
+        return totalReadyPlayers;
+    }
+
     public List<User> getPlayers() {
         return players;
     }

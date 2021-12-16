@@ -13,18 +13,27 @@ public class PlayGame {
     /**
      //     * @param user to be willing to participate in the game
      * */
-    public void playGameHandler(OutputStream outputStream, InputStream inputStream, User user) throws IOException {
+    public Boolean playGameHandler(OutputStream outputStream, InputStream inputStream, User user) throws IOException {
+        if(user.getUserReply() == "q"){
+            System.out.println(
+                    "\rClient User : " + user.getName() +
+                    "\rReply >> " + user.getUserReply()
+            );
+            return false;
+        }
+
         if(user.getUserReply() == "y"){
             String groupID = user.getGroupID();
+            user.setIsReadyState(true);
             System.out.println(
                     "\rClient User : " + user.getName() + "" +
                     "\rGroup ID : " + groupID +
                     "\rReply >> " + user.getUserReply()
             );
+
             Group group = getGroupById(groupID);
             System.out.println("Current groupID: " + group.getGroupID());
             runMgsThread(group, outputStream);
-
         } else if (groupList.isEmpty()) {
             Group group = new Group();
             group.addPlayer(user);
@@ -72,9 +81,11 @@ public class PlayGame {
     private static void runMgsThread(Group group, OutputStream outputStream){
         new Thread(() -> {
             try {
-                while (group.getTotalPlayers() < 3) {
-                    String waitMsg ="\rServer Reply>> You are in group "+ group.getGroupID() + ". Current number of player in group are " + group.getTotalPlayers() + ". Please wait for other players to join.";
+                int i = 1;
+                while (i < 5) {
+                    String waitMsg ="\rServer Reply>> Your Group ID: "+ group.getGroupID() + ". No. of ready players in group are "+ group.getTotalReadyPlayer() + "/" + group.getTotalPlayers() + ". Game starts in T - " + i;
                     outputStream.write((waitMsg + "\n").getBytes());
+                    i++;
                     Thread.sleep(5000);
                 }
             } catch (InterruptedException | IOException e) {

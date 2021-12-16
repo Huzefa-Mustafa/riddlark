@@ -21,11 +21,11 @@ public class User  {
         this.isReady = false;
     }
 
-    public boolean isReady() {
+    public boolean getIsReadyState() {
         return isReady;
     }
 
-    public void setReady(boolean ready) {
+    public void setIsReadyState(boolean ready) {
         isReady = ready;
     }
 
