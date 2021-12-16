@@ -117,6 +117,7 @@ public class ClientWorker {
                     serverOut.write((write+"\n").getBytes());
                     if ("y".equalsIgnoreCase(write)) {
                         startMessageReader();
+                        break;
                     }else if ("q".equalsIgnoreCase(write)) {
                         break;
                     }else System.out.println("\n\t************** Please Enter Correct option! **************");

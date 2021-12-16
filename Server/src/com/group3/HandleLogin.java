@@ -44,20 +44,19 @@ public class HandleLogin {
 //                        user = new User(userName, password);
 
                         System.out.println("New User Logged in, No. of Logged In Users now " + loggedInUserList.size());
-                        String line;
-                        line = reader.readLine();
-                        System.out.println("Response Line:" + line);
-                        String clientReply = line;
+                        String line = null;
+/*                        String clientReply = line;
                         System.out.println(clientReply);
-                        user.setUserReply(clientReply);
-                        if (!user.getUserReply().equalsIgnoreCase("q")) {
-                            if(clientReply.equalsIgnoreCase("1")) {
+                        user.setUserReply(clientReply);*/
+                        while (!"q".equalsIgnoreCase(line)) {
+                            line = reader.readLine();
+                            if (line.equalsIgnoreCase("1")) {
                                 boolean playGame = new PlayGame().playGameHandler(outputStream, inputStream, reader, user);
+                            } else if(user.getUserReply().equalsIgnoreCase("q")) {
+                                break;
                             }
                         }
                         removeLoggedIn(user);
-
-
 
 
                     } else {
