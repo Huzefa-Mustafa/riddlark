@@ -72,7 +72,7 @@ public class PlayGame {
          * if total ready players = 8 : Create 2 groups of 4 players each
          * */
 
-            Thread.sleep(50000);
+            Thread.sleep(30000);
             String waitMsg;
             isReadyPlayerList = lobbyGroup.getTotalReadyPlayer();
             if (isReadyPlayerList.size() == 2 || isReadyPlayerList.size() == 3 || isReadyPlayerList.size() == 4){
@@ -89,8 +89,14 @@ public class PlayGame {
                             ". No of players in group are " + group1.getTotalPlayers();
                     worker.outputStream.write((waitMsg + "\n").getBytes());
                 }
-                new PlayGame();
+                //                group1.runGroupMsgThread(outputStream,waitMsg);
+            } else if (isReadyPlayerList.size() == 5) {
+//            Group Group1 = new Group(); // of 4 players
+            } else if (isReadyPlayerList.size() > 5 ) {
+//            Group Group1 = new Group();
+//            Group Group2 = new Group();
             }
+
 
     }
     private void runGroupMsgThread(OutputStream outputStream,String message, Group group) {
